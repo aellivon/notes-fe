@@ -31,11 +31,9 @@ export class Api implements IApi {
         Accept: 'application/json'
       }
     })
-    // const authToken = store.getState().authState.user.accessToken
-    const authToken = 'xxx'
-    if (authToken !== 'xxx') {
+    const authToken = ''
+    if (authToken !== '') {
       this.apiSauce.addRequestTransform(request => {
-        // For bearer token
         console.log(`Bearer ${authToken}`)
         request.headers.Authorization = `Bearer ${authToken}`
       })
@@ -45,7 +43,6 @@ export class Api implements IApi {
   handleAPIFailure(response: ApiResponse<unknown, unknown>): IErrorResponseModel | null {
     const problemKind = getGeneralApiProblem(response)
     if (problemKind?.kind === 'cannot-connect' || 'server' || 'timeout') {
-      // store.dispatch(removeToken())
     }
     const res = {
       detail: problemKind?.kind,
@@ -54,13 +51,12 @@ export class Api implements IApi {
     return res
   }
 
+
   handleAPIResult<TApiResponseModel>(response: ApiResponse<unknown, unknown>): TApiResponseModel {
     const data = response.data as ApiDataResponseModel<TApiResponseModel>
     if (response.status && [200, 201, 202, 203, 204].includes(response.status)) {
       return data as TApiResponseModel
     } else {
-
-
       const errorResponseObject = JSON.parse(JSON.stringify(data));
       for (const [key, value] of Object.entries(errorResponseObject)) {
         let errorMessageKey = ''
@@ -70,7 +66,6 @@ export class Api implements IApi {
         toast.error(`${errorMessageKey} ${value}`)
       }
 
-      // store.dispatch(setAppLoading(false))
       throw new Error('Error')
     }
   }

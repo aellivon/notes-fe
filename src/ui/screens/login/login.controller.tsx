@@ -1,6 +1,6 @@
-import LoginCase from '../../core/usecases/login/login.case'
-import AuthApiGateway from '../../core/services/api/gateways/login.gateway'
-import { ILoginFormDataModel } from '../../core/domain/login-form.entity'
+import LoginCase from '../../../core/usecases/login/login.case'
+import AuthApiGateway from '../../../core/services/api/gateways/login.gateway'
+import { ILoginFormDataModel } from '../../../core/domain/login-form.entity'
 
 export default class LoginController {
   private readonly loginUseCase: LoginCase

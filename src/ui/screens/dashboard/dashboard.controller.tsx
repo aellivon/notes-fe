@@ -1,4 +1,4 @@
-import LogoutCase from '../../core/usecases/logout/logout.case'
+import LogoutCase from '../../../core/usecases/logout/logout.case'
 
 export default class DashboardController {
   private readonly logOutUseCase: LogoutCase

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import LoginController from './login.controller'
 import { LoginScreen } from './login.view'
 import { useNavigate } from 'react-router-dom'
-import { ILoginFormDataModel } from '../../core/domain/login-form.entity'
+import { ILoginFormDataModel } from '../../../core/domain/login-form.entity'
 
 const LoginFormContainer: React.FC = () => {
   const controller = new LoginController()

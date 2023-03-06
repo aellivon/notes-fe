@@ -5,9 +5,9 @@ import {
     Navigate
   } from 'react-router-dom'
 import { useEffect, useMemo } from 'react'
-import LoginFormContainer from './login/login.container'
-import AuthController from './login/login.controller'
-import DashboardContainer from './dashboard/dashboard.container'
+import LoginFormContainer from './screens/login/login.container'
+import AuthController from './screens/login/login.controller'
+import DashboardContainer from './screens/dashboard/dashboard.container'
 import { useAppSelector } from '../core/services/store/hooks'
   
 export const Navigator = () => {
