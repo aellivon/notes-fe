@@ -12,12 +12,13 @@ export default class UserProfileAuthEntity implements IBaseEntity {
   lastName?: string = ''
   accessToken?: string = ''
   refreshToken?: string = ''
+  displayName?: string = ''
 
   setFromApiModel(model: ILoginResponseDataModel): void {
-    console.log(model)
     this.id = model.user.id
     this.email = model.user.email
     this.firstName = model.user.first_name
+    this.displayName = model.user.display_name
     this.lastName = model.user.last_name
     this.accessToken = model.access_token
     this.refreshToken = model.refresh_token
@@ -30,7 +31,8 @@ export default class UserProfileAuthEntity implements IBaseEntity {
       firstName: this.firstName,
       lastName: this.lastName,
       accessToken: this.accessToken,
-      refreshToken: this.refreshToken
+      refreshToken: this.refreshToken,
+      displayName: this.displayName
     }
   }
 

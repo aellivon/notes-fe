@@ -35,6 +35,7 @@ export interface IUserProfileAPIModel extends IBaseAPIModel {
   email?: string
   first_name?: string
   last_name?: string
+  display_name?: string
 }
 
 export interface ILoginResponseDataModel{

@@ -25,14 +25,6 @@ const encryptor = encryptTransform({
 
 const reducer = combineReducers({
   authState: authReducer,
-//   documentsState: documentsReducer,
-//   appState: appReducer
-  // tableState: tableStateReduce,
-  // tooltipState: tooltipStateReduce,
-  // analysisResultState: analysisResultStateReduce,
-  // notificationState: notificationStateReduce,
-  // mapSelectionLayerStateSlice: mapSelectionLayerStateReduce,
-  // datasetState: datasetResultStateReduce,
 });
 
 

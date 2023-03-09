@@ -14,6 +14,7 @@ export default class LoginCase {
     try {
       const userInfoModel = await this.authApiGateway.login(loginForm)
       const user = new UserEntity()
+      console.log(userInfoModel)
       user.setFromApiModel(userInfoModel)
       store.dispatch(setUser(user.getCurrentValues()))
 
