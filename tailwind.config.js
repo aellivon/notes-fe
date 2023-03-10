@@ -13,7 +13,7 @@ module.exports = {
       spacing: {
         '2xfull': "200%",
       },
-    },
+    }
   },
   plugins: []
 }
