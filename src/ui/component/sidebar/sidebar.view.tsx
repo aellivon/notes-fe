@@ -13,17 +13,19 @@ import { SlScreenDesktop } from "react-icons/sl";
 
 export interface ISidebarViewModel {
   currentUser: IUserProfile,
-  logOutFunc: () => void
+  logOutFunc: () => void,
+  setNavBarFunc: (state: boolean) => void
+  navBarState: boolean
 }
 
 export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
 
   // Display only javascripts
+  let hideNavMenu = props.navBarState
+
   let [saleMenuGroupOpen, setsaleMenuGroupOpen] = useState(false)
   let [adminMenuGroupOpen, setadminMenuGroupOpen] = useState(false)
-  let [hideNavMenu, setHideNavMenu] = useState(true)
   let [showSettingMenu, setShowSettingMenu] = useState(false)
-  let [behindSidebar, setBehindSidebar] = useState(false)
 
   let saleMenuAdditionalClasses = ""
 
@@ -82,20 +84,19 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
         </div>
         <div aria-label="toggler" className="flex justify-center items-center">
           {/* Three menu line */}
-          <button aria-label="open" id="open" onClick={() => {setHideNavMenu(false)}} className={` focus:outline-none focus:ring-2 ${openButtonAdditionalClass}`}>
+          <button aria-label="open" id="open" onClick={() => {props.setNavBarFunc(false)}} className={` focus:outline-none focus:ring-2 ${openButtonAdditionalClass}`}>
           <IconContext.Provider value={{ className:"w-6 h-6 text-white" }}>
             <HiOutlineBars3/>
           </IconContext.Provider>
           </button>
           {/* Close */}
-          <button aria-label="close" id="close" onClick={() => {setHideNavMenu(true)}} className={` focus:outline-none focus:ring-2 ${closeButtonAdditionalClass}`}>
+          <button aria-label="close" id="close" onClick={() => {props.setNavBarFunc(true)}} className={` focus:outline-none focus:ring-2 ${closeButtonAdditionalClass}`}>
             <IconContext.Provider value={{ className:"w-6 h-6 text-white" }}>
               <HiXMark/>
             </IconContext.Provider>
           </button>
         </div>
       </div>
-      <div className='flex h-full w-full'>
         <div className={`ease-in-out flex justify-start items-start h-full transition-width duration-500 bg-salesPrimary flex-col ${mainClasses}`}>
           <div className="opacity-0 xl:opacity-100 z-1 xl:flex justify-start p-7 items-center space-x-3">
             {/* Logo */}
@@ -239,11 +240,6 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
             </div>
           </div>
         </div>
-        {/* Content? */}
-        <div className={`flex flex-grow transition-width ease-in-out duration-500 ${contentClasses}`}>
-          Test
-        </div>
-      </div>
     </>
   )
 }

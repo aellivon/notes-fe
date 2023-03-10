@@ -11,16 +11,24 @@ export interface ISidebarContainerViewModel {
 
 export const SidebarContainer: React.FC<ISidebarContainerViewModel> = (props) => {
   const currentUser = useAppSelector(state => state.authState.user);
+  const navBarState = useAppSelector(state => state.appUIState.hiddenNavbar);
 
   const controller = new SidebarController()
+
   const logout = async () => {
     await controller.logout()
   }
+
+  const setNavBar = async (state: boolean) => {
+    await controller.setNavbarStatus(state)
+  } 
 
   return (
     <SidebarView
       currentUser={currentUser}
       logOutFunc={logout}
+      setNavBarFunc={setNavBar}
+      navBarState={navBarState}
     />
   )
 }

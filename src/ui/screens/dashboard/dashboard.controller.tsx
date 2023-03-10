@@ -11,4 +11,6 @@ export default class DashboardController {
     const result = await this.logOutUseCase.execute()
     return result
   }
+
+
 }

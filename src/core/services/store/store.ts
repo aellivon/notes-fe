@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import authReducer from './reducers/auth.reducer'
-// import appReducer from '../common/reducers/app.slice'
+import appUIReducer from './reducers/appState.reducer'
 // import documentsReducer from '../files/reducers/files.slice'
 import {
   persistReducer,
@@ -25,6 +25,7 @@ const encryptor = encryptTransform({
 
 const reducer = combineReducers({
   authState: authReducer,
+  appUIState: appUIReducer
 });
 
 
