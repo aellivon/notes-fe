@@ -21,9 +21,8 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
   // Display only javascripts
   let [saleMenuGroupOpen, setsaleMenuGroupOpen] = useState(false)
   let [adminMenuGroupOpen, setadminMenuGroupOpen] = useState(false)
-  let [showNavMenu, setShowNavMenu] = useState(false)
+  let [hideNavMenu, setHideNavMenu] = useState(true)
   let [showSettingMenu, setShowSettingMenu] = useState(false)
-
 
   let saleMenuAdditionalClasses = ""
 
@@ -47,7 +46,7 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
   let closeButtonAdditionalClass = ""
   let openButtonAdditionalClass = ""
 
-  if (showNavMenu) {
+  if (hideNavMenu) {
     mainClasses = "-translate-x-full"
     closeButtonAdditionalClass = "hidden"
   } else {
@@ -55,12 +54,15 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
     openButtonAdditionalClass = "hidden"
   }
 
-  let settingMenuAdditionalClasses = ""
+  let cogAdditionalClasses = ""
+  let cogMenuAdditionalClasses = ""
 
   if(showSettingMenu) {
-    settingMenuAdditionalClasses = "color-white text-white"
+    cogAdditionalClasses = "color-white text-white"
+    cogMenuAdditionalClasses = "absolute m-0 -translate-y-full -translate-x-1/3 md:translate-x-0"
   } else {
-    settingMenuAdditionalClasses = ""
+    cogAdditionalClasses = ""
+    cogMenuAdditionalClasses = "hidden"
   }
 
   return (
@@ -75,13 +77,13 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
         </div>
         <div aria-label="toggler" className="flex justify-center items-center">
           {/* Three menu line */}
-          <button aria-label="open" id="open" onClick={() => {setShowNavMenu(false)}} className={` focus:outline-none focus:ring-2 ${openButtonAdditionalClass}`}>
+          <button aria-label="open" id="open" onClick={() => {setHideNavMenu(false)}} className={` focus:outline-none focus:ring-2 ${openButtonAdditionalClass}`}>
           <IconContext.Provider value={{ className:"w-6 h-6 text-white" }}>
             <HiOutlineBars3/>
           </IconContext.Provider>
           </button>
           {/* Close */}
-          <button aria-label="close" id="close" onClick={() => {setShowNavMenu(true)}} className={` focus:outline-none focus:ring-2 ${closeButtonAdditionalClass}`}>
+          <button aria-label="close" id="close" onClick={() => {setHideNavMenu(true)}} className={` focus:outline-none focus:ring-2 ${closeButtonAdditionalClass}`}>
             <IconContext.Provider value={{ className:"w-6 h-6 text-white" }}>
               <HiXMark/>
             </IconContext.Provider>
@@ -205,22 +207,20 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
                     <p className="cursor-pointer text-xs leading-3 text-white ">{truncate(props.currentUser.email, 25)}</p>
                   </div>
                 </div>
-                <div className="relative flex justify-center items-center" data-te-dropdown-position="dropup">
+                <div className="relative flex justify-center items-center">
                   <button
                     className={`focus:outline-none `} 
                     type="button"
-                    id="dropdownMenuButton1u"
-                    data-te-dropdown-toggle-ref
                     onClick={() => setShowSettingMenu(!showSettingMenu)}
-                    aria-expanded="false">
+                  >
                     <span className="w-2">
-                      <IconContext.Provider value={{ className:`w-6 h-6 hover:text-white focus:text-white text-salesSecondary ${settingMenuAdditionalClasses}` }}>
+                      <IconContext.Provider value={{ className:`w-6 h-6 hover:text-white focus:text-white text-salesSecondary ${cogAdditionalClasses}` }}>
                           <HiOutlineCog8Tooth/>
                     </IconContext.Provider>
                     </span>
                   </button>
-                  <div className="absolute z-[1000] float-left p-3 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-clip-padding text-left text-base shadow-sm shadow-white bg-salesPrimary [&[data-te-dropdown-show]]:block flex justify-center items-center"                    aria-labelledby="dropdownMenuButton1u"
-                    data-te-dropdown-menu-ref
+                  <div className={`absolute z-[1000] float-left p-3 min-w-max list-none overflow-hidden rounded-lg border-none bg-clip-padding text-left text-base shadow-sm shadow-white bg-salesPrimary flex justify-center items-center ${cogMenuAdditionalClasses}`}
+
                   >
                     <button className="flex justify-start items-center space-x-6 hover:text-white focus:text-white text-salesSecondary hover:text-white rounded pl-3 pr-9 pb-0  w-100" onClick={() => {props.logOutFunc()}}>
                       <IconContext.Provider value={{ className:"w-6 h-6" }}>

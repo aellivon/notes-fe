@@ -3,7 +3,6 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
     extend: {
@@ -12,9 +11,9 @@ module.exports = {
         salesSecondary: "#9D9DD1"
       },
       spacing: {
-        '2xfull': "120%",
+        '2xfull': "200%",
       },
     },
   },
-  plugins: [require("tw-elements/dist/plugin")]
+  plugins: []
 }
