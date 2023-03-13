@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { IUserProfile } from '../../../core/domain/user-profile-interface.type'
 import truncate from '../../../core/services/shortcuts/truncate'
+import { useOnClickOutside } from '../../../core/services/shortcuts/useOnClickOutside'
 import { IconContext } from 'react-icons'
 import { 
   HiOutlineSquares2X2, HiOutlineBars3, HiXMark, HiOutlineCalendar, 
@@ -9,6 +10,7 @@ import {
 } from "react-icons/hi2";
 import { MdOutlineRecordVoiceOver } from "react-icons/md";
 import { SlScreenDesktop } from "react-icons/sl";
+import { useNavigate } from 'react-router-dom';
 
 
 export interface ISidebarViewModel {
@@ -19,6 +21,9 @@ export interface ISidebarViewModel {
 }
 
 export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
+  const navigate = useNavigate();
+  const ref = useRef();
+
 
   // Display only javascripts
   let hideNavMenu = props.navBarState
@@ -26,6 +31,11 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
   let [saleMenuGroupOpen, setsaleMenuGroupOpen] = useState(false)
   let [adminMenuGroupOpen, setadminMenuGroupOpen] = useState(false)
   let [showSettingMenu, setShowSettingMenu] = useState(false)
+
+  const [clickOutsideCallback] = useOnClickOutside(() => {
+    setShowSettingMenu(false)
+  })
+
 
   let saleMenuAdditionalClasses = ""
 
@@ -107,7 +117,7 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
             <p className="leading-6 text-2xl text-white">ビジタイズ</p>
           </div>
           <div className="mt-6 flex flex-col justify-start items-center pl-7 w-full border-salesSecondary border-b space-y-3 pb-5 ">
-            <button className="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none focus:text-white  text-salesSecondary hover:text-white  rounded ">
+            <button onClick={() => {navigate("/dashboard")}} className="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none focus:text-white  text-salesSecondary hover:text-white  rounded ">
               <IconContext.Provider value={{ className:"w-6 h-6 " }}>
                 <HiOutlineSquares2X2/>
               </IconContext.Provider>
@@ -193,7 +203,7 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
                 </IconContext.Provider>
                 <p className="leading-4">グループ</p>
               </button>
-              <button className="flex justify-start items-center space-x-6 hover:text-white focus:text-white text-salesSecondary hover:text-white rounded px-3 py-2  w-full md:w-52">
+              <button onClick={() => {navigate("/members")}} className="flex justify-start items-center space-x-6 hover:text-white focus:text-white text-salesSecondary hover:text-white rounded px-3 py-2  w-full md:w-52">
                 <IconContext.Provider value={{ className:"w-6 h-6 " }}>
                   <HiOutlineUser/>
                 </IconContext.Provider>
@@ -226,7 +236,7 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
                       </IconContext.Provider>
                       </span>
                     </button>
-                    <div className={`absolute z-[1000] float-left p-3 min-w-max list-none overflow-hidden rounded-lg border-none bg-clip-padding text-left text-base shadow-sm shadow-white bg-salesPrimary flex justify-center items-center ${cogMenuAdditionalClasses}`}>
+                    <div ref={clickOutsideCallback} className={`absolute z-[1000] float-left p-3 min-w-max list-none overflow-hidden rounded-lg border-none bg-clip-padding text-left text-base shadow-sm shadow-white bg-salesPrimary flex justify-center items-center ${cogMenuAdditionalClasses}`}>
                       <button className="flex justify-start items-center space-x-6 hover:text-white focus:text-white text-salesSecondary hover:text-white rounded pl-3 pr-9 pb-0  w-100" onClick={() => {props.logOutFunc()}}>
                         <IconContext.Provider value={{ className:"w-6 h-6" }}>
                           <HiArrowLeftOnRectangle/>

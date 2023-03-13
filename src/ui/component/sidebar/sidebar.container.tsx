@@ -1,12 +1,11 @@
-import { useState } from 'react'
 import { SidebarView } from './sidebar.view'
-import classes from './sidebar.module.css'
 import { useAppSelector } from '../../../core/services/store/hooks'
 import SidebarController from './sidebar.controller'
 
 
 export interface ISidebarContainerViewModel {
   currentPage: string
+  currentPageTitle: string
 }
 
 export const SidebarContainer: React.FC<ISidebarContainerViewModel> = (props) => {

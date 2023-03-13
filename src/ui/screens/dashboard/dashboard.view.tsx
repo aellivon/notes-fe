@@ -1,12 +1,27 @@
 import {
     SidebarContainer
 } from '../../component/sidebar/sidebar.container'
+import { ContentHeaderContainer } from '../../component/contentHeader/contentHeader.container';
 import { useAppSelector } from '../../../core/services/store/hooks'
+
+import { ITabItems } from '../../../core/domain/active-tab-component.entity'
+import { MdOutlineRecordVoiceOver } from "react-icons/md";
 
 interface DashboardProps {
 }
   
 export const DashboardView:React.FC<DashboardProps> = (props) => {
+
+    const currentPage = "dashboard"
+    const currentPageTitle = "ダッシュボード"
+
+    const tabItems: ITabItems[] = [
+        {
+            name: currentPageTitle,
+            active: true,
+            to: "/dashboard"
+        },
+    ]
 
     const hiddenNavbar = useAppSelector(state => state.appUIState.hiddenNavbar);
 
@@ -22,12 +37,19 @@ export const DashboardView:React.FC<DashboardProps> = (props) => {
     return (
         <>
             <SidebarContainer
-                currentPage="dashboard"
+                currentPage={currentPage}
+                currentPageTitle={currentPageTitle}
             />
-            <div className={`flex flex-grow transition-width ease-in-out duration-500 ${contentClasses}`}>
-                Test
+            <div className={`transition-width ease-in-out duration-500 ${contentClasses}`}>
+                <ContentHeaderContainer
+                    currentPage={currentPage}
+                    currentPageTitle={currentPageTitle}
+                    tabItems={tabItems}
+                />
+                <span>
+                    Dashboard Content
+                </span>
             </div>
         </>
-
     );
 }
