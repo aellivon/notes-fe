@@ -18,6 +18,7 @@ export interface ISidebarViewModel {
   logOutFunc: () => void,
   setNavBarFunc: (state: boolean) => void
   navBarState: boolean
+  highLight: string
 }
 
 export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
@@ -117,7 +118,7 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
             <p className="leading-6 text-2xl text-white">ビジタイズ</p>
           </div>
           <div className="mt-6 flex flex-col justify-start items-center pl-7 w-full border-salesSecondary border-b space-y-3 pb-5 ">
-            <button onClick={() => {navigate("/dashboard")}} className="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none focus:text-white  text-salesSecondary hover:text-white  rounded ">
+            <button onClick={() => {navigate("/dashboard")}} className={`flex jusitfy-start items-center space-x-6 w-full  focus:outline-none focus:text-white hover:text-white rounded ` + (props.highLight === "dashboard" ? 'text-white' : 'text-salesSecondary')}>
               <IconContext.Provider value={{ className:"w-6 h-6 " }}>
                 <HiOutlineSquares2X2/>
               </IconContext.Provider>

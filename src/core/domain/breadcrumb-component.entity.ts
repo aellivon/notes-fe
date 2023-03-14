@@ -1,6 +1,4 @@
-export interface ITabItems {
+export interface IBreadCrumbItems {
     name: string
-    active: boolean
     to: string
-    icon?: JSX.Element
 }

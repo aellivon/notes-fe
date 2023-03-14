@@ -6,6 +6,7 @@ import SidebarController from './sidebar.controller'
 export interface ISidebarContainerViewModel {
   currentPage: string
   currentPageTitle: string
+  highLight: string
 }
 
 export const SidebarContainer: React.FC<ISidebarContainerViewModel> = (props) => {
@@ -28,6 +29,7 @@ export const SidebarContainer: React.FC<ISidebarContainerViewModel> = (props) =>
       logOutFunc={logout}
       setNavBarFunc={setNavBar}
       navBarState={navBarState}
+      highLight={props.highLight}
     />
   )
 }

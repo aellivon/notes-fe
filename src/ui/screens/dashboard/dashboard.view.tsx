@@ -5,6 +5,7 @@ import { ContentHeaderContainer } from '../../component/contentHeader/contentHea
 import { useAppSelector } from '../../../core/services/store/hooks'
 
 import { ITabItems } from '../../../core/domain/active-tab-component.entity'
+import { IBreadCrumbItems } from '../../../core/domain/breadcrumb-component.entity';
 import { MdOutlineRecordVoiceOver } from "react-icons/md";
 
 interface DashboardProps {
@@ -14,6 +15,14 @@ export const DashboardView:React.FC<DashboardProps> = (props) => {
 
     const currentPage = "dashboard"
     const currentPageTitle = "ダッシュボード"
+    const highLight = "dashboard"
+
+    const breadCrumbs: IBreadCrumbItems[] = [
+        {
+            name: currentPageTitle,
+            to: "/dashboard"
+        }
+    ]
 
     const tabItems: ITabItems[] = [
         {
@@ -39,12 +48,14 @@ export const DashboardView:React.FC<DashboardProps> = (props) => {
             <SidebarContainer
                 currentPage={currentPage}
                 currentPageTitle={currentPageTitle}
+                highLight={highLight}
             />
             <div className={`transition-width ease-in-out duration-500 ${contentClasses}`}>
                 <ContentHeaderContainer
                     currentPage={currentPage}
                     currentPageTitle={currentPageTitle}
                     tabItems={tabItems}
+                    breadCrumbs={breadCrumbs}
                 />
                 <span>
                     Dashboard Content

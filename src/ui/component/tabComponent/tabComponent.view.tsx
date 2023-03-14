@@ -18,7 +18,7 @@ export const TabComponentView: React.FC<ITabComponentViewModel> = (props) => {
             if(
               element.active === true
             ) {
-              return <li className="text-center w-full justify-center sm:w-auto pb-0 mb-0">
+              return <li className="text-center w-full justify-center sm:w-auto pb-0 mb-0" key={i}>
                 <Link
                   to={element.to}
                   className={`flex mt-2 block px-7 md:px-7 pt-4 pb-3 text-xs font-medium uppercase leading-tight border-b-2 hover:bg-neutral-100 border-b-blue-500 text-blue-500`}
@@ -29,7 +29,7 @@ export const TabComponentView: React.FC<ITabComponentViewModel> = (props) => {
                 </Link>
               </li>
             } else {
-              return <li className="text-center w-full justify-center sm:w-auto">
+              return <li className="text-center w-full justify-center sm:w-auto" key={i}>
                 <Link
                   to={element.to}
                   className={`flex mt-2 block px-7 md:px-7 pt-4 pb-3 text-xs font-medium uppercase leading-tight hover:border-b-2 hover:border-b-blue-300 hover:text-blue-300 text-neutral-500 hover:bg-neutral-100`}
