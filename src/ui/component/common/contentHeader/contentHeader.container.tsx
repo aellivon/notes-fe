@@ -1,9 +1,8 @@
 import { ContentHeaderView } from './contentHeader.view'
-import { useAppSelector } from '../../../core/services/store/hooks'
-import ContentHeaderController from './contentHeader.controller'
+import { useAppSelector } from '../../../../core/services/store/hooks'
 
-import { ITabItems } from '../../../core/domain/active-tab-component.entity'
-import { IBreadCrumbItems } from '../../../core/domain/breadcrumb-component.entity'
+import { ITabItems } from '../../../../core/domain/active-tab-component.entity'
+import { IBreadCrumbItems } from '../../../../core/domain/breadcrumb-component.entity'
 
 export interface IContentHeaderContainerViewModel {
   currentPage: string
@@ -14,7 +13,6 @@ export interface IContentHeaderContainerViewModel {
 
 export const ContentHeaderContainer: React.FC<IContentHeaderContainerViewModel> = (props) => {
   const currentUser = useAppSelector(state => state.authState.user);
-  const controller = new ContentHeaderController()
 
   return (
     <>

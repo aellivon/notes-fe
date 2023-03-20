@@ -1,5 +1,5 @@
 import { SidebarView } from './sidebar.view'
-import { useAppSelector } from '../../../core/services/store/hooks'
+import { useAppSelector } from '../../../../core/services/store/hooks'
 import SidebarController from './sidebar.controller'
 
 
@@ -7,6 +7,7 @@ export interface ISidebarContainerViewModel {
   currentPage: string
   currentPageTitle: string
   highLight: string
+  adminGroupOpen?: boolean
 }
 
 export const SidebarContainer: React.FC<ISidebarContainerViewModel> = (props) => {
@@ -30,6 +31,7 @@ export const SidebarContainer: React.FC<ISidebarContainerViewModel> = (props) =>
       setNavBarFunc={setNavBar}
       navBarState={navBarState}
       highLight={props.highLight}
+      adminGroupOpen={props.adminGroupOpen}
     />
   )
 }

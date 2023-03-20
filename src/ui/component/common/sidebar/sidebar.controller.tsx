@@ -1,5 +1,5 @@
-import LogoutCase from '../../../core/usecases/logout/logout.case'
-import SetNavBarCase from '../../../core/usecases/setNavbarStatus/navbar.case'
+import LogoutCase from '../../../../core/usecases/logout/logout.case'
+import SetNavBarCase from '../../../../core/usecases/setNavbarStatus/navbar.case'
 
 export default class SidebarController {
   private readonly logOutUseCase: LogoutCase

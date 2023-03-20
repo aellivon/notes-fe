@@ -1,9 +1,9 @@
-import { IUserProfile } from '../../../core/domain/user-profile-interface.type'
+import { IUserProfile } from '../../../../core/domain/users/auth/user-profile-auth.entity';
 import { TabComponentContainer } from '../tabComponent/tabComponent.container'
 import { Link } from "react-router-dom";
 
-import { ITabItems } from '../../../core/domain/active-tab-component.entity'
-import { IBreadCrumbItems } from '../../../core/domain/breadcrumb-component.entity'
+import { ITabItems } from '../../../../core/domain/active-tab-component.entity'
+import { IBreadCrumbItems } from '../../../../core/domain/breadcrumb-component.entity'
 
 export interface IContentHeaderViewModel {
   currentUser: IUserProfile
@@ -15,7 +15,7 @@ export interface IContentHeaderViewModel {
 export const ContentHeaderView: React.FC<IContentHeaderViewModel> = (props) => {
 
   return (
-    <div className='bg-white border-b-2 border-solid pt-8 lg:h-28 w-full'>
+    <div className='bg-white border-b-2 border-solid lg:pt-8 pt-4 lg:h-28 w-full'>
       <div className="content-center pl-10 w-full">
         {
           props.breadCrumbs.map((element, i) => {

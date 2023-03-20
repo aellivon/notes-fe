@@ -2,10 +2,6 @@
 import { store } from '../../services/store/store'
 import { clearUser } from '../../services/store/reducers/auth.reducer'
 export default class LoginCase {
-  constructor (
-
-  ) {
-  }
 
   async execute (): Promise<any> {
     try {

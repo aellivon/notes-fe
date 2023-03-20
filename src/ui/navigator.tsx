@@ -4,10 +4,9 @@ import {
     Route,
     Navigate
   } from 'react-router-dom'
-import { useEffect, useMemo } from 'react'
 import LoginFormContainer from './screens/login/login.container'
-import AuthController from './screens/login/login.controller'
 import DashboardContainer from './screens/dashboard/dashboard.container'
+import MemberContainer from './screens/members/members.container'
 import { useAppSelector } from '../core/services/store/hooks'
   
 export const Navigator = () => {
@@ -36,6 +35,7 @@ export const Navigator = () => {
       <Routes>
         <Route path='/' element={<AlreadyLoggedInRoute element={<LoginFormContainer />} />} />
         <Route path='/dashboard' element={<PrivateRoute element={<DashboardContainer />} />} />
+        <Route path='/members' element={<PrivateRoute element={<MemberContainer />} />} />
         <Route path="*" element={<Navigate to="/"/>} />
       </Routes>
     </BrowserRouter>

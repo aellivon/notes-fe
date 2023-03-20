@@ -1,5 +1,5 @@
 import AuthApiGateway from '../../services/api/gateways/login.gateway'
-import UserEntity from '../../domain/user-profile-auth.entity'
+import UserEntity from '../../domain/users/auth/user-profile-auth.entity'
 import { ILoginFormDataModel } from '../../domain/login-form.entity'
 // import { GroupListEntity } from '../../../common/entities/groups.entity'
 import { store } from '../../services/store/store'
@@ -14,7 +14,6 @@ export default class LoginCase {
     try {
       const userInfoModel = await this.authApiGateway.login(loginForm)
       const user = new UserEntity()
-      console.log(userInfoModel)
       user.setFromApiModel(userInfoModel)
       store.dispatch(setUser(user.getCurrentValues()))
 

@@ -17,10 +17,11 @@ export interface ApiDataResponseModel<T> {
 }
 
 export interface IPagedAPIViewModel<T> {
-  range: string
+  previous: boolean
+  next: boolean
+  count: number
+  current_page_number: number
   total_pages: number
-  has_previous: boolean
-  has_next: boolean
   results: T[]
 }
 
@@ -30,23 +31,26 @@ export interface IGroupAPIModel extends IBaseAPIModel {
   is_active?: boolean
 }
 
-
-export interface IUserProfileAPIModel extends IBaseAPIModel {
-  email?: string
-  first_name?: string
-  last_name?: string
-  display_name?: string
+export interface IUserModel extends IBaseAPIModel {
+  email: string
+  first_name: string
+  last_name: string
+  display_name: string
+  department?: string
+  furigana_fname?: string
+  furigana_lname?: string
+  position?: string
+  avatar_url?: string
+  date_joined?: string
+  is_active?: boolean
 }
+
+export interface IListUserModel extends IPagedAPIViewModel<IUserModel> {}
 
 export interface ILoginResponseDataModel{
-  user: IUserProfileAPIModel
+  user: IUserModel
   access_token: string
   refresh_token: string
-}
-
-export interface ILoginResponseModel {
-  status: string
-  data: ILoginResponseDataModel
 }
 
 export interface IErrorResponseModel {

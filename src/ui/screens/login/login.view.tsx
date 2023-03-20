@@ -20,7 +20,7 @@ export const LoginScreen:React.FC<ILoginFormViewModel> = (props) => {
 
   return (
     <div className="flex flex-wrap h-screen">
-      <div className="w-full sm:w-8/12 md:w-5/12 px-4">
+      <div className="w-full md:w-5/12 px-4">
         <div className="w-full">
           <div className="md:p-12 md:mx-6">
             <div className="text-center">
@@ -67,7 +67,7 @@ export const LoginScreen:React.FC<ILoginFormViewModel> = (props) => {
           </div>
         </div>
       </div>
-      <div className="w-0 sm:w-4/12 md:w-7/12 bg-[url('https://images.unsplash.com/photo-1675151638871-81d2e9acf61c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3NzA0OTYzNA&ixlib=rb-4.0.3&q=80&w=1080')] bg-no-repeat bg-cover bg-center"></div>
+      <div className="w-0 md:w-7/12 bg-[url('https://images.unsplash.com/photo-1675151638871-81d2e9acf61c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3NzA0OTYzNA&ixlib=rb-4.0.3&q=80&w=1080')] bg-no-repeat bg-cover bg-center"></div>
     </div>
   );
 }

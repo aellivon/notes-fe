@@ -1,7 +1,7 @@
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import UserProfileAuthEntity from "../../../domain/user-profile-auth.entity";
-import { IUserProfile } from "../../../domain/user-profile-interface.type";
+import UserProfileAuthEntity from "../../../domain/users/auth/user-profile-auth.entity";
+import { IUserProfile } from "../../../domain/users/auth/user-profile-auth.entity";
 
 
 interface IAuthState {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { ITabItems } from '../../../core/domain/active-tab-component.entity'
+import { ITabItems } from '../../../../core/domain/active-tab-component.entity'
 
 export interface ITabComponentViewModel {
   items: ITabItems[]

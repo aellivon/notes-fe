@@ -2,10 +2,6 @@
 import { store } from '../../services/store/store'
 import { setNavbar } from '../../services/store/reducers/appState.reducer'
 export default class SetNavBarCase {
-  constructor (
-
-  ) {
-  }
 
   async execute (state: boolean): Promise<any> {
     try {

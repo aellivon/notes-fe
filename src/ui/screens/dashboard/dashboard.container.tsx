@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
-import DashboardController from './dashboard.controller'
+import React from 'react'
 import { DashboardView } from './dashboard.view'
 
 const DashboardContainer: React.FC = () => {
   return (
-    <div className='bg-gray-100 h-screen'>
+    <div className='h-screen'>
       <DashboardView/>
     </div>        
   )

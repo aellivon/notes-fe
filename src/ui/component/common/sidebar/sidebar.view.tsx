@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react'
-import { IUserProfile } from '../../../core/domain/user-profile-interface.type'
-import truncate from '../../../core/services/shortcuts/truncate'
-import { useOnClickOutside } from '../../../core/services/shortcuts/useOnClickOutside'
+import { useState } from 'react'
+import { IUserProfile } from '../../../../core/domain/users/auth/user-profile-auth.entity'
+import truncate from '../../../../core/services/shortcuts/truncate'
+import { useOnClickOutside } from '../../../../core/services/shortcuts/useOnClickOutside'
 import { IconContext } from 'react-icons'
 import { 
   HiOutlineSquares2X2, HiOutlineBars3, HiXMark, HiOutlineCalendar, 
@@ -19,18 +19,17 @@ export interface ISidebarViewModel {
   setNavBarFunc: (state: boolean) => void
   navBarState: boolean
   highLight: string
+  adminGroupOpen?: boolean
 }
 
 export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
   const navigate = useNavigate();
-  const ref = useRef();
-
 
   // Display only javascripts
   let hideNavMenu = props.navBarState
 
   let [saleMenuGroupOpen, setsaleMenuGroupOpen] = useState(false)
-  let [adminMenuGroupOpen, setadminMenuGroupOpen] = useState(false)
+  let [adminMenuGroupOpen, setadminMenuGroupOpen] = useState(props.adminGroupOpen ? props.adminGroupOpen : false)
   let [showSettingMenu, setShowSettingMenu] = useState(false)
 
   const [clickOutsideCallback] = useOnClickOutside(() => {
@@ -59,17 +58,13 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
   let mainClasses = ""
   let closeButtonAdditionalClass = ""
   let openButtonAdditionalClass = ""
-  let contentClasses = ""
 
   if (hideNavMenu) {
-
-    contentClasses = "ml-0 xl:ml-64 mt-20 xl:mt-0"
     closeButtonAdditionalClass = "hidden"
     mainClasses = "absolute w-64 md:w-64 xl:w-64 xl:translate-x-0 z-10 -translate-x-full"
   } else {
     mainClasses = "absolute w-full md:w-64 xl:w-64 z-10 translate-x-0"
     openButtonAdditionalClass = "hidden"
-    contentClasses = "ml-0 md:ml-64 mt-20 xl:mt-0"
   }
 
   let cogAdditionalClasses = ""
@@ -180,7 +175,7 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
           </div>
           <div className="flex flex-col justify-start items-center   px-6 border-salesSecondary w-full text-salesSecondary hover:text-white">
             <button onClick={() => {setadminMenuGroupOpen(!adminMenuGroupOpen)}} className="focus:outline-none focus:text-white text-left flex justify-between items-center w-full py-5 space-x-14  ">
-              <p className="text-md leading-5 uppercase">管理</p>
+              <p className={`text-md leading-5 uppercase ` + (props.highLight === "members" ? 'text-white' : 'text-salesSecondary')}>管理</p>
               {
                 !adminMenuGroupOpen ?  
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -204,7 +199,8 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
                 </IconContext.Provider>
                 <p className="leading-4">グループ</p>
               </button>
-              <button onClick={() => {navigate("/members")}} className="flex justify-start items-center space-x-6 hover:text-white focus:text-white text-salesSecondary hover:text-white rounded px-3 py-2  w-full md:w-52">
+              <button onClick={() => {navigate("/members")}}
+                className={`flex jusitfy-start items-center space-x-6 w-full  focus:outline-none focus:text-white hover:text-white rounded px-3 py-2  w-full md:w-52 ` + (props.highLight === "members" ? 'text-white' : 'text-salesSecondary')}>
                 <IconContext.Provider value={{ className:"w-6 h-6 " }}>
                   <HiOutlineUser/>
                 </IconContext.Provider>
@@ -218,7 +214,7 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
                 <div className=" flex justify-between items-center w-full">
                   <div className="flex justify-center items-center  space-x-2">
                     <div>
-                      <img className="rounded-full h-10	w-10" src="https://www.w3schools.com/howto/img_avatar.png" alt="avatar" />
+                      <img className="rounded-full h-10	w-10" src={props.currentUser.avatarURL} alt="avatar" />
                     </div>
                     <div className="flex justify-start flex-col items-start">
                       <p className="cursor-pointer text-md leading-5 text-white">{truncate(props.currentUser.displayName, 12)}</p>

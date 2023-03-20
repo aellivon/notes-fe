@@ -2,9 +2,7 @@ import { ApiResponse, ApisauceInstance, create } from 'apisauce'
 import { ApiConfig, API_CONFIG } from './api.config'
 import { getGeneralApiProblem } from './api-problem'
 import { IErrorResponseModel } from '../../domain/api/api.types'
-// import { removeToken } from '../../auth/reducers/auth.slice'
 import { toast } from 'react-toastify'
-// import { setAppLoading } from '../reducers/app.slice'
 
 export interface IApi {
   apiSauce: ApisauceInstance

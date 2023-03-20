@@ -1,18 +1,21 @@
-import { ILoginResponseDataModel } from './api/api.types'
+import UserBaseEntity from '../user-base.entity'
 
-interface IBaseEntity {
-  setFromApiModel: (model: any) => void
+import { ILoginResponseDataModel } from '../../api/api.types'
+
+export interface IUserProfile {
+  id: number
+  email?: string
+  firstName?: string
+  lastName?: string
+  displayName?: string
+  accessToken?: string
+  refreshToken?: string
+  avatarURL?: string
 }
 
-
-export default class UserProfileAuthEntity implements IBaseEntity {
-  id: number = -1
-  email?: string = ''
-  firstName?: string = ''
-  lastName?: string = ''
+export default class UserProfileAuthEntity extends UserBaseEntity {
   accessToken?: string = ''
   refreshToken?: string = ''
-  displayName?: string = ''
 
   setFromApiModel(model: ILoginResponseDataModel): void {
     this.id = model.user.id
@@ -22,9 +25,10 @@ export default class UserProfileAuthEntity implements IBaseEntity {
     this.lastName = model.user.last_name
     this.accessToken = model.access_token
     this.refreshToken = model.refresh_token
+    this.avatarURL = model.user.avatar_url
   }
 
-  getCurrentValues() {
+  getCurrentValues(): IUserProfile {
     return {
       id: this.id,
       email: this.email,
@@ -32,7 +36,8 @@ export default class UserProfileAuthEntity implements IBaseEntity {
       lastName: this.lastName,
       accessToken: this.accessToken,
       refreshToken: this.refreshToken,
-      displayName: this.displayName
+      displayName: this.displayName,
+      avatarURL: this.avatarURL,
     }
   }
 
@@ -42,3 +47,4 @@ export default class UserProfileAuthEntity implements IBaseEntity {
     return user
   }
 }
+

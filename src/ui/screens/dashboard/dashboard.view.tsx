@@ -1,12 +1,11 @@
 import {
     SidebarContainer
-} from '../../component/sidebar/sidebar.container'
-import { ContentHeaderContainer } from '../../component/contentHeader/contentHeader.container';
+} from '../..//component/common/sidebar/sidebar.container'
+import { ContentHeaderContainer } from '../../component/common/contentHeader/contentHeader.container';
 import { useAppSelector } from '../../../core/services/store/hooks'
 
 import { ITabItems } from '../../../core/domain/active-tab-component.entity'
 import { IBreadCrumbItems } from '../../../core/domain/breadcrumb-component.entity';
-import { MdOutlineRecordVoiceOver } from "react-icons/md";
 
 interface DashboardProps {
 }
@@ -42,7 +41,6 @@ export const DashboardView:React.FC<DashboardProps> = (props) => {
       contentClasses = "ml-0 md:ml-64 pt-20 xl:pt-0"
     }
 
-    const initialValues: any = { username: '', password: '' }
     return (
         <>
             <SidebarContainer
