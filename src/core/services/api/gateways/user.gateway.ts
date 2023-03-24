@@ -21,7 +21,7 @@ export default class UserApiGateway extends Api {
         let params = {
             page: pageNumber,
             search: queryString,
-            department: department,
+            division: department,
             type: type,
             status: status
         }

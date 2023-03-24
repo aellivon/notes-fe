@@ -11,6 +11,7 @@ import { HiMagnifyingGlass } from 'react-icons/hi2';
 import { IconContext } from 'react-icons'
 
 import { IPagedUserListInterface } from '../../../core/domain/users/user.entity';
+import { IPagedGroupBaseEntity } from '../../../core/domain/groups/group-base.entity';
 import MemberCardContainer from '../../component/members/memberCard/memberCard.container';
 
 import { PaginationContainer } from '../../component/common/pagination/pagination.container';
@@ -21,6 +22,8 @@ interface MemberProps {
     onNextClickEvent: (url: string) => void
     onPreviousClickEvent: (url: string) => void
     onSearchEvent: () => void
+    selectedDepartment: string
+    departments: IPagedGroupBaseEntity
     setqueryString: React.Dispatch<React.SetStateAction<string>>
     setDepartment: React.Dispatch<React.SetStateAction<string>>
     setType: React.Dispatch<React.SetStateAction<string>>
@@ -64,7 +67,7 @@ export const MemberView:React.FC<MemberProps> = (props) => {
                 currentPage={currentPage}
                 currentPageTitle={currentPageTitle}
                 highLight={highLight}
-                adminGroupOpen={true}
+                adminGroupOpen={true}   
             />
             <div className={`transition-width ease-in-out duration-500 ${contentClasses}`}>
                 <ContentHeaderContainer
@@ -78,9 +81,12 @@ export const MemberView:React.FC<MemberProps> = (props) => {
                         <div className='flex items-center bg-white my-2 mx-2 px-4 shadow-lg h-20'>
                             <input type="text" id="queryString" onChange={(e) => props.setqueryString(e.target.value)} className="mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Keywords" required />
                             <select defaultValue="all" id="department" onChange={(e) => props.setDepartment(e.target.value)} className="mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="all">All</option>   
-                                <option value="sales">Sales</option>   
-                                <option value="skilled">Skilled</option>
+                                <option value="*">All</option>   
+                                {
+                                    props.departments.results.map((department) => {
+                                        return <option key={department.id} value={department.id}>{department.name}</option>
+                                    })
+                                }
                             </select>
                             <select defaultValue="" id="type" onChange={(e) => props.setType(e.target.value)} className="mx-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value="*">All</option>

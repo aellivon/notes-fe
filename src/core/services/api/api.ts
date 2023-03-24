@@ -3,6 +3,7 @@ import { ApiConfig, API_CONFIG } from './api.config'
 import { getGeneralApiProblem } from './api-problem'
 import { IErrorResponseModel } from '../../domain/api/api.types'
 import { toast } from 'react-toastify'
+import { store } from '../store/store'
 
 export interface IApi {
   apiSauce: ApisauceInstance
@@ -29,7 +30,7 @@ export class Api implements IApi {
         Accept: 'application/json'
       }
     })
-    const authToken = ''
+    const authToken = store.getState().authState.user.accessToken
     if (authToken !== '') {
       this.apiSauce.addRequestTransform(request => {
         console.log(`Bearer ${authToken}`)

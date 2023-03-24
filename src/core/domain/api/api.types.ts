@@ -25,9 +25,8 @@ export interface IPagedAPIViewModel<T> {
   results: T[]
 }
 
-export interface IGroupAPIModel extends IBaseAPIModel {
+export interface IGroupBaseModel extends IBaseAPIModel {
   name: string
-  description?: string
   is_active?: boolean
 }
 
@@ -46,6 +45,8 @@ export interface IUserModel extends IBaseAPIModel {
 }
 
 export interface IListUserModel extends IPagedAPIViewModel<IUserModel> {}
+
+export interface IListGroupModel extends IPagedAPIViewModel<IGroupBaseModel> {}
 
 export interface ILoginResponseDataModel{
   user: IUserModel

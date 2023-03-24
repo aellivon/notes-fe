@@ -25,4 +25,3 @@ export interface IPagedListEntity {
     count: number
     current_page_number: number
 }
-  
