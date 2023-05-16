@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import { store } from './core/services/store/store';
+import { store } from './core/presentation/presenters/store/store';
 import { App } from './app';
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
