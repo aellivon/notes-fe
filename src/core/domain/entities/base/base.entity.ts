@@ -1,5 +1,5 @@
 export interface IBaseEntity {
-  setFromApiModel: (model: any) => void
+  // setFromApiModel: (model: any) => void
 }
 
 export interface IBaseDataModel {

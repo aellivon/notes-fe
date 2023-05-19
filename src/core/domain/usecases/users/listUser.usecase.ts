@@ -13,7 +13,7 @@ interface Params {
 
 export default class ListUsersUseCase {
   constructor (
-    private readonly userGateway: UserApiGateway,
+    private readonly userGateway: UserApiGateway
   ) {
   }
   async execute ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<any> {

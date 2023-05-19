@@ -4,18 +4,18 @@ import { IUserModel } from '../../../data/gateways/api/api.types'
 
 export interface IBaseUserProfile {
   id: number
-  email?: string
-  firstName?: string
-  lastName?: string
-  avatarURL?: string
-  displayName?: string
+  email: string
+  firstName: string
+  lastName: string
+  avatarURL: string
+  displayName: string
 }
 
 export default class UserBaseEntity implements IBaseEntity {
   id: number = -1
   email: string = ''
   firstName: string = ''
-  avatarURL?: string = ''
+  avatarURL: string = ''
   lastName: string = ''
   displayName: string = ''
 
@@ -34,7 +34,8 @@ export default class UserBaseEntity implements IBaseEntity {
       email: this.email,
       firstName: this.firstName,
       lastName: this.lastName,
-      displayName: this.displayName
+      displayName: this.displayName,
+      avatarURL: this.avatarURL
     }
   }
 

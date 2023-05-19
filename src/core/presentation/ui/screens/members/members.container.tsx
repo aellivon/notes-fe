@@ -17,7 +17,7 @@ const MemberContainer: React.FC = () => {
   useEffect(() => {
     const controller = new MemberController()
     const handleInitalized = async () => {
-      const locUsers = await controller.list_users({})
+      const locUsers = await controller.listUsers({})
       const dep = await controller.list_departments({})
       setPagedUsers(locUsers.data)
       setDepartments(dep.data)
@@ -37,7 +37,7 @@ const MemberContainer: React.FC = () => {
   const requestPaginaton = async ({pageNumber = 1, url = null}: Params) => {
     const controller = new MemberController()
     const department = selectedDepartment
-    const locUsers = await controller.list_users({pageNumber, queryString, department, type, status, url})
+    const locUsers = await controller.listUsers({pageNumber, queryString, department, type, status, url})
     setPagedUsers({...locUsers.data})
   }
 

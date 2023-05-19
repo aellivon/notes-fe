@@ -23,7 +23,7 @@ export default class MemberController {
     this.listGroupUseCase = new ListGroupUseCase(new GroupApiGateway())
   }
 
-  async list_users ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<any> {
+  async listUsers ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<any> {
     const result = await this.listUsersUseCase.execute({pageNumber, url, queryString, department, type, status})
     return result
   }

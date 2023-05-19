@@ -14,6 +14,7 @@ interface Params {
 }
 
 export default class UserApiGateway extends Api {
+
     async listUsers ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<IListUserModel> {
         if(url !== null) {
             return this.get<IListUserModel>(url, {})

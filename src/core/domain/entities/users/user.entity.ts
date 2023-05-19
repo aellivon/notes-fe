@@ -1,14 +1,13 @@
 import UserBaseEntity, { IBaseUserProfile } from './user-base.entity'
 
-import { IUserModel, IListUserModel } from '../../../data/gateways/api/api.types'
+import { IUserModel, IListUserModel, } from '../../../data/gateways/api/api.types'
 import PagedListEntity from '../base/base.paged.entity'
-
 
 
 export interface IUserProfile extends IBaseUserProfile {
   furiganaLastName?: string
   furiganaFirstName?: string
-  avatarURL?: string
+  avatarURL: string
   position?: string
   department?: string
 }

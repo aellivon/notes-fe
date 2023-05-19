@@ -1,7 +1,7 @@
 // Use this import if you want to use "env.js" file
 // const { API_URL } = require("../../config/env")
 // Or just specify it directly like this:
-import { API_URL, BASE_URL } from "../../../../config"
+import { API_URL, BASE_URL } from "../../../config"
 
 /**
  * The options used to configure the API.
@@ -9,6 +9,8 @@ import { API_URL, BASE_URL } from "../../../../config"
 export interface ApiConfig {
   url: string
 }
+
+export const REFRESH_URL: String = "/user/auth/token/refresh/"
 
 export const DEFAULT_API_CONFIG: ApiConfig = {
   url: BASE_URL

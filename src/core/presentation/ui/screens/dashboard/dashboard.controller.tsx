@@ -1,10 +1,12 @@
-import LogoutCase from '../../../../domain/usecases/logout/logout.case'
+import AuthRepository from '../../../../data/gateways/api/services/auth.repositories'
+import LogOutCase from '../../../../domain/usecases/logout/logout.case'
+
 
 export default class DashboardController {
-  private readonly logOutUseCase: LogoutCase
+  private readonly logOutUseCase: LogOutCase
 
   constructor () {
-    this.logOutUseCase = new LogoutCase()
+    this.logOutUseCase = new LogOutCase(new AuthRepository())
   }
 
   async logout (): Promise<any> {

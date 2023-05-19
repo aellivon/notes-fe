@@ -1,4 +1,4 @@
-import { IUserProfile } from '../../../../../domain/entities/users/auth/user-profile-auth.entity';
+import { IAuthenticatedUserProfile } from '../../../../../domain/entities/users/auth/user-profile-auth.entity';
 import { TabComponentContainer } from '../tabComponent/tabComponent.container'
 import { Link } from "react-router-dom";
 
@@ -6,7 +6,7 @@ import { ITabItems } from '../../../../../domain/entities/active-tab-component.e
 import { IBreadCrumbItems } from '../../../../../domain/entities/breadcrumb-component.entity'
 
 export interface IContentHeaderViewModel {
-  currentUser: IUserProfile
+  currentUser: IAuthenticatedUserProfile
   currentPageTitle: string
   tabItems: ITabItems[]
   breadCrumbs: IBreadCrumbItems[]

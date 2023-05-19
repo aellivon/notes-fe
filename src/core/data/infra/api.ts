@@ -1,9 +1,15 @@
 import { ApiResponse, ApisauceInstance, create } from 'apisauce'
-import { ApiConfig, API_CONFIG } from '../gateways/api/api.config'
-import { getGeneralApiProblem } from '../gateways/api/api-problem'
+import { ApiConfig, API_CONFIG, REFRESH_URL } from './api.config'
+import { getGeneralApiProblem } from './api-problem'
 import { IErrorResponseModel } from '../gateways/api/api.types'
 import { toast } from 'react-toastify'
 import { store } from '../../presentation/presenters/store/store'
+import RefreshAPIGateway from '../gateways/api/services/refresh.gateway'
+
+import {
+  IRefreshParamModel,
+  IRefreshResponseDataModel
+} from '../gateways/api/api.types'
 
 export interface IApi {
   apiSauce: ApisauceInstance
@@ -22,6 +28,7 @@ export interface ApiDataResponseModel<TApiResponseModel> {
 export class Api implements IApi {
   apiSauce: ApisauceInstance
   config: ApiConfig
+  onHoldRequest: ApiResponse<unknown, unknown> | null
 
   constructor() {
     this.config = API_CONFIG
@@ -32,18 +39,32 @@ export class Api implements IApi {
       }
     })
 
+    this.onHoldRequest = null
+
     const authToken = store.getState().authState.user.accessToken
 
     if (authToken !== '') {
       this.apiSauce.addRequestTransform(request => {
-        console.log(`Bearer ${authToken}`)
         request.headers.Authorization = `Bearer ${authToken}`
       })
+      this.apiSauce.addResponseTransform(async (response: ApiResponse<unknown, unknown>) => {
+
+        if (response.status && response.status == 401 && this.onHoldRequest === null) {
+          let form: IRefreshParamModel = {
+            refresh: store.getState().authState.user.refreshToken
+          }
+          this.onHoldRequest = response
+          const res = await this.post<IRefreshResponseDataModel>('/user/auth/token/refresh/', form)
+          
+        }
+
+        return response
+      });
     }
   }
 
   handleAPIFailure(response: ApiResponse<unknown, unknown>): IErrorResponseModel | null {
-    const problemKind = getGeneralApiProblem(response)
+    const problemKind = getGeneralApiProblem(response)  
     if (problemKind?.kind === 'cannot-connect' || 'server' || 'timeout') {
     }
     const res = {

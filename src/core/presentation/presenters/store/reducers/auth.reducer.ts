@@ -1,11 +1,11 @@
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import UserProfileAuthEntity from "../../../../domain/entities/users/auth/user-profile-auth.entity";
-import { IUserProfile } from "../../../../domain/entities/users/auth/user-profile-auth.entity";
+import { IAuthenticatedUserProfile } from "../../../../domain/entities/users/auth/user-profile-auth.entity";
 
 
 interface IAuthState {
-  user: IUserProfile,
+  user: IAuthenticatedUserProfile,
 }
 
 const initialState: IAuthState = {
@@ -16,8 +16,13 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<IUserProfile>) {
+    setUser(state, action: PayloadAction<IAuthenticatedUserProfile>) {
       state.user = action.payload
+    },
+    setToken(state, action: PayloadAction<IAuthenticatedUserProfile>) {
+      let user = {...state.user}
+      // UserProfileAuthEntity()
+      // user.setTokens()
     },
     clearUser(state) {
       state.user = new UserProfileAuthEntity().getCurrentValues()

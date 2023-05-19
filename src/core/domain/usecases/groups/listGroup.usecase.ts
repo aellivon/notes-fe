@@ -1,4 +1,4 @@
-import GroupApiGateway from '../../../data/gateways/api/services/group.gateway'
+import GroupApiGateway, { IGroupGateway } from '../../../data/gateways/api/services/group.gateway'
 import { PagedGroupBaseEntity } from '../../entities/groups/group-base.entity'
 
 interface Params {
@@ -7,7 +7,7 @@ interface Params {
 
 export default class ListGroupUseCase {
   constructor (
-    private readonly groupGateway: GroupApiGateway,
+    private readonly groupGateway: IGroupGateway,
   ) {
   }
   async execute ({pageNumber = 1}: Params): Promise<any> {

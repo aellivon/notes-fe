@@ -1,6 +1,7 @@
 import LoginCase from '../../../../domain/usecases/login/login.case'
 import { ILoginFormDataModel } from '../../../../domain/entities/formModels/login-form.entity'
 import AuthApiGateway from '../../../../data/gateways/api/services/auth.gateway'
+import AuthRepository from '../../../../data/gateways/api/services/auth.repositories'
 
 
 export default class LoginController {
@@ -8,11 +9,11 @@ export default class LoginController {
 
   constructor () {
     const authGateway = new AuthApiGateway()
-    this.loginUseCase = new LoginCase(authGateway)
+    const authRepository = new AuthRepository()
+    this.loginUseCase = new LoginCase(authGateway, authRepository)
   }
 
-  async login (values: ILoginFormDataModel): Promise<any> {
-    const result = await this.loginUseCase.execute(values)
-    return result
+  async login (values: ILoginFormDataModel) {
+    await this.loginUseCase.execute(values)
   }
 }

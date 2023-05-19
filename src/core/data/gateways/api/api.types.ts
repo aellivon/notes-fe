@@ -39,7 +39,7 @@ export interface IUserModel extends IBaseAPIModel {
   furigana_fname?: string
   furigana_lname?: string
   position?: string
-  avatar_url?: string
+  avatar_url: string
   date_joined?: string
   is_active?: boolean
 }
@@ -62,4 +62,14 @@ export interface IErrorResponseModel {
 export interface IRefreshResponseModel {
   access: string
   refresh: string
+}
+
+export interface IRefreshParamModel {
+  refresh: string
+}
+
+export interface IRefreshResponseDataModel {
+  access: string
+  refresh: string
+  access_token_expiration: string
 }

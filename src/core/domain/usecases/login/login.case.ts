@@ -1,10 +1,7 @@
-
-import UserEntity from '../../entities/users/auth/user-profile-auth.entity'
 import { ILoginFormDataModel } from '../../entities/formModels/login-form.entity'
 
-import { store } from '../../../presentation/presenters/store/store'
-import { setUser } from '../../../presentation/presenters/store/reducers/auth.reducer'
-import AuthApiGateway from '../../../data/gateways/api/services/auth.gateway'
+import IAuthBaseGateway from '../../../data/gateways/api/services/auth.gateway'
+import AuthRepository from '../../../data/gateways/api/services/auth.repositories'
 
 interface LoginBaseUsecase {
   execute: (params: ILoginFormDataModel) => Promise<any>
@@ -12,20 +9,20 @@ interface LoginBaseUsecase {
 
 export default class LoginCase implements LoginBaseUsecase {
   constructor (
-    private readonly authApiGateway: AuthApiGateway,
+    private readonly dataGateway: IAuthBaseGateway,
+    private readonly authRepository: AuthRepository
   ) {
   }
 
   async execute (loginForm: ILoginFormDataModel): Promise<any> {
     try {
-      const userInfoModel = await this.authApiGateway.login(loginForm)
-      const user = new UserEntity()
-      user.setFromApiModel(userInfoModel)
-      store.dispatch(setUser(user.getCurrentValues()))
+      const userInfoModel = await this.dataGateway.login(loginForm)
+      const userAuthEntity = this.dataGateway.getUserEntityFromLoginResponse(userInfoModel)
+      this.authRepository.setLoggedInUser(userAuthEntity)
 
       return {
         'success': true,
-        'data': user
+        'data': userAuthEntity
       }
     } catch (error) {
       console.log({ error })
