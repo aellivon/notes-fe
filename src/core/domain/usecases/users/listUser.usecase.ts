@@ -1,5 +1,6 @@
 
-import UserApiGateway from '../../../data/gateways/api/services/user.gateway'
+import { IUserGateway } from '../../../data/gateways/api/services/user.gateway'
+import UsersRepository from '../../../data/gateways/api/services/users.repositories'
 import { PagedUserListEntity } from '../../entities/users/user.entity'
 
 interface Params {
@@ -13,23 +14,22 @@ interface Params {
 
 export default class ListUsersUseCase {
   constructor (
-    private readonly userGateway: UserApiGateway
+    private readonly dataGateway: IUserGateway,
+    private readonly usersRepository: UsersRepository
   ) {
   }
   async execute ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<any> {
-    const response = await this.userGateway.listUsers({pageNumber, url, queryString, department, type, status})
+    const response = await this.dataGateway.listUsers({pageNumber, url, queryString, department, type, status})
     try {
-      const userList = new PagedUserListEntity()
-      userList.setFromApiModel(response)
+      let userList = this.dataGateway.getUserListFromResponse(response)
+      this.usersRepository.setUsers(userList)
 
       return {
-        'data': userList.getCurrentValues(),
         'success': true
       }
     } catch (error) {
       console.log({ error })
       return {
-        'data': new PagedUserListEntity().getCurrentValues(),
         'success': false
       }
     }

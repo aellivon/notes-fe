@@ -2,10 +2,10 @@ import { HiPencilSquare } from 'react-icons/hi2';
 
 import { IconContext } from 'react-icons'
 
-import UserEntity from '../../../../../domain/entities/users/user.entity'
+import UserEntity, { IUserProfile } from '../../../../../domain/entities/users/user.entity'
 
 export interface IMemberCardViewModel {
-    member: UserEntity
+    member: IUserProfile
 }
 
 export const MemberCardView: React.FC<IMemberCardViewModel> = (props) => {

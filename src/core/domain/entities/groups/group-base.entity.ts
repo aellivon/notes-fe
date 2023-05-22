@@ -45,7 +45,7 @@ export interface IPagedGroupBaseEntity {
 export class PagedGroupBaseEntity extends PagedListEntity<GroupBaseEntity> {
 
   setFromApiModel(model: IListGroupModel): void {
-    super.setFromApiModel(model)
+    // super.setFromApiModel(model)
     const results: GroupBaseEntity[] = []
     model.results.forEach(element => {
       const user = new GroupBaseEntity()

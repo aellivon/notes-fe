@@ -19,13 +19,22 @@ export default class UserBaseEntity implements IBaseEntity {
   lastName: string = ''
   displayName: string = ''
 
-  setFromApiModel(model: IUserModel | any): void {
+  // setFromApiModel(model: IUserModel | any): void {
+  //   this.id = model.id
+  //   this.email = model.email
+  //   this.firstName = model.first_name
+  //   this.avatarURL = model.avatar_url
+  //   this.displayName = model.display_name
+  //   this.lastName = model.last_name
+  // }
+
+  setEntity(model: IBaseUserProfile) {
     this.id = model.id
     this.email = model.email
-    this.firstName = model.first_name
-    this.avatarURL = model.avatar_url
-    this.displayName = model.display_name
-    this.lastName = model.last_name
+    this.firstName = model.firstName
+    this.avatarURL = model.avatarURL
+    this.displayName = model.displayName
+    this.lastName = model.lastName
   }
 
   getCurrentValues(): IBaseUserProfile {

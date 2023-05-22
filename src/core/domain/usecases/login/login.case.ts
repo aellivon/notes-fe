@@ -18,7 +18,7 @@ export default class LoginCase implements LoginBaseUsecase {
     try {
       const userInfoModel = await this.dataGateway.login(loginForm)
       const userAuthEntity = this.dataGateway.getUserEntityFromLoginResponse(userInfoModel)
-      this.authRepository.setLoggedInUser(userAuthEntity)
+      this.authRepository.setLoggedInUser(userAuthEntity.getCurrentValues())
 
       return {
         'success': true,

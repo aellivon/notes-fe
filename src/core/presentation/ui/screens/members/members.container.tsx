@@ -3,6 +3,7 @@ import { PagedUserListEntity } from '../../../../domain/entities/users/user.enti
 import MemberController from './members.controller'
 import { MemberView } from './members.view'
 import { PagedGroupBaseEntity } from '../../../../domain/entities/groups/group-base.entity'
+import { useAppSelector } from '../../../presenters/store/hooks'
 
 
 const MemberContainer: React.FC = () => {
@@ -11,19 +12,19 @@ const MemberContainer: React.FC = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("")
   const [type, setType] = useState("")
   const [status, setStatus] = useState("")
-  const [pagedUsers, setPagedUsers] = useState(new PagedUserListEntity().getCurrentValues())
   const [departments, setDepartments] = useState(new PagedGroupBaseEntity().getCurrentValues())
 
   useEffect(() => {
     const controller = new MemberController()
     const handleInitalized = async () => {
-      const locUsers = await controller.listUsers({})
+      await controller.listUsers({})
       const dep = await controller.list_departments({})
-      setPagedUsers(locUsers.data)
       setDepartments(dep.data)
     }
     handleInitalized()
   }, [])
+
+  const pagedUsers = useAppSelector(state => state.usersState.users);
 
   interface Params {
     pageNumber?: number
@@ -37,8 +38,7 @@ const MemberContainer: React.FC = () => {
   const requestPaginaton = async ({pageNumber = 1, url = null}: Params) => {
     const controller = new MemberController()
     const department = selectedDepartment
-    const locUsers = await controller.listUsers({pageNumber, queryString, department, type, status, url})
-    setPagedUsers({...locUsers.data})
+    await controller.listUsers({pageNumber, queryString, department, type, status, url})
   }
 
   const searchBarHit = async () => {

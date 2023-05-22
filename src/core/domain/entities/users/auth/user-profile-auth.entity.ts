@@ -17,6 +17,16 @@ export default class UserProfileAuthEntity extends UserBaseEntity {
   accessToken?: string = ''
   refreshToken?: string = ''
 
+  setEntity(model: IAuthenticatedUserProfile): void {
+    this.id = model.id
+    this.email = model.email
+    this.firstName = model.firstName
+    this.displayName = model.displayName
+    this.lastName = model.lastName
+    this.accessToken = model.accessToken
+    this.refreshToken = model.refreshToken
+  }
+
   setTokens(model: IRefreshResponseDataModel): void {
     this.accessToken = model.access
     this.refreshToken = model.refresh

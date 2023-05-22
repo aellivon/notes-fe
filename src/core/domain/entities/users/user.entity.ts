@@ -1,6 +1,5 @@
 import UserBaseEntity, { IBaseUserProfile } from './user-base.entity'
 
-import { IUserModel, IListUserModel, } from '../../../data/gateways/api/api.types'
 import PagedListEntity from '../base/base.paged.entity'
 
 
@@ -18,11 +17,11 @@ export default class UserEntity extends UserBaseEntity {
   position?: string = ''
   department?: string = ''
 
-  setFromApiModel(model: IUserModel): void {
-    super.setFromApiModel(model)
-    this.furiganaFirstName = model.furigana_fname
-    this.furiganaLastName = model.furigana_lname
-    this.avatarURL = model.avatar_url
+  setEntity(model: IUserProfile): void {
+    super.setEntity(model)
+    this.furiganaFirstName = model.furiganaFirstName
+    this.furiganaLastName = model.furiganaLastName
+    this.avatarURL = model.avatarURL
     this.position = model.position
     this.department = model.department
   }
@@ -51,7 +50,7 @@ export default class UserEntity extends UserBaseEntity {
 
 
 export interface IPagedUserListInterface {
-  results: UserEntity[]
+  results: IUserProfile[]
   next: string
   previous: string
   totalPages: number
@@ -59,17 +58,11 @@ export interface IPagedUserListInterface {
   currentPageNumber: number
 }
 
-export class PagedUserListEntity extends PagedListEntity<UserEntity> {
+export class PagedUserListEntity extends PagedListEntity<IUserProfile> {
 
-  setFromApiModel(model: IListUserModel): void {
-    super.setFromApiModel(model)
-    const results: UserEntity[] = []
-    model.results.forEach(element => {
-      const user = new UserEntity()
-      user.setFromApiModel(element)
-      results.push(user.getCurrentValues() as UserEntity)
-    });
-    this.results = results
+  setEntity(model: IPagedUserListInterface): void {
+    super.setEntity(model)
+    this.results = model.results
   }
 
   getCurrentValues(): IPagedUserListInterface{

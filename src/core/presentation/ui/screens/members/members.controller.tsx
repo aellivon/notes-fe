@@ -2,6 +2,7 @@ import ListUsersUseCase from "../../../../domain/usecases/users/listUser.usecase
 import ListGroupUseCase from "../../../../domain/usecases/groups/listGroup.usecase"
 
 import UserApiGateway from "../../../../data/gateways/api/services/user.gateway"
+import UsersRepository from "../../../../data/gateways/api/services/users.repositories"
 import GroupApiGateway from "../../../../data/gateways/api/services/group.gateway"
 
 
@@ -19,7 +20,7 @@ export default class MemberController {
   private readonly listGroupUseCase: ListGroupUseCase
 
   constructor () {
-    this.listUsersUseCase = new ListUsersUseCase(new UserApiGateway())
+    this.listUsersUseCase = new ListUsersUseCase(new UserApiGateway(), new UsersRepository())
     this.listGroupUseCase = new ListGroupUseCase(new GroupApiGateway())
   }
 

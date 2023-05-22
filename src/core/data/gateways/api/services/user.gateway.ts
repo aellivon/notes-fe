@@ -2,7 +2,9 @@ import {
     IListUserModel
 } from '../api.types'
 import { Api } from '../../../infra/api'
-
+import UserEntity, { IUserProfile, PagedUserListEntity } from '../../../../domain/entities/users/user.entity'
+import { setPagedDataBaseAttributes } from './mappers/page.mapper'
+import { setUserAttributes } from './mappers/user.mappers'
 
 interface Params {
     pageNumber?: number
@@ -11,6 +13,11 @@ interface Params {
     department?: string
     type?: string
     status?: string
+}
+
+export interface IUserGateway {
+    listUsers: ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params) => Promise<IListUserModel>
+    getUserListFromResponse: (listUserModel: IListUserModel) => PagedUserListEntity
 }
 
 export default class UserApiGateway extends Api {
@@ -27,5 +34,26 @@ export default class UserApiGateway extends Api {
             status: status
         }
         return this.get<IListUserModel>('/user', {...params})
+    }
+
+    getUserListFromResponse (listUserModel: IListUserModel): PagedUserListEntity {
+        let data = setPagedDataBaseAttributes(listUserModel)
+        let results: IUserProfile[] = []
+
+        listUserModel.results.forEach(element => {
+            const user = new UserEntity()
+            user.setEntity(setUserAttributes(element))
+            results.push(user.getCurrentValues())
+        });
+
+        let pagedUsers = new PagedUserListEntity()
+        pagedUsers.setEntity(
+            {
+                ...data,
+                results: results
+            }
+        )
+
+        return pagedUsers
     }
 }
