@@ -1,5 +1,7 @@
 import GroupApiGateway, { IGroupGateway } from '../../../data/gateways/api/services/group.gateway'
+import GroupsRepository from '../../../data/gateways/api/services/group.repositories'
 import { PagedGroupBaseEntity } from '../../entities/groups/group-base.entity'
+
 
 interface Params {
   pageNumber?: number
@@ -7,14 +9,17 @@ interface Params {
 
 export default class ListGroupUseCase {
   constructor (
-    private readonly groupGateway: IGroupGateway,
+    private readonly dataGateway: IGroupGateway,
+    private readonly repository: GroupsRepository
   ) {
   }
   async execute ({pageNumber = 1}: Params): Promise<any> {
-    const response = await this.groupGateway.listGroups({pageNumber})
+    const response = await this.dataGateway.listGroups({pageNumber})
     try {
-      const groupList = new PagedGroupBaseEntity()
-      groupList.setFromApiModel(response)
+      console.log(response)
+      let groupList = this.dataGateway.mapGroupEntity(response)
+      console.log(groupList, "groupss")
+      this.repository.setGroups(groupList)
 
       return {
         'data': groupList.getCurrentValues(),

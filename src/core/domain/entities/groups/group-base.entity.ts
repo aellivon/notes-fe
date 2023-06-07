@@ -1,5 +1,5 @@
 import { IBaseEntity } from '../base/base.entity'
-import { IGroupBaseModel, IListGroupModel } from '../../../data/gateways/api/api.types'
+import { IGroupBaseModel } from '../../../data/gateways/api/api.types'
 import PagedListEntity from '../base/base.paged.entity'
 
 
@@ -34,7 +34,7 @@ export default class GroupBaseEntity implements IBaseEntity {
 
 
 export interface IPagedGroupBaseEntity {
-  results: GroupBaseEntity[]
+  results: IBaseGroupProfile[]
   next: string
   previous: string
   totalPages: number
@@ -42,17 +42,22 @@ export interface IPagedGroupBaseEntity {
   currentPageNumber: number
 }
 
-export class PagedGroupBaseEntity extends PagedListEntity<GroupBaseEntity> {
+export class PagedGroupBaseEntity extends PagedListEntity<IBaseGroupProfile> {
 
-  setFromApiModel(model: IListGroupModel): void {
-    // super.setFromApiModel(model)
-    const results: GroupBaseEntity[] = []
-    model.results.forEach(element => {
-      const user = new GroupBaseEntity()
-      user.setFromApiModel(element)
-      results.push(user.getCurrentValues() as GroupBaseEntity)
-    });
-    this.results = results
+  // setFromApiModel(model: IListGroupModel): void {
+  //   // super.setFromApiModel(model)
+  //   const results: GroupBaseEntity[] = []
+  //   model.results.forEach(element => {
+  //     const user = new GroupBaseEntity()
+  //     user.setFromApiModel(element)
+  //     results.push(user.getCurrentValues() as GroupBaseEntity)
+  //   });
+  //   this.results = results
+  // }
+
+  setEntity(model: IPagedGroupBaseEntity): void {
+    super.setEntity(model)
+    this.results = model.results
   }
 
   getCurrentValues(): IPagedGroupBaseEntity{

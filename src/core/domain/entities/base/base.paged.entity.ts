@@ -1,6 +1,3 @@
-import { IPagedAPIViewModel } from "../../../data/gateways/api/api.types"
-
-
 export interface IBasePagedListEntity {
     next: string
     previous: string
@@ -29,12 +26,4 @@ export default class PagedListEntity<T> {
         this.currentPageNumber = model.currentPageNumber
         this.count = model.count
     }
-
-    // setFromApiModel(model: IPagedAPIViewModel<T> | any): void {
-    //     this.next = model.next
-    //     this.previous = model.previous
-    //     this.totalPages = model.total_pages
-    //     this.currentPageNumber = model.current_page_number
-    //     this.count = model.count
-    // }
 }

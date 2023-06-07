@@ -4,6 +4,7 @@ import ListGroupUseCase from "../../../../domain/usecases/groups/listGroup.useca
 import UserApiGateway from "../../../../data/gateways/api/services/user.gateway"
 import UsersRepository from "../../../../data/gateways/api/services/users.repositories"
 import GroupApiGateway from "../../../../data/gateways/api/services/group.gateway"
+import GroupsRepository from "../../../../data/gateways/api/services/group.repositories"
 
 
 interface Params {
@@ -21,7 +22,7 @@ export default class MemberController {
 
   constructor () {
     this.listUsersUseCase = new ListUsersUseCase(new UserApiGateway(), new UsersRepository())
-    this.listGroupUseCase = new ListGroupUseCase(new GroupApiGateway())
+    this.listGroupUseCase = new ListGroupUseCase(new GroupApiGateway(), new GroupsRepository())
   }
 
   async listUsers ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<any> {
@@ -29,7 +30,7 @@ export default class MemberController {
     return result
   }
 
-  async list_departments({pageNumber = 1}): Promise<any> {
+  async listDepartments({pageNumber = 1}): Promise<any> {
     const result = await this.listGroupUseCase.execute({pageNumber})
     return result
   }

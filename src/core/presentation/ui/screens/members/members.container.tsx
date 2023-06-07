@@ -12,19 +12,18 @@ const MemberContainer: React.FC = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("")
   const [type, setType] = useState("")
   const [status, setStatus] = useState("")
-  const [departments, setDepartments] = useState(new PagedGroupBaseEntity().getCurrentValues())
 
   useEffect(() => {
     const controller = new MemberController()
     const handleInitalized = async () => {
       await controller.listUsers({})
-      const dep = await controller.list_departments({})
-      setDepartments(dep.data)
+      await controller.listDepartments({})
     }
     handleInitalized()
   }, [])
 
   const pagedUsers = useAppSelector(state => state.usersState.users);
+  const departments = useAppSelector(state => state.groupState.groups);
 
   interface Params {
     pageNumber?: number

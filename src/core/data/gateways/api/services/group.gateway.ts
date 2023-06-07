@@ -1,7 +1,10 @@
 import {
     IListGroupModel
 } from '../api.types'
+import { PagedGroupBaseEntity, IBaseGroupProfile } from '../../../../domain/entities/groups/group-base.entity'
 import { Api } from '../../../infra/api'
+import { setGroupAttributes } from './mappers/group.mappers'
+import { setPagedDataBaseAttributes } from './mappers/page.mapper'
 
 
 interface Params {
@@ -11,6 +14,7 @@ interface Params {
 
 export interface IGroupGateway {
     listGroups: ({pageNumber = 1}: Params) => Promise<IListGroupModel>
+    mapGroupEntity: (response: IListGroupModel) => PagedGroupBaseEntity
 }
 
 export default class GroupApiGateway extends Api implements IGroupGateway {
@@ -19,5 +23,30 @@ export default class GroupApiGateway extends Api implements IGroupGateway {
             page: pageNumber
         }
         return this.get<IListGroupModel>('/user/division', {...params})
+    }
+
+    mapGroupEntity (model: IListGroupModel) {
+        
+        let results: IBaseGroupProfile[] = []
+
+        let data = setPagedDataBaseAttributes(model)
+        setGroupAttributes(model)
+
+        model.results.forEach(element => {
+            const group: IBaseGroupProfile = setGroupAttributes(element)
+            results.push(group)
+        });
+
+        console.log(results)
+
+        let pagedGroups = new PagedGroupBaseEntity()
+        pagedGroups.setEntity(
+            {
+                ...data,
+                results: results
+            }
+        )
+    
+        return pagedGroups
     }
 }
