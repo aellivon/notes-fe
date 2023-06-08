@@ -11,7 +11,7 @@ const initialState: IUsersState = {
   users: new PagedUserListEntity().getCurrentValues(),
 }
 
-export const authSlice = createSlice({
+export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
@@ -24,5 +24,5 @@ export const authSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   setUserList,
-} = authSlice.actions
-export default authSlice.reducer
+} = usersSlice.actions
+export default usersSlice.reducer

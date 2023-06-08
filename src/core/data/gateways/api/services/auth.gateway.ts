@@ -5,18 +5,25 @@ import {
 import { ILoginFormDataModel } from '../../../../domain/entities/formModels/login-form.entity'
 import { Api } from '../../../infra/api'
 
-import UserProfileEntity, { IAuthenticatedUserProfile } from '../../../../domain/entities/users/auth/user-profile-auth.entity';
+import UserProfileEntity from '../../../../domain/entities/users/auth/user-profile-auth.entity';
+import UserAuthEntity, { IAuthenticationTokens } from '../../../../domain/entities/users/auth/user-tokens.entity';
 import UserEntity from '../../../../domain/entities/users/user.entity';
-import { setUserAuthAttributes } from './mappers/user.auth.mapper';
-
+import { setUserAuthAttributes, transformTokenResponse, transformInitialLoginTokenResponse } from './mappers/user.auth.mapper';
 
 export interface IAuthBaseGateway {
   login: (form: ILoginFormDataModel) => Promise<ILoginResponseDataModel>
-  getUserEntityFromLoginResponse: (response: ILoginResponseDataModel) => UserEntity
+  extractEntitiesFromLoginResponse: (response: ILoginResponseDataModel) => IMappedLoginResponse
+  refresh: (form: IRefreshFormDataModel) => Promise<IRefreshResponseModel>
+  getTokensFromResponse: (response: IRefreshResponseModel) => IAuthenticationTokens
 }
 
 export interface IRefreshFormDataModel {
   refresh: string;
+}
+
+interface IMappedLoginResponse {
+  user: UserProfileEntity,
+  tokens: UserAuthEntity
 }
 
 export default class AuthApiGateway extends Api implements IAuthBaseGateway {
@@ -26,18 +33,31 @@ export default class AuthApiGateway extends Api implements IAuthBaseGateway {
   }
 
   // Mapper
-  getUserEntityFromLoginResponse(response: ILoginResponseDataModel): UserEntity {
+  extractEntitiesFromLoginResponse(response: ILoginResponseDataModel): IMappedLoginResponse {
     let entity = new UserProfileEntity()
 
     // Map here so entities does not know anything about the database
     entity.setEntity(
       setUserAuthAttributes(response, {})
     )
+  
+    let tokens = new UserAuthEntity()
 
-    return entity
+    tokens.setEntity(
+      transformInitialLoginTokenResponse(response)
+    )
+
+    return {
+      user: entity,
+      tokens: tokens
+    }
   }
 
   async refresh (form: IRefreshFormDataModel): Promise<IRefreshResponseModel> {
-      return this.post<IRefreshResponseModel>('/user/auth/token/refresh/', form)
+    return this.post<IRefreshResponseModel>('/user/auth/token/refresh/', form)
+  }
+
+  getTokensFromResponse(response: IRefreshResponseModel): IAuthenticationTokens {
+    return transformTokenResponse(response)
   }
 }

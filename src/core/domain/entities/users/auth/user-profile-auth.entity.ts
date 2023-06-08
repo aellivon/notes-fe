@@ -8,14 +8,10 @@ export interface IAuthenticatedUserProfile extends IBaseUserProfile {
   firstName: string
   lastName: string
   displayName: string
-  accessToken?: string
-  refreshToken?: string
   avatarURL: string
 }
 
 export default class UserProfileAuthEntity extends UserBaseEntity {
-  accessToken?: string = ''
-  refreshToken?: string = ''
 
   setEntity(model: IAuthenticatedUserProfile): void {
     this.id = model.id
@@ -23,13 +19,6 @@ export default class UserProfileAuthEntity extends UserBaseEntity {
     this.firstName = model.firstName
     this.displayName = model.displayName
     this.lastName = model.lastName
-    this.accessToken = model.accessToken
-    this.refreshToken = model.refreshToken
-  }
-
-  setTokens(model: IRefreshResponseDataModel): void {
-    this.accessToken = model.access
-    this.refreshToken = model.refresh
   }
 
   getCurrentValues(): IAuthenticatedUserProfile {
@@ -38,8 +27,6 @@ export default class UserProfileAuthEntity extends UserBaseEntity {
       email: this.email,
       firstName: this.firstName,
       lastName: this.lastName,
-      accessToken: this.accessToken,
-      refreshToken: this.refreshToken,
       displayName: this.displayName,
       avatarURL: this.avatarURL,
     }

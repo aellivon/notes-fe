@@ -1,7 +1,6 @@
 import { 
-    ILoginResponseDataModel,
+    ILoginResponseDataModel, IRefreshResponseModel
 } from '../../api.types'
-
 
 
 export const setUserAuthAttributes = (initialModel: ILoginResponseDataModel, data: any = {}) => {
@@ -12,8 +11,20 @@ export const setUserAuthAttributes = (initialModel: ILoginResponseDataModel, dat
         firstName: initialModel.user.first_name,
         displayName: initialModel.user.display_name,
         lastName: initialModel.user.last_name,
-        accessToken: initialModel.access_token,
-        refreshToken: initialModel.refresh_token,
         avatarURL: initialModel.user.avatar_url
+    }
+}
+
+export const transformInitialLoginTokenResponse = (initialModel: ILoginResponseDataModel) => {
+    return {
+        accessToken: initialModel.access_token,
+        refreshToken: initialModel.refresh_token
+    }
+}
+
+export const transformTokenResponse = (initialModel: IRefreshResponseModel) => {
+    return {
+        accessToken: initialModel.access,
+        refreshToken: initialModel.refresh
     }
 }

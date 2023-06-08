@@ -13,11 +13,6 @@ export default class GroupBaseEntity implements IBaseEntity {
   id: number = -1
   name: string = ''
 
-  setFromApiModel(model: IGroupBaseModel | any): void {
-    this.id = model.id
-    this.name = model.name
-  }
-
   getCurrentValues(): IBaseGroupProfile {
     return {
       id: this.id,
@@ -43,17 +38,6 @@ export interface IPagedGroupBaseEntity {
 }
 
 export class PagedGroupBaseEntity extends PagedListEntity<IBaseGroupProfile> {
-
-  // setFromApiModel(model: IListGroupModel): void {
-  //   // super.setFromApiModel(model)
-  //   const results: GroupBaseEntity[] = []
-  //   model.results.forEach(element => {
-  //     const user = new GroupBaseEntity()
-  //     user.setFromApiModel(element)
-  //     results.push(user.getCurrentValues() as GroupBaseEntity)
-  //   });
-  //   this.results = results
-  // }
 
   setEntity(model: IPagedGroupBaseEntity): void {
     super.setEntity(model)

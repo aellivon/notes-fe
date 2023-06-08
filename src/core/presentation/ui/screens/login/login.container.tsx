@@ -12,10 +12,13 @@ const LoginFormContainer: React.FC = () => {
   const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState('');
   const currentUser = useAppSelector(state => state.authState.user);
+  const auth = useAppSelector(state => state.authState.tokens);
 
   const handleFormSubmit = async (values: ILoginFormDataModel) => {
     await controller.login(values)
-    if (currentUser.accessToken != "") {
+
+    console.log(auth)
+    if (auth.accessToken != "") {
       navigate('/dashboard')
     } else {
       setErrorMessage('ユーザー名またはパスワードが無効です。')

@@ -1,6 +1,5 @@
-import GroupApiGateway, { IGroupGateway } from '../../../data/gateways/api/services/group.gateway'
+import { IGroupGateway } from '../../../data/gateways/api/services/group.gateway'
 import GroupsRepository from '../../../data/gateways/api/services/group.repositories'
-import { PagedGroupBaseEntity } from '../../entities/groups/group-base.entity'
 
 
 interface Params {
@@ -22,13 +21,11 @@ export default class ListGroupUseCase {
       this.repository.setGroups(groupList)
 
       return {
-        'data': groupList.getCurrentValues(),
         'success': true
       }
     } catch (error) {
       console.log({ error })
       return {
-        'data': new PagedGroupBaseEntity().getCurrentValues(),
         'success': false
       }
     }

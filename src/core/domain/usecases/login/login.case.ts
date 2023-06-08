@@ -17,12 +17,13 @@ export default class LoginCase implements LoginBaseUsecase {
   async execute (loginForm: ILoginFormDataModel): Promise<any> {
     try {
       const userInfoModel = await this.dataGateway.login(loginForm)
-      const userAuthEntity = this.dataGateway.getUserEntityFromLoginResponse(userInfoModel)
-      this.authRepository.setLoggedInUser(userAuthEntity.getCurrentValues())
+      const entities = this.dataGateway.extractEntitiesFromLoginResponse(userInfoModel)
+      this.authRepository.setLoggedInUser(entities.user.getCurrentValues())
+      this.authRepository.setUserTokens(entities.tokens.getCurrentValues())
 
       return {
         'success': true,
-        'data': userAuthEntity
+        'data': null
       }
     } catch (error) {
       console.log({ error })

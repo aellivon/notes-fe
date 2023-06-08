@@ -23,7 +23,9 @@ export interface IUserGateway {
 export default class UserApiGateway extends Api {
 
     async listUsers ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<IListUserModel> {
-        if(url !== null) {
+        console.trace()
+        console.log(pageNumber)
+        if(url !== null && url !== undefined) {
             return this.get<IListUserModel>(url, {})
         }
         let params = {

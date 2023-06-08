@@ -8,7 +8,7 @@ interface IGroupState {
 }
 
 const initialState: IGroupState = {
-  groups: new PagedGroupBaseEntity()
+  groups: new PagedGroupBaseEntity().getCurrentValues()
 }
 
 export const authSlice = createSlice({

@@ -1,24 +1,22 @@
 import AuthApiGateway from "../../../data/gateways/api/services/auth.gateway"
-
-// import { PagedUserListEntity } from '../../domain/users/auth/user-profile-auth.entity'
+import AuthRepository from '../../../data/gateways/api/services/auth.repositories'
 
 
 interface Params {
-  refresh?: string
+  refresh: string
 }
 
 export default class RefreshTokenUseCase {
   constructor (
     private readonly authApiGateway: AuthApiGateway,
+    private readonly authRepository: AuthRepository
   ) {
   }
-  async execute ({refresh = ""}: Params): Promise<any> {
-
+  async execute (form: Params): Promise<any> {
     try {
-        // const refreshToken = await this.authApiGateway.refresh({refresh: ""})
-
-        // user.setFromApiModel(refreshToken)
-        // store.dispatch(setUser(user.getCurrentValues()))
+        const refreshToken = await this.authApiGateway.refresh({...form})
+        const formattedTokenResponse = this.authApiGateway.getTokensFromResponse(refreshToken)
+        this.authRepository.setUserTokens(formattedTokenResponse)
   
         return {
           'success': true,
@@ -32,4 +30,9 @@ export default class RefreshTokenUseCase {
         }
     }
   }
+}
+
+export const callRefresh = (refresh: Params) => {
+  const usecase = new RefreshTokenUseCase(new AuthApiGateway(true), new AuthRepository())
+  return usecase.execute(refresh)
 }

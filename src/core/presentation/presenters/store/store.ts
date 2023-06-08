@@ -16,6 +16,7 @@ import {
 import storage from 'redux-persist/lib/storage'
 
 import { encryptTransform } from 'redux-persist-transform-encrypt';
+import { useStore } from 'react-redux';
 
 const encryptor = encryptTransform({
   secretKey: 'my-super-secret-key',
@@ -54,6 +55,7 @@ export const store = configureStore({
 })
 
 export type AppDispatch = typeof store.dispatch;
+export type AppUseStoreType = typeof store
 export type RootState = ReturnType<typeof reducer>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

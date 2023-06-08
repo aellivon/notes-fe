@@ -1,5 +1,4 @@
 import { IBaseEntity } from '../base/base.entity'
-import { IUserModel } from '../../../data/gateways/api/api.types'
 
 
 export interface IBaseUserProfile {
@@ -18,15 +17,6 @@ export default class UserBaseEntity implements IBaseEntity {
   avatarURL: string = ''
   lastName: string = ''
   displayName: string = ''
-
-  // setFromApiModel(model: IUserModel | any): void {
-  //   this.id = model.id
-  //   this.email = model.email
-  //   this.firstName = model.first_name
-  //   this.avatarURL = model.avatar_url
-  //   this.displayName = model.display_name
-  //   this.lastName = model.last_name
-  // }
 
   setEntity(model: IBaseUserProfile) {
     this.id = model.id

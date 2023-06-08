@@ -1,10 +1,11 @@
+import { callRefresh } from '../../domain/usecases/users/refreshToken.usecase'
+import { callLogout } from '../../domain/usecases/logout/logout.case'
 import { ApiResponse, ApisauceInstance, create } from 'apisauce'
 import { ApiConfig, API_CONFIG, REFRESH_URL } from './api.config'
 import { getGeneralApiProblem } from './api-problem'
 import { IErrorResponseModel } from '../gateways/api/api.types'
 import { toast } from 'react-toastify'
 import { store } from '../../presentation/presenters/store/store'
-import RefreshAPIGateway from '../gateways/api/services/refresh.gateway'
 
 import {
   IRefreshParamModel,
@@ -20,7 +21,6 @@ export interface ApiDataResponseModel<TApiResponseModel> {
   success: boolean
   code: number
   error: string | null
-
   response?: TApiResponseModel | IErrorResponseModel
 }
 
@@ -30,7 +30,7 @@ export class Api implements IApi {
   config: ApiConfig
   onHoldRequest: ApiResponse<unknown, unknown> | null
 
-  constructor() {
+  constructor(singleRequest=false) {
     this.config = API_CONFIG
     this.apiSauce = create({
       baseURL: this.config.url,
@@ -41,23 +41,42 @@ export class Api implements IApi {
 
     this.onHoldRequest = null
 
-    const authToken = store.getState().authState.user.accessToken
+    const authToken = store.getState().authState.tokens.accessToken
 
     if (authToken !== '') {
+
       this.apiSauce.addRequestTransform(request => {
-        request.headers.Authorization = `Bearer ${authToken}`
+        const innerAuthToken = store.getState().authState.tokens.accessToken
+        console.log(store.getState().authState.user, "USER")
+        console.log(innerAuthToken, "Inner")
+        request.headers.Authorization = `Bearer ${innerAuthToken}`
       })
+
       this.apiSauce.addResponseTransform(async (response: ApiResponse<unknown, unknown>) => {
-
-        if (response.status && response.status == 401 && this.onHoldRequest === null) {
-          let form: IRefreshParamModel = {
-            refresh: store.getState().authState.user.refreshToken
+  
+        if (response.status && response.status == 401 && singleRequest == false) {
+          if (this.onHoldRequest === null) {
+            let form: IRefreshParamModel = {
+              refresh: store.getState().authState.tokens.refreshToken
+            }
+            console.log("Call refresh")
+            // Maybe setting it on axios is better?
+            this.onHoldRequest = response
+            const refRes = await callRefresh(form)
+            console.log(refRes.success, "success")
+            console.log(this.onHoldRequest.config, "config")
+            if (refRes.success === true && this.onHoldRequest.config !== undefined) {
+              console.log(store.getState().authState.user, "USER2")
+              response = await this.apiSauce.any(this.onHoldRequest.config)
+              console.log(response, "res")
+            } else {
+              console.log("Called logout")
+              callLogout()
+            }
+          } else {
+            callLogout()
           }
-          this.onHoldRequest = response
-          const res = await this.post<IRefreshResponseDataModel>('/user/auth/token/refresh/', form)
-          
         }
-
         return response
       });
     }

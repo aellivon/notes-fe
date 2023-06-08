@@ -1,5 +1,3 @@
-import { store } from '../../../presentation/presenters/store/store'
-import { clearUser } from '../../../presentation/presenters/store/reducers/auth.reducer'
 import AuthRepository from '../../../data/gateways/api/services/auth.repositories'
 
 export default class LogOutCase {
@@ -23,4 +21,9 @@ export default class LogOutCase {
       }
     }
   }
+}
+
+export const callLogout = () => {
+  const usecase = new LogOutCase(new AuthRepository())
+  return usecase.execute()
 }
