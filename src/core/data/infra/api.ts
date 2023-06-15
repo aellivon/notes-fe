@@ -28,9 +28,11 @@ export interface ApiDataResponseModel<TApiResponseModel> {
 export class Api implements IApi {
   apiSauce: ApisauceInstance
   config: ApiConfig
+  singleRequest: boolean
   onHoldRequest: ApiResponse<unknown, unknown> | null
 
   constructor(singleRequest=false) {
+    this.singleRequest = singleRequest
     this.config = API_CONFIG
     this.apiSauce = create({
       baseURL: this.config.url,
@@ -51,34 +53,7 @@ export class Api implements IApi {
         console.log(innerAuthToken, "Inner")
         request.headers.Authorization = `Bearer ${innerAuthToken}`
       })
-
-      this.apiSauce.addResponseTransform(async (response: ApiResponse<unknown, unknown>) => {
-  
-        if (response.status && response.status == 401 && singleRequest == false) {
-          if (this.onHoldRequest === null) {
-            let form: IRefreshParamModel = {
-              refresh: store.getState().authState.tokens.refreshToken
-            }
-            console.log("Call refresh")
-            // Maybe setting it on axios is better?
-            this.onHoldRequest = response
-            const refRes = await callRefresh(form)
-            console.log(refRes.success, "success")
-            console.log(this.onHoldRequest.config, "config")
-            if (refRes.success === true && this.onHoldRequest.config !== undefined) {
-              console.log(store.getState().authState.user, "USER2")
-              response = await this.apiSauce.any(this.onHoldRequest.config)
-              console.log(response, "res")
-            } else {
-              console.log("Called logout")
-              callLogout()
-            }
-          } else {
-            callLogout()
-          }
-        }
-        return response
-      });
+      // this.apiSauce.addResponseTransform();
     }
   }
 
@@ -94,10 +69,35 @@ export class Api implements IApi {
   }
 
 
-  handleAPIResult<TApiResponseModel>(response: ApiResponse<unknown, unknown>): TApiResponseModel {
+  async handleAPIResult<TApiResponseModel>(response: ApiResponse<unknown, unknown>): Promise<TApiResponseModel> {
     const data = response.data as ApiDataResponseModel<TApiResponseModel>
     if (response.status && [200, 201, 202, 203, 204].includes(response.status)) {
       return data as TApiResponseModel
+    } else if (response.status === 401) {
+        if (response.status && response.status == 401 && this.singleRequest == false) {
+          if (this.onHoldRequest === null) {
+              let form: IRefreshParamModel = {
+                refresh: store.getState().authState.tokens.refreshToken
+              }
+              console.log("Call refresh")
+              // Maybe setting it on axios is better?
+              this.onHoldRequest = response
+              const refRes = await callRefresh(form)
+              console.log(refRes.success, "success")
+              console.log(this.onHoldRequest.config, "config")
+              if (refRes.success === true && this.onHoldRequest.config !== undefined) {
+                console.log(store.getState().authState.user, "USER2")
+                response = await this.apiSauce.any(this.onHoldRequest.config)
+                console.log(response, "res")
+              } else {
+                console.log("Called logout")
+                callLogout()
+              }
+            } else {
+              callLogout()
+            }
+        }
+        return response.data as TApiResponseModel
     } else {
       const errorResponseObject = JSON.parse(JSON.stringify(data));
       for (const [key, value] of Object.entries(errorResponseObject)) {
@@ -112,12 +112,8 @@ export class Api implements IApi {
     }
   }
 
-  handleDataResult<TApiResponseModel>(data: ApiDataResponseModel<TApiResponseModel>): TApiResponseModel {
-    return data.response as TApiResponseModel
-  }
-
-  parseAPIResultIntoModel<TApiResponseModel>(response: ApiResponse<unknown, unknown>): TApiResponseModel {
-    return this.handleAPIResult<TApiResponseModel>(response)
+  async parseAPIResultIntoModel<TApiResponseModel>(response: ApiResponse<unknown, unknown>): Promise<TApiResponseModel> {
+    return await this.handleAPIResult<TApiResponseModel>(response)
   }
 
   async delete<TApiResponseModel>(apiPath: string, params?: any): Promise<TApiResponseModel> {
@@ -127,7 +123,7 @@ export class Api implements IApi {
 
   async get<TApiResponseModel>(apiPath: string, params?: any): Promise<TApiResponseModel> {
     const result = await this.apiSauce.get(apiPath, params)
-    return this.parseAPIResultIntoModel<TApiResponseModel>(result)
+    return await this.parseAPIResultIntoModel<TApiResponseModel>(result)
   }
 
   async post<TApiResponseModel>(apiPath: string, params?: any): Promise<TApiResponseModel> {

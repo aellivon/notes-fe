@@ -22,7 +22,7 @@ export default class GroupApiGateway extends Api implements IGroupGateway {
         let params = {
             page: pageNumber
         }
-        return this.get<IListGroupModel>('/user/division', {...params})
+        return this.get<IListGroupModel>('/user/group', {...params})
     }
 
     mapGroupEntity (model: IListGroupModel) {

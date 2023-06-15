@@ -1,4 +1,4 @@
-import {
+    import {
     IListUserModel
 } from '../api.types'
 import { Api } from '../../../infra/api'
@@ -23,7 +23,6 @@ export interface IUserGateway {
 export default class UserApiGateway extends Api {
 
     async listUsers ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<IListUserModel> {
-        console.trace()
         console.log(pageNumber)
         if(url !== null && url !== undefined) {
             return this.get<IListUserModel>(url, {})
@@ -31,11 +30,11 @@ export default class UserApiGateway extends Api {
         let params = {
             page: pageNumber,
             search: queryString,
-            division: department,
+            group: department,
             type: type,
             status: status
         }
-        return this.get<IListUserModel>('/user', {...params})
+        return this.get<IListUserModel>('/user/user', {...params})
     }
 
     getUserListFromResponse (listUserModel: IListUserModel): PagedUserListEntity {

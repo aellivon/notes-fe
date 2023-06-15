@@ -9,9 +9,9 @@ import { useAppSelector } from '../../../presenters/store/hooks'
 const MemberContainer: React.FC = () => {
 
   const [queryString, setqueryString] = useState("")
-  const [selectedDepartment, setSelectedDepartment] = useState("")
-  const [type, setType] = useState("")
-  const [status, setStatus] = useState("")
+  const [selectedDepartment, setSelectedDepartment] = useState("*")
+  const [type, setType] = useState("*")
+  const [status, setStatus] = useState("active")
 
   useEffect(() => {
     const controller = new MemberController()
@@ -62,7 +62,7 @@ const MemberContainer: React.FC = () => {
         setType={setType}
         setStatus={setStatus}
       />
-    </div>        
+    </div>
   )
 }
 

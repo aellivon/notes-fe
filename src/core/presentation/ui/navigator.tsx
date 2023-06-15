@@ -11,13 +11,13 @@ import { useAppSelector } from '../presenters/store/hooks'
   
 export const Navigator = () => {
   const currentUser = useAppSelector(state => state.authState.user);
-  const auth = useAppSelector(state => state.authState.tokens);
+  // const auth = useAppSelector(state => state.authState.tokens);
 
   const PrivateRoute: React.FC<{ element: any }> = (props) => {
     const userInfo = currentUser;
-    const tokens = auth;
+    // const tokens = auth;
     let invalidUser = false
-    if (!userInfo.id || userInfo.id <= 0 || !tokens.accessToken || !tokens.refreshToken) {
+    if (!userInfo.id || userInfo.id <= 0) {
       invalidUser = true
     }
     return invalidUser ? <Navigate to='/' /> : props.element  
@@ -25,10 +25,10 @@ export const Navigator = () => {
 
   const AlreadyLoggedInRoute: React.FC<{ element: any }> = (props) => {
     const userInfo = currentUser;
-    const tokens = auth;
+    // const tokens = auth;
     let alreadyLoggedIn = false
     console.log()
-    if (userInfo && userInfo.id && userInfo.id > 0 && tokens.accessToken && tokens.refreshToken) {
+    if (userInfo && userInfo.id && userInfo.id > 0) {
       alreadyLoggedIn = true
     }
     return alreadyLoggedIn ? <Navigate to='/dashboard' /> : props.element  
