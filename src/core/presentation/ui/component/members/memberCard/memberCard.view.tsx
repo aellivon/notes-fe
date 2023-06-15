@@ -3,6 +3,7 @@ import { HiPencilSquare } from 'react-icons/hi2';
 import { IconContext } from 'react-icons'
 
 import UserEntity, { IUserProfile } from '../../../../../domain/entities/users/user.entity'
+import MemberModalContainer from '../memberModal/memberModal.container';
 
 export interface IMemberCardViewModel {
     member: IUserProfile
@@ -31,11 +32,9 @@ export const MemberCardView: React.FC<IMemberCardViewModel> = (props) => {
             </p>
         </div>
         <div className='flex items-center justify-end flex'>
-            <button type="button" className='mr-4'>
-                <IconContext.Provider value={{ className:"w-5 h-5" }}>
-                    <HiPencilSquare/>
-                </IconContext.Provider>
-            </button>
+            <MemberModalContainer
+                member={props.member}
+            />
         </div>
     </div>
   )
