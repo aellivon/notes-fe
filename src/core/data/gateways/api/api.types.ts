@@ -73,3 +73,19 @@ export interface IRefreshResponseDataModel {
   refresh: string
   access_token_expiration: string
 }
+
+export interface IUserProfileError {
+  email?: string,
+  non_field_errors?: string,
+  avatar_url?: string
+  first_name?: string
+  last_name?: string
+  furigana_first_name?: string
+  furigana_last_name?: string
+  position?: string
+  date_joined?: string
+}
+
+export interface WrappedIUserProfileError {
+  error: IUserProfileError
+}

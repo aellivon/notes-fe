@@ -17,17 +17,8 @@ export default class RefreshTokenUseCase {
         const refreshToken = await this.authApiGateway.refresh({...form})
         const formattedTokenResponse = this.authApiGateway.getTokensFromResponse(refreshToken)
         this.authRepository.setUserTokens(formattedTokenResponse)
-  
-        return {
-          'success': true,
-          'data': null
-        }
       } catch (error) {
         console.log({ error })
-        return {
-          'success': false,
-          'data': error
-        }
     }
   }
 }

@@ -49,8 +49,6 @@ export class Api implements IApi {
 
       this.apiSauce.addRequestTransform(request => {
         const innerAuthToken = store.getState().authState.tokens.accessToken
-        console.log(store.getState().authState.user, "USER")
-        console.log(innerAuthToken, "Inner")
         request.headers.Authorization = `Bearer ${innerAuthToken}`
       })
       // this.apiSauce.addResponseTransform();
@@ -79,18 +77,12 @@ export class Api implements IApi {
               let form: IRefreshParamModel = {
                 refresh: store.getState().authState.tokens.refreshToken
               }
-              console.log("Call refresh")
               // Maybe setting it on axios is better?
               this.onHoldRequest = response
               const refRes = await callRefresh(form)
-              console.log(refRes.success, "success")
-              console.log(this.onHoldRequest.config, "config")
               if (refRes.success === true && this.onHoldRequest.config !== undefined) {
-                console.log(store.getState().authState.user, "USER2")
                 response = await this.apiSauce.any(this.onHoldRequest.config)
-                console.log(response, "res")
               } else {
-                console.log("Called logout")
                 callLogout()
               }
             } else {
@@ -100,15 +92,7 @@ export class Api implements IApi {
         return response.data as TApiResponseModel
     } else {
       const errorResponseObject = JSON.parse(JSON.stringify(data));
-      for (const [key, value] of Object.entries(errorResponseObject)) {
-        let errorMessageKey = ''
-        if (key !== 'detail'){
-          errorMessageKey= `${key} :`
-        }
-        toast.error(`${errorMessageKey} ${value}`)
-      }
-
-      throw new Error('Error')
+      throw errorResponseObject
     }
   }
 

@@ -11,7 +11,6 @@ import { useAppSelector } from '../presenters/store/hooks'
   
 export const Navigator = () => {
   const currentUser = useAppSelector(state => state.authState.user);
-  // const auth = useAppSelector(state => state.authState.tokens);
 
   const PrivateRoute: React.FC<{ element: any }> = (props) => {
     const userInfo = currentUser;

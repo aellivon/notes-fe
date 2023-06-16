@@ -20,17 +20,8 @@ export default class LoginCase implements LoginBaseUsecase {
       const entities = this.dataGateway.extractEntitiesFromLoginResponse(userInfoModel)
       this.authRepository.setLoggedInUser(entities.user.getCurrentValues())
       this.authRepository.setUserTokens(entities.tokens.getCurrentValues())
-
-      return {
-        'success': true,
-        'data': null
-      }
     } catch (error) {
       console.log({ error })
-      return {
-        'success': false,
-        'data': error
-      }
     }
   }
 }

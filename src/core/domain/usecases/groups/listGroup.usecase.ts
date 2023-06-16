@@ -15,19 +15,10 @@ export default class ListGroupUseCase {
   async execute ({pageNumber = 1}: Params): Promise<any> {
     const response = await this.dataGateway.listGroups({pageNumber})
     try {
-      console.log(response)
       let groupList = this.dataGateway.mapGroupEntity(response)
-      console.log(groupList, "groupss")
       this.repository.setGroups(groupList)
-
-      return {
-        'success': true
-      }
     } catch (error) {
       console.log({ error })
-      return {
-        'success': false
-      }
     }
   }
 }

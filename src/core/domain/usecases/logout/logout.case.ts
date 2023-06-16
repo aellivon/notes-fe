@@ -10,15 +10,8 @@ export default class LogOutCase {
   async execute (): Promise<any> {
     try {
       this.authRepository.clearLoggedInUser()
-      return {
-        'success': true
-      }
     } catch (error) {
       console.log({ error })
-      return {
-        'success': false,
-        'data': error
-      }
     }
   }
 }

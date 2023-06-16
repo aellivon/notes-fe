@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { PagedUserListEntity } from '../../../../domain/entities/users/user.entity'
 import MemberController from './members.controller'
 import { MemberView } from './members.view'
-import { PagedGroupBaseEntity } from '../../../../domain/entities/groups/group-base.entity'
 import { useAppSelector } from '../../../presenters/store/hooks'
 
 

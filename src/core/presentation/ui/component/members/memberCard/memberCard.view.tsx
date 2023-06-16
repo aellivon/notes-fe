@@ -1,12 +1,11 @@
-import { HiPencilSquare } from 'react-icons/hi2';
-
-import { IconContext } from 'react-icons'
-
-import UserEntity, { IUserProfile } from '../../../../../domain/entities/users/user.entity'
+import { IUserProfile } from '../../../../../domain/entities/users/user.entity'
 import MemberModalContainer from '../memberModal/memberModal.container';
+import { IFormUserProfileErrors, IFormUserProfileFields } from '../../../../../domain/entities/formModels/user-profile-form.entity';
 
 export interface IMemberCardViewModel {
     member: IUserProfile
+    updateUserProfile: (form: IFormUserProfileFields, userId: number) => void
+    formErrors: IFormUserProfileErrors
 }
 
 export const MemberCardView: React.FC<IMemberCardViewModel> = (props) => {
@@ -34,6 +33,10 @@ export const MemberCardView: React.FC<IMemberCardViewModel> = (props) => {
         <div className='flex items-center justify-end flex'>
             <MemberModalContainer
                 member={props.member}
+                onSubmit={(form, userID) => {
+                    props.updateUserProfile(form, userID)
+                }}
+                formErrors={props.formErrors}
             />
         </div>
     </div>

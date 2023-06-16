@@ -9,6 +9,7 @@ export interface IUserProfile extends IBaseUserProfile {
   avatarURL: string
   position?: string
   department?: string
+  dateJoined?: string
 }
 
 export default class UserEntity extends UserBaseEntity {
@@ -16,6 +17,7 @@ export default class UserEntity extends UserBaseEntity {
   furiganaLastName?: string = ''
   position?: string = ''
   department?: string = ''
+  dateJoined?: string = ''
 
   setEntity(model: IUserProfile): void {
     super.setEntity(model)
@@ -24,6 +26,7 @@ export default class UserEntity extends UserBaseEntity {
     this.avatarURL = model.avatarURL
     this.position = model.position
     this.department = model.department
+    this.dateJoined = model.dateJoined
   }
 
   getCurrentValues(): IUserProfile {
@@ -37,7 +40,8 @@ export default class UserEntity extends UserBaseEntity {
       furiganaFirstName: this.furiganaFirstName,
       avatarURL: this.avatarURL,
       position: this.position,
-      department: this.department
+      department: this.department,
+      dateJoined: this.dateJoined
     }
   }
 

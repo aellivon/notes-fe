@@ -1,31 +1,57 @@
-import { Formik, FormikProps, Form, FormikErrors } from 'formik'
+import { Formik, FormikProps, Form } from 'formik'
+import Datepicker from "react-tailwindcss-datepicker";
 
-
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ModalContainer } from "../../common/modal/modal.container";
 import { HiPencilSquare } from 'react-icons/hi2';
 import { IconContext } from 'react-icons'
 import { IUserProfile } from '../../../../../domain/entities/users/user.entity';
+import { IFormUserProfileErrors, IFormUserProfileFields } from '../../../../../domain/entities/formModels/user-profile-form.entity';
+
+import InputContainer from '../../common/input/input.container';
 
 export interface Props {
     member: IUserProfile
+    onSubmit: (form: IFormUserProfileFields, userId: number) => void
+    formErrors: IFormUserProfileErrors
+    resetForm: () => void
 }
 
-export interface IProfileFields {
-    avatarURL: File | undefined
-}  
-
-
 export const MemberModalView: React.FC<Props> = (props) => {
-
-    const [modalOpen, setModalOpen] = useState(true);
+    const [modalOpen, setModalOpen] = useState(false);
     const [imgDisplay, setImgDisplay] = useState(props.member.avatarURL)
+    const [memberID] = useState(props.member.id)
+    const initialValues: IFormUserProfileFields = {
+        avatarURL: undefined,
+        firstName: props.member.firstName,
+        lastName: props.member.lastName,
+        email: props.member.email,
+        furiganaFirstName: props.member.furiganaFirstName,
+        furiganaLastName: props.member.furiganaLastName,
+        position: props.member.position,
+        dateJoined: props.member.dateJoined
+    };
+    const [userProfileValue, setUserProfileValue] = useState(initialValues)
+
+    useEffect(() => {
+        setUserProfileValue(initialValues)
+    }, [props.member])
+
     const handleModalToggle = (toChangeInto: boolean) => {
         setModalOpen(toChangeInto)
-        console.log(toChangeInto)
+        setUserProfileValue(initialValues)
+        props.resetForm()
     };
-    const initialValues: IProfileFields = { avatarURL: undefined };
+    const [dateValue, setDateValue] = useState({ 
+        startDate: props.member?.dateJoined !== null && props.member?.dateJoined !== undefined ? new Date(props.member.dateJoined) : null,
+        endDate: props.member?.dateJoined !== null && props.member?.dateJoined !== undefined ? new Date(props.member.dateJoined) : null
+    });
+        
+    const handleDateValueChange = (newValue: any) => {
+        setDateValue(newValue); 
+    }
+
 
 
     const buttonJSX = () => (
@@ -37,7 +63,6 @@ export const MemberModalView: React.FC<Props> = (props) => {
             <IconContext.Provider value={{ className:"w-5 h-5" }}>
                 <HiPencilSquare/>
             </IconContext.Provider>
-            {/*  */}
         </button>
     )
 
@@ -52,129 +77,177 @@ export const MemberModalView: React.FC<Props> = (props) => {
                 </div>
             </div>
             <Formik
-                initialValues={initialValues}
-                onSubmit={values => {
-                    console.log(values)
+                enableReinitialize
+                initialValues={userProfileValue}
+                onSubmit={async values => {
+                    props.resetForm()
+                    await props.onSubmit(values, memberID)
                 }}
                 validate={() => {}}
             >
-                {/* 'id', 'first_name', 'last_name', 'email', 'furigana_lname', 'furigana_fname',
-            'position', 'avatar_url', 'date_joined', 'display_name' */}
                 {
-                    ({ handleChange, setFieldValue, handleSubmit, values, errors, isSubmitting }: FormikProps<IProfileFields>) => {
+                    ({ setFieldValue, errors, isSubmitting }: FormikProps<IFormUserProfileFields>) => {
+                        errors = props.formErrors
                         return (
                             <Form>
-                                <div className='flex justify-center items-center'>
-                                    <img className="rounded-full h-32 w-32 mb-4" src={imgDisplay} alt="avatar" />
-                                </div>
-                                <div className='flex justify-center items-center text-center'>
-                                    <input id="avatar_url" name="avatarURL" type="file" 
-                                            className="text-sm text-grey-500
-                                                file:mr-5 file:py-2 file:px-10
-                                                file:rounded-full file:border-0
-                                                file:text-md file:font-semibold file:text-white pb-2
-                                                file:bg-gradient-to-r file:from-blue-600 file:to-blue-600
-                                                hover:file:cursor-pointer hover:file:opacity-80"
-                                            onChange={(event) => {
-                                                if (event.currentTarget !== null && event?.currentTarget.files  !== null) {
-                                                    setFieldValue("avatarURL", event?.currentTarget?.files[0]);
-                                                    const objectUrl = URL.createObjectURL(event.currentTarget.files[0]);
-                                                    setImgDisplay(objectUrl)
-                                                }
-                                            }}
-                                    />
-                                </div>
-                                <hr className='py-2'/>
-                                <div className="mb-2">
-                                    <div className="flex justify-center w-full items-center text-center">
-                                        <label className="block w-1/3 text-gray-700 text-sm font-bold mb-2 mr-5">
-                                            First Name
-                                        </label>
-                                        <input 
-                                            className="shadow w-3/4 appearance-none border border-red-500 rounded w-full py-2 px-4 mr-5 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" 
-                                        />
-                                    </div>
-                                    <div className="flex justify-center items-center text-center">
-                                        <div className='w-1/3'></div>
-                                        <p className="w-2/3 text-red-500 text-xs italic">Please choose a password.</p>
-                                    </div>
-                                </div>
-                                <div className="mb-2">
-                                    <div className="flex justify-center w-full items-center text-center">
-                                        <label className="block w-1/3 text-gray-700 text-sm font-bold mb-2 mr-5">
-                                            Furigana First Name
-                                        </label>
-                                        <input 
-                                            className="shadow w-3/4 appearance-none border border-red-500 rounded w-full py-2 px-4 mr-5 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" 
-                                        />
-                                    </div>
-                                    <div className="flex justify-center items-center text-center">
-                                        <div className='w-1/3'></div>
-                                        <p className="w-2/3 text-red-500 text-xs italic">Please choose a password.</p>
-                                    </div>
-                                </div>
-                                <div className="mb-2">
-                                    <div className="flex justify-center w-full items-center text-center">
-                                        <label className="block w-1/3 text-gray-700 text-sm font-bold mb-2 mr-5">
-                                            Last Name
-                                        </label>
-                                        <input 
-                                            className="shadow w-3/4 appearance-none border border-red-500 rounded w-full py-2 px-4 mr-5 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" 
-                                        />
-                                    </div>
-                                    <div className="flex justify-center items-center text-center">
-                                        <div className='w-1/3'></div>
-                                        <p className="w-2/3 text-red-500 text-xs italic">Please choose a password.</p>
-                                    </div>
-                                </div>
-                                <div className="mb-2">
-                                    <div className="flex justify-center w-full items-center text-center">
-                                        <label className="block w-1/3 text-gray-700 text-sm font-bold mb-2 mr-5">
-                                            Furigana Last Name
-                                        </label>
-                                        <input 
-                                            className="shadow w-3/4 appearance-none border border-red-500 rounded w-full py-2 px-4 mr-5 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" 
-                                        />
-                                    </div>
-                                    <div className="flex justify-center items-center text-center">
-                                        <div className='w-1/3'></div>
-                                        <p className="w-2/3 text-red-500 text-xs italic">Please choose a password.</p>
-                                    </div>
-                                </div>
-                                <div className="mb-2">
-                                    <div className="flex justify-center w-full items-center text-center">
-                                        <label className="block w-1/3 text-gray-700 text-sm font-bold mb-2 mr-5">
-                                            Position
-                                        </label>
-                                        <input 
-                                            className="shadow w-3/4 appearance-none border border-red-500 rounded w-full py-2 px-4 mr-5 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" 
-                                        />
-                                    </div>
-                                    <div className="flex justify-center items-center text-center">
-                                        <div className='w-1/3'></div>
-                                        <p className="w-2/3 text-red-500 text-xs italic">Please choose a password.</p>
-                                    </div>
-                                </div>
-                                <div className="mb-2">
-                                    <div className="flex justify-center w-full items-center text-center">
-                                        <label className="block w-1/3 text-gray-700 text-sm font-bold mb-2 mr-5">
-                                            Date Joined
-                                        </label>
-                                        <input 
-                                            className="shadow w-3/4 appearance-none border border-red-500 rounded w-full py-2 px-4 mr-5 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="text" 
-                                        />
-                                    </div>
-                                    <div className="flex justify-center items-center text-center">
-                                        <div className='w-1/3'></div>
-                                        <p className="w-2/3 text-red-500 text-xs italic">Please choose a password.</p>
-                                    </div>
+                                <div className='h-40vh hsm:h-50vh hmd:h-55vh hlg:h-60vh hxl:h-65vh overflow-y-scroll'>
+                                    <span>
+                                        <div className='flex justify-center items-center'>
+                                            <img className="rounded-full h-32 w-32 mb-4" src={imgDisplay} alt="avatar" />
+                                        </div>
+                                        <div className='flex justify-center items-center text-center'>
+                                            <input 
+                                                id="avatarURL" name="avatarURL" type="file" 
+                                                className="text-sm text-grey-500
+                                                    file:mr-5 file:py-2 file:px-10
+                                                    file:rounded-full file:border-0
+                                                    file:text-md file:font-semibold file:text-white pb-2
+                                                    file:bg-gradient-to-r file:from-blue-600 file:to-blue-600
+                                                    hover:file:cursor-pointer hover:file:opacity-80"
+                                                onChange={(event) => {
+                                                    if (event.currentTarget !== null && event?.currentTarget.files  !== null) {
+                                                        setFieldValue("avatarURL", event?.currentTarget?.files[0]);
+                                                        const objectUrl = URL.createObjectURL(event.currentTarget.files[0]);
+                                                        setImgDisplay(objectUrl)
+                                                    }
+                                                }}
+                                            />
+                                        </div>
+                                        <div className='flex justify-center items-center text-center w-full'>
+                                            { errors.avatarURL !== "" && errors.avatarURL !== undefined && errors.avatarURL.length !== 0 ?
+                                                <div className="flex justify-center items-center text-center w-full">
+                                                        <p className="text-red-500 text-xs italic">{ errors.avatarURL[0] }</p>
+                                                </div> :
+                                                null
+                                            }
+                                        </div>
+                                        <hr className='py-2 mt-4'/>
+                                        <div className="mb-2">
+                                            <InputContainer
+                                                label='Email'
+                                                errors={errors.email}
+                                                onChangeEvent={(event) => {
+                                                    setFieldValue("email", event.target.value)
+                                                    setUserProfileValue({
+                                                        ...userProfileValue,
+                                                        email: event.target.value
+                                                    })
+                                                }}
+                                                value={userProfileValue.email}
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <InputContainer
+                                                label='First Name'
+                                                errors={errors.firstName}
+                                                onChangeEvent={(event) => {
+                                                    setFieldValue("firstName", event.target.value)
+                                                    setUserProfileValue({
+                                                        ...userProfileValue,
+                                                        firstName: event.target.value
+                                                    })
+                                                }}
+                                                value={userProfileValue.firstName}
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <InputContainer
+                                                label='Furigana First Name'
+                                                errors={errors.furiganaFirstName}
+                                                onChangeEvent={(event) => {
+                                                    setFieldValue("furiganaFirstName", event.target.value)
+                                                    setUserProfileValue({
+                                                        ...userProfileValue,
+                                                        furiganaFirstName: event.target.value
+                                                    })
+                                                }}
+                                                value={userProfileValue.furiganaFirstName}
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <InputContainer
+                                                label='Last Name'
+                                                errors={errors.lastName}
+                                                onChangeEvent={(event) => {
+                                                    setFieldValue("lastName", event.target.value)
+                                                    setUserProfileValue({
+                                                        ...userProfileValue,
+                                                        lastName: event.target.value
+                                                    })
+                                                }}
+                                                value={userProfileValue.lastName}
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <InputContainer
+                                                label='Furigana Last Name'
+                                                errors={errors.furiganaLastName}
+                                                onChangeEvent={(event) => {
+                                                    setFieldValue("furiganaLastName", event.target.value)
+                                                    setUserProfileValue({
+                                                        ...userProfileValue,
+                                                        furiganaLastName: event.target.value
+                                                    })
+                                                }}
+                                                value={userProfileValue.furiganaLastName}
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <InputContainer
+                                                label='Position'
+                                                errors={errors.position}
+                                                onChangeEvent={(event) => {
+                                                    setFieldValue("position", event.target.value)
+                                                    setUserProfileValue({
+                                                        ...userProfileValue,
+                                                        position: event.target.value
+                                                    })
+                                                }}
+                                                value={userProfileValue.position}
+                                            />
+                                        </div>
+                                        <div className="mb-2">
+                                            <div className="flex justify-start w-full items-center text-center">
+                                                <label className="block w-1/3 text-gray-700 text-sm font-bold mb-2 mr-4">
+                                                    Date Joined
+                                                </label>
+                                                <Datepicker
+                                                    toggleClassName="hidden"
+                                                    popoverDirection="up"
+                                                    containerClassName="relative w-full mr-5 text-gray-700"
+                                                    inputClassName={`shadow  appearance-none border ${ errors.dateJoined !== "" && errors.dateJoined !== undefined && errors.dateJoined.length !== 0 ? 'border-red-500' : null}  rounded w-full py-2  mr-5 px-4 mr-5 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
+                                                    useRange={false} 
+                                                    asSingle={true} 
+                                                    value={dateValue} 
+                                                    onChange={(newDateValue: any) => {
+                                                        handleDateValueChange(newDateValue)
+                                                        setFieldValue("dateJoined", newDateValue.startDate)
+                                                        setUserProfileValue({
+                                                            ...userProfileValue,
+                                                            dateJoined: newDateValue.startDate
+                                                        })
+                                                    }} 
+                                                />
+                                            </div>
+                                            { errors.dateJoined !== "" && errors.dateJoined !== undefined && errors.dateJoined.length !== 0 ?
+                                                <div className="flex justify-center items-center text-center">
+                                                        <div className='w-1/3'></div>
+                                                        <p className="w-2/3 text-red-500 text-xs italic">{ errors.dateJoined[0] }</p>
+                                                </div> :
+                                                null
+                                            }
+                                        </div>
+                                    </span>
                                 </div>
                                 <div className="flex justify-end pt-6">
-                                    <button className="px-4 mr-5 bg-blue-700 p-0 rounded-lg text-white hover:bg-blue-900" type="button">
-                                        Sign In
+                                    <button disabled={isSubmitting ? true : false} 
+                                        className={` ${isSubmitting ? "animate-pulse bg-gray-700 " : "bg-blue-700 "} px-4 mr-5 p-0 rounded-lg text-white hover:bg-blue-900 d-flex` } type="submit">
+                                        <span>
+                                            { isSubmitting ? "Submitting...": "Update Profile"}
+                                        </span>
                                     </button>
                                     <button className="modal-close px-4 bg-gray-500 p-3 rounded-lg text-white hover:bg-gray-700" onClick={() => {handleModalToggle(false)}}>Close</button>
-                                </div>  
+                                </div>
                             </Form>
                         )
                     }

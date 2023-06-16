@@ -3,7 +3,7 @@ import authReducer from './reducers/auth.reducer'
 import appUIReducer from './reducers/appState.reducer'
 import usersReducer from './reducers/users.reducer';
 import groupsReducer from './reducers/groups.reducer';
-// import documentsReducer from '../files/reducers/files.slice'
+import formUserProfileReducer from './reducers/formUserProfile.reducer';
 import {
   persistReducer,
   FLUSH,
@@ -27,6 +27,7 @@ const encryptor = encryptTransform({
 
 
 const reducer = combineReducers({
+  formUserProfileState: formUserProfileReducer,
   authState: authReducer,
   appUIState: appUIReducer,
   usersState: usersReducer,

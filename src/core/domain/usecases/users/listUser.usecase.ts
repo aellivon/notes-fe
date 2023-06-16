@@ -1,7 +1,6 @@
 
 import { IUserGateway } from '../../../data/gateways/api/services/user.gateway'
 import UsersRepository from '../../../data/gateways/api/services/users.repositories'
-import { PagedUserListEntity } from '../../entities/users/user.entity'
 
 interface Params {
   pageNumber?: number
@@ -23,15 +22,8 @@ export default class ListUsersUseCase {
     try {
       let userList = this.dataGateway.getUserListFromResponse(response)
       this.usersRepository.setUsers(userList)
-
-      return {
-        'success': true
-      }
     } catch (error) {
       console.log({ error })
-      return {
-        'success': false
-      }
     }
   }
 }

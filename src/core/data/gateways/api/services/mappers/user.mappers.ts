@@ -12,5 +12,6 @@ export const setUserAttributes = (initialModel: IUserModel | any, data: any = {}
         avatarURL: initialModel.avatar_url,
         position: initialModel.position,
         department: initialModel.department,
+        dateJoined: initialModel.date_joined
     }
 }

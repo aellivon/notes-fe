@@ -1,4 +1,4 @@
-export default (str?: string, num?: number) => {
+const fn = (str?: string, num?: number) => {
     if (str === undefined) {
         return ""
     }
@@ -12,3 +12,5 @@ export default (str?: string, num?: number) => {
       return str+"...";
     } 
 }
+
+export default fn

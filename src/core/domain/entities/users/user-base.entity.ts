@@ -34,7 +34,7 @@ export default class UserBaseEntity implements IBaseEntity {
       firstName: this.firstName,
       lastName: this.lastName,
       displayName: this.displayName,
-      avatarURL: this.avatarURL
+      avatarURL: this.avatarURL,
     }
   }
 

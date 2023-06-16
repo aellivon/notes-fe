@@ -1,24 +1,23 @@
-import AuthRepository from '../../../../../data/gateways/api/services/auth.repositories'
-import LogOutCase from '../../../../../domain/usecases/logout/logout.case'
-import SetNavBarCase from '../../../../../domain/usecases/setNavbarStatus/navbar.case'
+import UserApiGateway from "../../../../../data/gateways/api/services/user.gateway";
+import UsersRepository from "../../../../../data/gateways/api/services/users.repositories";
+import { IFormUserProfileFields } from "../../../../../domain/entities/formModels/user-profile-form.entity";
+import UpdateUserUseCase from "../../../../../domain/usecases/users/updateUser/updateUser.usecase";
 
-
-export default class SidebarController {
-  private readonly logOutUseCase: LogOutCase
-  private readonly setNavBarCase: SetNavBarCase
+export default class memberCardController {
+  private readonly updateUserUseCase: UpdateUserUseCase
+  private readonly userRepository: UsersRepository
 
   constructor () {
-    this.logOutUseCase = new LogOutCase(new AuthRepository())
-    this.setNavBarCase = new SetNavBarCase()
+    this.updateUserUseCase = new UpdateUserUseCase(new UserApiGateway(), new UsersRepository())
+    this.userRepository = new UsersRepository()
   }
 
-  async logout (): Promise<any> {
-    const result = await this.logOutUseCase.execute()
-    return result
+  async updateProfile (form: IFormUserProfileFields, userId: number): Promise<any> {
+    this.updateUserUseCase.execute(form, userId)
   }
 
-  async setNavbarStatus (state: boolean): Promise<any> {
-    const result = await this.setNavBarCase.execute(state)
-    return result
+  resetUserFormErrors () {
+    this.userRepository.resetUserFormErrors()
   }
+
 }

@@ -37,7 +37,6 @@ export default class GroupApiGateway extends Api implements IGroupGateway {
             results.push(group)
         });
 
-        console.log(results)
 
         let pagedGroups = new PagedGroupBaseEntity()
         pagedGroups.setEntity(
