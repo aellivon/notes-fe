@@ -69,13 +69,15 @@ export const MemberModalView: React.FC<Props> = (props) => {
     const innerHTML = () => (
         <>
             <div className="flex justify-between items-center pb-3">
-                <p className="text-2xl font-bold">Update User</p>
+                <p className="text-2xl font-bold ml-3 mt-2">Update Member</p>
                 <div className="modal-close cursor-pointer z-50">
                 <svg className="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" onClick={() => handleModalToggle(false)}>
                     <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
                 </svg>
                 </div>
             </div>
+            <hr className='py-2'/>
+
             <Formik
                 enableReinitialize
                 initialValues={userProfileValue}
@@ -90,8 +92,9 @@ export const MemberModalView: React.FC<Props> = (props) => {
                         errors = props.formErrors
                         return (
                             <Form>
-                                <div className='h-40vh hsm:h-50vh hmd:h-55vh hlg:h-60vh hxl:h-65vh overflow-y-scroll'>
+                                <div className='h-40vh hsm:h-50vh hmd:h-55vh hlg:h-60vh hxl:h-65vh'>
                                     <span>
+                                        
                                         <div className='flex justify-center items-center'>
                                             <img className="rounded-full h-32 w-32 mb-4" src={imgDisplay} alt="avatar" />
                                         </div>
@@ -102,8 +105,9 @@ export const MemberModalView: React.FC<Props> = (props) => {
                                                     file:mr-5 file:py-2 file:px-10
                                                     file:rounded-full file:border-0
                                                     file:text-md file:font-semibold file:text-white pb-2
-                                                    file:bg-gradient-to-r file:from-blue-600 file:to-blue-600
-                                                    hover:file:cursor-pointer hover:file:opacity-80"
+                                                    hover:file:cursor-pointer hover:file:opacity-80
+                                                    file:bg-kbGreenHoverDark file:hover:bg-kbGreen
+                                                    file:focus:ring-4 focus:ring-kbGreenRing"
                                                 onChange={(event) => {
                                                     if (event.currentTarget !== null && event?.currentTarget.files  !== null) {
                                                         setFieldValue("avatarURL", event?.currentTarget?.files[0]);
@@ -122,7 +126,7 @@ export const MemberModalView: React.FC<Props> = (props) => {
                                             }
                                         </div>
                                         <hr className='py-2 mt-4'/>
-                                        <div className="mb-2">
+                                        <div>
                                             <InputContainer
                                                 label='Email'
                                                 errors={errors.email}
@@ -136,7 +140,7 @@ export const MemberModalView: React.FC<Props> = (props) => {
                                                 value={userProfileValue.email}
                                             />
                                         </div>
-                                        <div className="mb-2">
+                                        <div>
                                             <InputContainer
                                                 label='First Name'
                                                 errors={errors.firstName}
@@ -150,7 +154,7 @@ export const MemberModalView: React.FC<Props> = (props) => {
                                                 value={userProfileValue.firstName}
                                             />
                                         </div>
-                                        <div className="mb-2">
+                                        <div>
                                             <InputContainer
                                                 label='Furigana First Name'
                                                 errors={errors.furiganaFirstName}
@@ -164,7 +168,7 @@ export const MemberModalView: React.FC<Props> = (props) => {
                                                 value={userProfileValue.furiganaFirstName}
                                             />
                                         </div>
-                                        <div className="mb-2">
+                                        <div>
                                             <InputContainer
                                                 label='Last Name'
                                                 errors={errors.lastName}
@@ -178,7 +182,7 @@ export const MemberModalView: React.FC<Props> = (props) => {
                                                 value={userProfileValue.lastName}
                                             />
                                         </div>
-                                        <div className="mb-2">
+                                        <div>
                                             <InputContainer
                                                 label='Furigana Last Name'
                                                 errors={errors.furiganaLastName}
@@ -192,7 +196,7 @@ export const MemberModalView: React.FC<Props> = (props) => {
                                                 value={userProfileValue.furiganaLastName}
                                             />
                                         </div>
-                                        <div className="mb-2">
+                                        <div>
                                             <InputContainer
                                                 label='Position'
                                                 errors={errors.position}
@@ -206,7 +210,7 @@ export const MemberModalView: React.FC<Props> = (props) => {
                                                 value={userProfileValue.position}
                                             />
                                         </div>
-                                        <div className="mb-2">
+                                        <div>
                                             <div className="flex justify-start w-full items-center text-center">
                                                 <label className="block w-1/3 text-gray-700 text-sm font-bold mb-2 mr-4">
                                                     Date Joined
@@ -239,14 +243,15 @@ export const MemberModalView: React.FC<Props> = (props) => {
                                         </div>
                                     </span>
                                 </div>
+
                                 <div className="flex justify-end pt-6">
                                     <button disabled={isSubmitting ? true : false} 
-                                        className={` ${isSubmitting ? "animate-pulse bg-gray-700 " : "bg-blue-700 "} px-4 mr-5 p-0 rounded-lg text-white hover:bg-blue-900 d-flex` } type="submit">
+                                        className={` ${isSubmitting ? "animate-pulse bg-gray-700 " : "bg-kbGreenHoverDark hover:bg-kbGreen focus:ring-4 focus:ring-kbGreenRing"} w-32  shadow-md focus:outline-none mr-5 p-0 rounded-full font-medium text-white d-flex` } type="submit">
                                         <span>
-                                            { isSubmitting ? "Submitting...": "Update Profile"}
+                                            { isSubmitting ? "Submitting...": "Update"}
                                         </span>
                                     </button>
-                                    <button className="modal-close px-4 bg-gray-500 p-3 rounded-lg text-white hover:bg-gray-700" onClick={() => {handleModalToggle(false)}}>Close</button>
+                                    <button type="button" className="modal-close px-4 bg-gray-500 p-3 rounded-full text-white hover:bg-gray-700 w-32 font-medium shadow-sm" onClick={() => {handleModalToggle(false)}}>Close</button>
                                 </div>
                             </Form>
                         )

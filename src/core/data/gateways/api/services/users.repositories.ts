@@ -1,7 +1,7 @@
 import { store } from "../../../../presentation/presenters/store/store"
-import { setUserList } from "../../../../presentation/presenters/store/reducers/users.reducer"
+import { setUserList, updateUserList } from "../../../../presentation/presenters/store/reducers/users.reducer"
 import { setUserProfileErrors, resetUserProfileErrors } from "../../../../presentation/presenters/store/reducers/formUserProfile.reducer"
-import { PagedUserListEntity } from "../../../../domain/entities/users/user.entity"
+import { IUserProfile, PagedUserListEntity } from "../../../../domain/entities/users/user.entity"
 import { IFormUserProfileErrors } from "../../../../domain/entities/formModels/user-profile-form.entity"
 
 
@@ -12,6 +12,10 @@ export default class UsersRepository {
 
     setUserFormErrors(formError: IFormUserProfileErrors) {
         store.dispatch(setUserProfileErrors(formError))
+    }
+
+    updateUser(user: IUserProfile) {
+        store.dispatch(updateUserList(user))
     }
 
     resetUserFormErrors() {

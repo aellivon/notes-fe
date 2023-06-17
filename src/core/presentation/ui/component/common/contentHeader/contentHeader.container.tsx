@@ -8,23 +8,23 @@ import { useAppSelector } from '../../../../presenters/store/hooks'
 
 export interface IContentHeaderContainerViewModel {
   currentPage: string
-  currentPageTitle:string
-  tabItems: ITabItems[]
-  breadCrumbs: IBreadCrumbItems[]
+  currentPageTitle: string
+  tabItems?: ITabItems[]
+  breadCrumbs?: IBreadCrumbItems[]
+  children?: React.ReactNode
 }
 
 export const ContentHeaderContainer: React.FC<IContentHeaderContainerViewModel> = (props) => {
   const currentUser = useAppSelector(state => state.authState.user);
 
   return (
-    <>
-      <ContentHeaderView
-        currentUser={currentUser}
-        currentPageTitle={props.currentPageTitle}
-        tabItems={props.tabItems}
-        breadCrumbs={props.breadCrumbs}
-      />
-    </>
-
+    <ContentHeaderView
+      currentUser={currentUser}
+      currentPageTitle={props.currentPageTitle}
+      tabItems={props.tabItems}
+      breadCrumbs={props.breadCrumbs}
+    >
+      {props.children}
+    </ContentHeaderView>
   )
 }

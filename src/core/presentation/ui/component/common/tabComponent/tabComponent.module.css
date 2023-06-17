@@ -1,11 +1,11 @@
 @charset "utf-8";
 
 .activeTab{
-	color: #3B71CA;
-	border-color: #3B71CA;
+	color: #1DB954;
+	border-color: #1DB954;
 }
 
 .potentialActiveTab:hover{
-	color: #3B71CA;
-	border-color: #3B71CA;
+	color: #1DB954;
+	border-color: #1DB954;
 }

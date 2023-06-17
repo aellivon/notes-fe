@@ -6,7 +6,7 @@ import {
 import { Api } from '../../../infra/api'
 import UserEntity, { IUserProfile, PagedUserListEntity } from '../../../../domain/entities/users/user.entity'
 import { setPagedDataBaseAttributes } from './mappers/page.mapper'
-import { setUserAttributes } from './mappers/user.mappers'
+import { mapUserAttributes } from './mappers/user.mappers'
 import { IFormUserProfileFields } from '../../../../domain/entities/formModels/user-profile-form.entity'
 import { mapUserFormError } from './mappers/userForms/userFormError'
 import { IFormUserProfileErrors } from '../../../../domain/entities/formModels/user-profile-form.entity'
@@ -25,6 +25,7 @@ export interface IUserGateway {
     getUserListFromResponse: (listUserModel: IListUserModel) => PagedUserListEntity
     updateUser: (form: IFormUserProfileFields, id: number) => Promise<IUserModel>
     mapUserProfileFormError: (form: IUserProfileError) => IFormUserProfileErrors
+    mapSingleUserFromResponse: (rawUser: IUserModel) => IUserProfile
 }
 
 export default class UserApiGateway extends Api {
@@ -79,7 +80,7 @@ export default class UserApiGateway extends Api {
 
         listUserModel.results.forEach(element => {
             const user = new UserEntity()
-            user.setEntity(setUserAttributes(element))
+            user.setEntity(mapUserAttributes(element))
             results.push(user.getCurrentValues())
         });
 
@@ -91,5 +92,11 @@ export default class UserApiGateway extends Api {
             }
         )
         return pagedUsers
+    }
+
+    mapSingleUserFromResponse(rawUser: IUserModel): IUserProfile {
+        const user = new UserEntity()
+        user.setEntity(mapUserAttributes(rawUser))
+        return user.getCurrentValues()
     }
 }

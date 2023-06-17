@@ -5,10 +5,11 @@ import { ITabItems } from '../../../../../domain/entities/active-tab-component.e
 
 export interface ITabComponentContainerViewModel {
   items: ITabItems[]
+  hasButton: boolean
 }
 
 export const TabComponentContainer: React.FC<ITabComponentContainerViewModel> = (props) => {
   return (
-    <TabComponentView items={props.items} />
+    <TabComponentView items={props.items} hasButton={props.hasButton}/>
   )
 }

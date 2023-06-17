@@ -8,8 +8,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        salesPrimary: "#0d142e",
-        salesSecondary: "#9D9DD1"
+        kbPrimary: "#1b211c",
+        kbSecondary: "#1DB954",
+        kbGreen: "#1DB954",
+        kbGreenHover: "#00ff5a",
+        kbGreenHoverDark: "#007900",
+        kbDark: "#121212",
+        kbGreenRing: "#02a9028a"
       },
       spacing: {
         '2xfull': "200%",

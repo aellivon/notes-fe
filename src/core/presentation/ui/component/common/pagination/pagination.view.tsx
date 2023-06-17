@@ -59,11 +59,11 @@ export const PaginationView: React.FC<IPaginationViewModel> = (props) => {
   return (
     <>
       <span className='flex justify-center'>
-          <div className='flex bg-white mb-5 bg-white mt-3 xl:mt-4 mx-2 px-4 shadow-lg justify-center'>
+          <div className='flex mb-5 mt-3 xl:mt-4 mx-2 px-4 justify-center'>
               <nav aria-label="Pagination" className="flex items-center text-gray-600 rounded">
                   {
                     props.previous !== "" && props.previous !== undefined && props.previous !== null ? 
-                      <button onClick={() => props.onPreviousClickEvent(props.previous)} className="cursor-pointer p-2 mr-4 rounded hover:bg-gray-100">
+                      <button onClick={() => props.onPreviousClickEvent(props.previous)} className="cursor-pointer p-2 mr-4 rounded hover:bg-kbGreen hover:text-white">
                         <svg xmlns="http://www.w3.orcenterg/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                         </svg>
@@ -72,16 +72,16 @@ export const PaginationView: React.FC<IPaginationViewModel> = (props) => {
                   }
                   { paginationSet.map((element, index) => {
                       if (element === "...") {
-                        return <button onClick={() => {}} key={index} className="px-4 py-2 rounded hover:bg-gray-100 hidden md:block"> {element} </button>
+                        return <button onClick={() => {}} key={index} className="px-4 py-2 rounded hover:bg-kbGreen hover:text-white hidden md:block"> {element} </button>
                       } else if (element === props.currentPageNumber) {
-                        return <button onClick={() => props.onPageClickEvent(element)} key={index} className="px-4 py-2 rounded bg-gray-200 text-gray-900 font-medium hover:bg-gray-100"> { element } </button>
+                        return <button onClick={() => props.onPageClickEvent(element)} key={index} className="shadow-md px-4 py-2 rounded bg-kbPrimary text-kbSecondary font-medium hover:bg-kbGreen hover:text-white"> { element } </button>
                       } else {
-                        return <button onClick={() => props.onPageClickEvent(element)} key={index} className="hidden md:block cursor-pointer px-4 py-2 rounded hover:bg-gray-100"> {element} </button>    
+                        return <button onClick={() => props.onPageClickEvent(element)} key={index} className="hidden md:block cursor-pointer px-4 py-2 rounded hover:bg-kbGreen hover:text-white"> {element} </button>    
                       }
                   })}
                   {
                     props.next !== "" && props.next !== undefined && props.next !== null ? 
-                      <button onClick={() => props.onNextClickEvent(props.next)} className="cursor-pointer p-2 ml-4 rounded hover:bg-gray-100">
+                      <button onClick={() => props.onNextClickEvent(props.next)} className="cursor-pointer p-2 ml-4 rounded hover:bg-kbGreen hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                         </svg>

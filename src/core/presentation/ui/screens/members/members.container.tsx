@@ -32,14 +32,14 @@ const MemberContainer: React.FC = () => {
     status?: string
   }
 
-  const requestPaginaton = async ({pageNumber = 1, url = null}: Params) => {
+  const requestPaginaton = async ({ pageNumber = 1, url = null }: Params) => {
     const controller = new MemberController()
     const department = selectedDepartment
-    await controller.listUsers({pageNumber, queryString, department, type, status, url})
+    await controller.listUsers({ pageNumber, queryString, department, type, status, url })
   }
 
   const searchBarHit = async () => {
-    const params: Params = {pageNumber: 1, url: null, queryString: queryString, department: selectedDepartment, type: type, status: status}
+    const params: Params = { pageNumber: 1, url: null, queryString: queryString, department: selectedDepartment, type: type, status: status }
     requestPaginaton(params)
   }
 
@@ -47,9 +47,9 @@ const MemberContainer: React.FC = () => {
     <div className='h-screen'>
       <MemberView
         pagedUsers={pagedUsers}
-        onPreviousClickEvent={(prev: string) => {requestPaginaton({url: prev})}}
-        onPageClickEvent={(pageNumber: number) => {requestPaginaton({pageNumber: pageNumber})}}
-        onNextClickEvent={(next: string) => {requestPaginaton({url: next})}}
+        onPreviousClickEvent={(prev: string) => { requestPaginaton({ url: prev }) }}
+        onPageClickEvent={(pageNumber: number) => { requestPaginaton({ pageNumber: pageNumber }) }}
+        onNextClickEvent={(next: string) => { requestPaginaton({ url: next }) }}
         onSearchEvent={() => {
           searchBarHit()
         }}

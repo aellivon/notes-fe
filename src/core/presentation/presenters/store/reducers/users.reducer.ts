@@ -1,6 +1,7 @@
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { PagedUserListEntity, IPagedUserListInterface } from "../../../../domain/entities/users/user.entity";
+import { PagedUserListEntity, IPagedUserListInterface, IUserProfile } from "../../../../domain/entities/users/user.entity";
+import { stat } from "fs";
 
 
 interface IUsersState {
@@ -18,11 +19,19 @@ export const usersSlice = createSlice({
     setUserList(state, action: PayloadAction<IPagedUserListInterface>) {
       state.users = action.payload
     },
+    updateUserList(state, action: PayloadAction<IUserProfile>) {
+      const updatedUser = action.payload
+      var elementPos = state.users.results.map(function(x) {return x.id; }).indexOf(updatedUser.id);
+      let toUpdateUsers = [...state.users.results]
+      toUpdateUsers[elementPos] = action.payload
+      state.users.results = [...toUpdateUsers]
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
 export const {
   setUserList,
+  updateUserList
 } = usersSlice.actions
 export default usersSlice.reducer

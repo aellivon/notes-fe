@@ -4,7 +4,7 @@ import {
 import { setBaseUserAttributes } from './user.base.mapper'
 
 
-export const setUserAttributes = (initialModel: IUserModel | any, data: any = {}) => {
+export const mapUserAttributes = (initialModel: IUserModel | any, data: any = {}) => {
     return {
         ...setBaseUserAttributes(initialModel, data),
         furiganaFirstName: initialModel.furigana_fname,

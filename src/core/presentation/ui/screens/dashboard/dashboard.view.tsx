@@ -1,11 +1,8 @@
 import {
     SidebarContainer
 } from '../../component/common/sidebar/sidebar.container'
-import { ContentHeaderContainer } from '../../component/common/contentHeader/contentHeader.container';
 import { useAppSelector } from '../../../presenters/store/hooks'
 
-import { ITabItems } from '../../../../domain/entities/active-tab-component.entity'
-import { IBreadCrumbItems } from '../../../../domain/entities/breadcrumb-component.entity';
 
 interface DashboardProps {
 }
@@ -13,23 +10,8 @@ interface DashboardProps {
 export const DashboardView:React.FC<DashboardProps> = (props) => {
 
     const currentPage = "dashboard"
-    const currentPageTitle = "ダッシュボード"
+    const currentPageTitle = "Dashboard"
     const highLight = "dashboard"
-
-    const breadCrumbs: IBreadCrumbItems[] = [
-        {
-            name: currentPageTitle,
-            to: "/dashboard"
-        }
-    ]
-
-    const tabItems: ITabItems[] = [
-        {
-            name: currentPageTitle,
-            active: true,
-            to: "/dashboard"
-        },
-    ]
 
     const hiddenNavbar = useAppSelector(state => state.appUIState.hiddenNavbar);
 
@@ -49,15 +31,12 @@ export const DashboardView:React.FC<DashboardProps> = (props) => {
                 highLight={highLight}
             />
             <div className={`transition-width ease-in-out duration-500 ${contentClasses}`}>
-                <ContentHeaderContainer
-                    currentPage={currentPage}
-                    currentPageTitle={currentPageTitle}
-                    tabItems={tabItems}
-                    breadCrumbs={breadCrumbs}
-                />
+                <div>
                 <span>
                     Dashboard Content
                 </span>
+                </div>
+                
             </div>
         </>
     );
