@@ -15,6 +15,8 @@ import { IPagedGroupBaseEntity } from '../../../../domain/entities/groups/group-
 import MemberCardContainer from '../../component/members/memberCard/memberCard.container';
 
 import { PaginationContainer } from '../../component/common/pagination/pagination.container';
+import MemberModalContainer from '../../component/members/memberModal/memberModal.container';
+import { IFormUserProfileErrors } from '../../../../domain/entities/formModels/user-profile-form.entity';
 
 interface MemberProps {
     pagedUsers: IPagedUserListInterface
@@ -28,6 +30,7 @@ interface MemberProps {
     setDepartment: React.Dispatch<React.SetStateAction<string>>
     setType: React.Dispatch<React.SetStateAction<string>>
     setStatus: React.Dispatch<React.SetStateAction<string>>
+    formErrors: IFormUserProfileErrors
 }
 
 export const MemberView:React.FC<MemberProps> = (props) => {
@@ -76,6 +79,16 @@ export const MemberView:React.FC<MemberProps> = (props) => {
                     tabItems={tabItems}
                     breadCrumbs={breadCrumbs}
                 >
+                    {/* TODO: 
+                        <MemberModalContainer
+                        member={}
+                        onSubmit={(form, userID) => {
+                            alert('add')
+                            // props.updateUserProfile(form, userID)
+                        }}
+                        formErrors={props.formErrors}
+                        actionType='Add'
+                    /> */}
                     <button type="button" onClick={() => {
                             props.onSearchEvent()
                         }}

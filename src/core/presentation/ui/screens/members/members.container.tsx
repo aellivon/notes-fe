@@ -10,6 +10,7 @@ const MemberContainer: React.FC = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("*")
   const [type, setType] = useState("*")
   const [status, setStatus] = useState("active")
+  const formErrors = useAppSelector(state => state.formUserProfileState.userErrors);
 
   useEffect(() => {
     const controller = new MemberController()
@@ -59,6 +60,7 @@ const MemberContainer: React.FC = () => {
         setDepartment={setSelectedDepartment}
         setType={setType}
         setStatus={setStatus}
+        formErrors={formErrors}
       />
     </div>
   )

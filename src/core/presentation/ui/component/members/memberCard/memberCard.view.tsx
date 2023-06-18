@@ -37,6 +37,17 @@ export const MemberCardView: React.FC<IMemberCardViewModel> = (props) => {
                     props.updateUserProfile(form, userID)
                 }}
                 formErrors={props.formErrors}
+                actionType='Update'
+            />
+        </div>
+        <div className='flex items-center justify-end flex text-kbGreenHoverDark'>
+            <MemberModalContainer
+                member={props.member}
+                onSubmit={(form, userID) => {
+                    props.updateUserProfile(form, userID)
+                }}
+                formErrors={props.formErrors}
+                actionType='Delete'
             />
         </div>
     </div>

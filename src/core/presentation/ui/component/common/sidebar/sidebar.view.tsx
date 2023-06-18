@@ -140,12 +140,6 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
               }
             </button>
             <div className={`flex justify-start  flex-col w-full md:w-auto items-start pb-1 ${adminMenuAdditionalClasses}`}>
-              <button className="flex justify-start items-center space-x-6 hover:text-kbGreenHover focus:text-kbGreenHover text-kbSecondary hover:text-kbGreenHover rounded px-3 py-2  w-full md:w-52">
-                <IconContext.Provider value={{ className:"w-6 h-6 " }}>
-                  <HiOutlineUserGroup/>
-                </IconContext.Provider>
-                <p className="leading-4">Groups</p>
-              </button>
               <button onClick={() => {navigate("/members")}}
                 className={`flex jusitfy-start items-center space-x-6 w-full  focus:outline-none focus:text-kbGreenHover hover:text-kbGreenHover rounded px-3 py-2  w-full md:w-52 ` + (props.highLight === "members" ? 'text-kbGreenHover' : 'text-kbSecondary')}>
                 <IconContext.Provider value={{ className:"w-6 h-6 " }}>
@@ -180,7 +174,7 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
                       </IconContext.Provider>
                       </span>
                     </button>
-                    <div ref={clickOutsideCallback} className={`absolute z-[1000] float-left p-3 min-w-max list-none overflow-hidden rounded-lg border-none bg-clip-padding text-left text-base shadow-sm shadow-white bg-kbPrimary flex justify-center items-center ${cogMenuAdditionalClasses}`}>
+                    <div ref={clickOutsideCallback} className={`absolute z-[1000] float-left p-3 min-w-max list-none overflow-hidden rounded-lg border-none bg-clip-padding text-left text-base shadow-sm shadow-gray-500 bg-kbPrimary flex justify-center items-center ${cogMenuAdditionalClasses}`}>
                       <button className="flex justify-start items-center space-x-6 hover:text-kbGreenHover focus:text-kbGreenHover text-kbSecondary hover:text-kbGreenHover rounded pl-3 pr-9 pb-0  w-100" onClick={() => {props.logOutFunc()}}>
                         <IconContext.Provider value={{ className:"w-6 h-6" }}>
                           <HiArrowLeftOnRectangle/>

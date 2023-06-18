@@ -9,6 +9,7 @@ export interface Props {
   member: IUserProfile,
   onSubmit: (form: IFormUserProfileFields, userId: number) => void
   formErrors: IFormUserProfileErrors
+  actionType: string
 }
 
 const MemberModalContainer: React.FC<Props> = (props) => {
@@ -30,6 +31,7 @@ const MemberModalContainer: React.FC<Props> = (props) => {
         resetForm={() => {
           resetForm()
         }}
+        actionType={props.actionType}
       />
     </div>
   )
