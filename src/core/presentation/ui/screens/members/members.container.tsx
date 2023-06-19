@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import MemberController from './members.controller'
 import { MemberView } from './members.view'
 import { useAppSelector } from '../../../presenters/store/hooks'
+import { IFormUserProfileFields } from '../../../../domain/entities/formModels/user-profile-form.entity'
+import memberCardController from '../../component/members/memberCard/memberCard.controller'
 
 
 const MemberContainer: React.FC = () => {
@@ -44,6 +46,11 @@ const MemberContainer: React.FC = () => {
     requestPaginaton(params)
   }
 
+  const createUserProfile = (form: IFormUserProfileFields) => {
+    const controller = new memberCardController()
+    controller.createProfile(form)
+  }
+
   return (
     <div className='h-screen'>
       <MemberView
@@ -61,6 +68,7 @@ const MemberContainer: React.FC = () => {
         setType={setType}
         setStatus={setStatus}
         formErrors={formErrors}
+        createUserProfile={createUserProfile}
       />
     </div>
   )

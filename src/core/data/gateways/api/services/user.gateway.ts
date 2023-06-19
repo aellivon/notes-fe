@@ -21,9 +21,11 @@ interface Params {
 }
 
 export interface IUserGateway {
-    listUsers: ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params) => Promise<IListUserModel>
+    listUsers: ({ pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active" }: Params) => Promise<IListUserModel>
     getUserListFromResponse: (listUserModel: IListUserModel) => PagedUserListEntity
     updateUser: (form: IFormUserProfileFields, id: number) => Promise<IUserModel>
+    createUser: (form: IFormUserProfileFields) => Promise<IUserModel>
+    deleteUser: (id: number) => Promise<IUserModel>
     mapUserProfileFormError: (form: IUserProfileError) => IFormUserProfileErrors
     mapSingleUserFromResponse: (rawUser: IUserModel) => IUserProfile
 }
@@ -51,17 +53,54 @@ export default class UserApiGateway extends Api {
 
         if (form.avatarURL !== undefined) {
             let base64AvatarURL = toBase64(form.avatarURL)
-            params["avatar_url"] = await base64AvatarURL   
+            params["avatar_url"] = await base64AvatarURL
         }
         return await this.patch<IUserModel>(`user/user/${id}/`, params)
     }
+
+    async createUser(form: IFormUserProfileFields): Promise<IUserModel> {
+        const toBase64 = (file: File) => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+        });
+
+        let newDateJoined = form.dateJoined
+        if (form.dateJoined) {
+            const dateList = form.dateJoined?.split("-");
+            const dobj = new Date(parseInt(dateList[0]), parseInt(dateList[1]) - 1, parseInt(dateList[2]));
+            newDateJoined = dobj.toISOString();
+        }
+
+        let params: any = {
+            first_name: form.firstName,
+            last_name: form.lastName,
+            furigana_fname: form.furiganaFirstName,
+            furigana_lname: form.furiganaLastName,
+            position: form.position,
+            email: form.email,
+            date_joined: newDateJoined
+        }
+
+        if (form.avatarURL !== undefined) {
+            let base64AvatarURL = toBase64(form.avatarURL)
+            params["avatar_url"] = await base64AvatarURL
+        }
+        return await this.post<IUserModel>(`user/user/`, params)
+    }
+
+    async deleteUser(id: number): Promise<IUserModel> {
+        return await this.delete<IUserModel>(`user/user/${id}/`)
+    }
+
 
     mapUserProfileFormError(error: IUserProfileError): IFormUserProfileErrors {
         return mapUserFormError(error)
     }
 
-    async listUsers ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<IListUserModel> {
-        if(url !== null && url !== undefined) {
+    async listUsers({ pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active" }: Params): Promise<IListUserModel> {
+        if (url !== null && url !== undefined) {
             return this.get<IListUserModel>(url, {})
         }
         let params = {
@@ -71,10 +110,10 @@ export default class UserApiGateway extends Api {
             type: type,
             status: status
         }
-        return this.get<IListUserModel>('/user/user', {...params})
+        return this.get<IListUserModel>('/user/user', { ...params })
     }
 
-    getUserListFromResponse (listUserModel: IListUserModel): PagedUserListEntity {
+    getUserListFromResponse(listUserModel: IListUserModel): PagedUserListEntity {
         let data = setPagedDataBaseAttributes(listUserModel)
         let results: IUserProfile[] = []
 

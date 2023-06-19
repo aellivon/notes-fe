@@ -43,17 +43,17 @@ export const LoginScreen:React.FC<ILoginFormViewModel> = (props) => {
                 <div className="mb-4">  
                   <label htmlFor="username" className="">Username</label>
                   <Field type="text" name="username" id="username" 
-                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" required />
+                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-kbGreen focus:outline-none" required />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="password" className="">パスワード</label>
+                  <label htmlFor="password" className="">Password</label>
                   <Field type="password" name="password" id="password" autoComplete="on" required
-                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-kbGreen focus:outline-none"
                   />
                 </div>
                 <div className="text-center pt-1 mb-12 pb-1">
                   <button
-                    className="inline-block px-6 py-2.5 font-medium text-xs bg-blue-500 hover:bg-blue-700 leading-tight uppercase rounded shadow-md text-white hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
+                    className="inline-block px-6 py-2.5 font-medium text-xs text-white bg-kbGreenHoverDark hover:bg-kbGreen focus:outline-none focus:ring-4 focus:ring-kbGreenRing leading-tight uppercase rounded shadow-md text-white hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
                     type="submit"
                     data-mdb-ripple="true"
                     data-mdb-ripple-color="light"

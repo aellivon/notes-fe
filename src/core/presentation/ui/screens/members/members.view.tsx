@@ -10,13 +10,13 @@ import { HiMagnifyingGlass, HiPlusCircle } from 'react-icons/hi2';
 
 import { IconContext } from 'react-icons'
 
-import { IPagedUserListInterface } from '../../../../domain/entities/users/user.entity';
+import UserEntity, { IPagedUserListInterface } from '../../../../domain/entities/users/user.entity';
 import { IPagedGroupBaseEntity } from '../../../../domain/entities/groups/group-base.entity';
 import MemberCardContainer from '../../component/members/memberCard/memberCard.container';
 
 import { PaginationContainer } from '../../component/common/pagination/pagination.container';
 import MemberModalContainer from '../../component/members/memberModal/memberModal.container';
-import { IFormUserProfileErrors } from '../../../../domain/entities/formModels/user-profile-form.entity';
+import { IFormUserProfileErrors, IFormUserProfileFields } from '../../../../domain/entities/formModels/user-profile-form.entity';
 
 interface MemberProps {
     pagedUsers: IPagedUserListInterface
@@ -31,6 +31,7 @@ interface MemberProps {
     setType: React.Dispatch<React.SetStateAction<string>>
     setStatus: React.Dispatch<React.SetStateAction<string>>
     formErrors: IFormUserProfileErrors
+    createUserProfile: (form: IFormUserProfileFields) => void
 }
 
 export const MemberView:React.FC<MemberProps> = (props) => {
@@ -38,6 +39,7 @@ export const MemberView:React.FC<MemberProps> = (props) => {
     const currentPage = "members"
     const currentPageTitle = "Members"
     const highLight = "members"
+    const emptyMember = new UserEntity().getCurrentValues()
 
     const breadCrumbs: IBreadCrumbItems[] = [
         {
@@ -79,26 +81,14 @@ export const MemberView:React.FC<MemberProps> = (props) => {
                     tabItems={tabItems}
                     breadCrumbs={breadCrumbs}
                 >
-                    {/* TODO: 
-                        <MemberModalContainer
-                        member={}
-                        onSubmit={(form, userID) => {
-                            alert('add')
-                            // props.updateUserProfile(form, userID)
+                    <MemberModalContainer
+                        member={emptyMember}
+                        onSubmit={(form) => {
+                            props.createUserProfile(form)
                         }}
                         formErrors={props.formErrors}
                         actionType='Add'
-                    /> */}
-                    <button type="button" onClick={() => {
-                            props.onSearchEvent()
-                        }}
-                        className="flex items-center justify-center text-white bg-kbGreenHoverDark hover:bg-kbGreen focus:outline-none focus:ring-4 focus:ring-kbGreenRing font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2"
-                    >
-                        <IconContext.Provider value={{ className:"w-5 h-5 mr-2" }}>
-                            <HiPlusCircle/>
-                        </IconContext.Provider>
-                        Add Member
-                    </button>
+                    />
                 </ContentHeaderContainer>
                 <span>
                     <form>

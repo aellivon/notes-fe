@@ -25,13 +25,26 @@ export const usersSlice = createSlice({
       let toUpdateUsers = [...state.users.results]
       toUpdateUsers[elementPos] = action.payload
       state.users.results = [...toUpdateUsers]
-    }
+    },
+    createUserList(state, action: PayloadAction<IUserProfile>){
+      let prevResults = [...state.users.results]
+      prevResults.unshift(action.payload)
+      state.users.results = prevResults
+    },
+    deleteUserList(state, action: PayloadAction<IUserProfile>){
+      const { id } = action.payload; 
+      let prevResults = [...state.users.results]
+      prevResults = state.users.results.filter(item => item.id !== id)
+      state.users.results = prevResults
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
 export const {
   setUserList,
-  updateUserList
+  updateUserList,
+  createUserList,
+  deleteUserList
 } = usersSlice.actions
 export default usersSlice.reducer

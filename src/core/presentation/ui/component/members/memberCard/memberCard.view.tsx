@@ -5,51 +5,55 @@ import { IFormUserProfileErrors, IFormUserProfileFields } from '../../../../../d
 export interface IMemberCardViewModel {
     member: IUserProfile
     updateUserProfile: (form: IFormUserProfileFields, userId: number) => void
+    deleteUserProfile: (userId: number) => void
     formErrors: IFormUserProfileErrors
 }
 
 export const MemberCardView: React.FC<IMemberCardViewModel> = (props) => {
 
-  return (
-    <div className='flex items-center rounded-lg bg-white my-2 xl:my-4 mx-2 px-4 shadow-md h-24 grid grid-cols-4 sm:grid-cols-4 sm:grid-cols-4 lg:grid-cols-5'>
-        <div className='flex items-center col-span-3 sm:col-span-2'>
-            <img className="rounded-full h-16 w-16" src={
-                `${props.member?.avatarURL ? props.member?.avatarURL : `/logo192.png`}`
-            } alt="avatar"/>
-            <p className='ml-4 mr-1'>
-                { props.member.displayName }
-            </p>
+    return (
+        <div className='flex items-center rounded-lg bg-white my-2 xl:my-4 mx-2 px-4 shadow-md h-24 grid grid-cols-4 sm:grid-cols-4 sm:grid-cols-4 lg:grid-cols-5'>
+            <div className='flex items-center col-span-3 sm:col-span-2'>
+                <img className="rounded-full h-16 w-16" src={
+                    `${props.member?.avatarURL ? props.member?.avatarURL : `/logo192.png`}`
+                } alt="avatar" />
+                <p className='ml-4 mr-1'>
+                    {props.member.displayName}
+                </p>
+            </div>
+            <div className='flex items-center justify-center hidden sm:flex'>
+                <p className='mr-1'>
+                    {props.member.department}
+                </p>
+            </div>
+            <div className='flex items-center justify-center hidden lg:flex'>
+                <p className='mr-1'>
+                    {props.member.position}
+                </p>
+            </div>
+            <div className='flex items-center justify-end flex'>
+                <span className='text-kbGreen mr-3'>
+                    <MemberModalContainer
+                        member={props.member}
+                        onSubmit={(form, userID) => {
+                            props.updateUserProfile(form, userID)
+                        }}
+                        formErrors={props.formErrors}
+                        actionType='Update'
+                    />
+                </span>
+                <span className='text-red-500'>
+                    <MemberModalContainer
+                        member={props.member}
+                        onSubmit={(form, userID) => {
+                            props.deleteUserProfile(userID)
+                        }}
+                        formErrors={props.formErrors}
+                        actionType='Delete'
+                    />
+                </span>
+
+            </div>
         </div>
-        <div className='flex items-center justify-center hidden sm:flex'>
-            <p className='mr-1'>
-                { props.member.department }
-            </p>
-        </div>
-        <div className='flex items-center justify-center hidden lg:flex'>
-            <p className='mr-1'>
-                { props.member.position }
-            </p>
-        </div>
-        <div className='flex items-center justify-end flex text-kbGreenHoverDark'>
-            <MemberModalContainer
-                member={props.member}
-                onSubmit={(form, userID) => {
-                    props.updateUserProfile(form, userID)
-                }}
-                formErrors={props.formErrors}
-                actionType='Update'
-            />
-        </div>
-        <div className='flex items-center justify-end flex text-kbGreenHoverDark'>
-            <MemberModalContainer
-                member={props.member}
-                onSubmit={(form, userID) => {
-                    props.updateUserProfile(form, userID)
-                }}
-                formErrors={props.formErrors}
-                actionType='Delete'
-            />
-        </div>
-    </div>
-  )
+    )
 }

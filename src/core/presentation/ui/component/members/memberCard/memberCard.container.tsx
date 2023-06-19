@@ -23,12 +23,19 @@ const MemberCardContainer: React.FC<IMemberCardContainerModel> = (props) => {
     controller.updateProfile(form, userId)
   }
 
+  const deleteUserProfile = ( userId: number) => {
+    controller.deleteProfile(userId)
+  }
+
   return (
     <div>
       <MemberCardView
         member={props.member}
         updateUserProfile={(form: IFormUserProfileFields, userId: number) => {
           updateUserProfile(form, userId)
+        }}
+        deleteUserProfile={(userId: number) => {
+          deleteUserProfile(userId)
         }}
         formErrors={formErrors}
       />
