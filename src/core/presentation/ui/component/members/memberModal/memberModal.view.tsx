@@ -123,7 +123,6 @@ export const MemberModalView: React.FC<Props> = (props) => {
                 enableReinitialize
                 initialValues={userProfileValue}
                 onSubmit={async values => {
-                    console.log(values);
                     props.resetForm()
                     await props.onSubmit(values, memberID)
                 }}

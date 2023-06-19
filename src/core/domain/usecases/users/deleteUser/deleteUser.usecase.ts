@@ -11,12 +11,11 @@ export default class DeleteUserUseCase {
   }
   async execute (userID: number): Promise<any> {
     try {
-      const res = await this.dataGateway.deleteUser(userID)
-      const updatedUser = this.dataGateway.mapSingleUserFromResponse(res)
-      this.usersRepository.deleteUser(updatedUser)
+      await this.dataGateway.deleteUser(userID)
+      this.usersRepository.deleteUser(userID)
       store.dispatch(setNotificationMessage('Successfully Deleted Member'))
-    } catch (error: any) {
-      this.usersRepository.setUserFormErrors(this.dataGateway.mapUserProfileFormError(error))
+    } catch (error: any) {  
+      store.dispatch(setNotificationMessage('Failed to delete member! \n Please check that it is not your own account...'))
       console.log({ error })
     }
   }

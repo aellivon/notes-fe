@@ -25,8 +25,8 @@ export const usersSlice = createSlice({
       toUpdateUsers[elementPos] = action.payload
       state.users.results = [...toUpdateUsers]
     },
-    deleteUserList(state, action: PayloadAction<IUserProfile>){
-      const { id } = action.payload; 
+    deleteUserList(state, action: PayloadAction<number>){
+      const id = action.payload; 
       let prevResults = [...state.users.results]
       prevResults = state.users.results.filter(item => item.id !== id)
       state.users.results = prevResults

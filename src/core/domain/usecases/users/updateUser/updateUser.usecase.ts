@@ -19,8 +19,7 @@ export default class UpdateUserUseCase {
       store.dispatch(setNotificationMessage('Successfully Updated Member'))
     } catch (error: any) {
       this.usersRepository.setUserFormErrors(this.dataGateway.mapUserProfileFormError(error))
-      // history.apRe
-      // toast.error('Error in updating member')
+      toast.error('Failed to update member...')
       console.log({ error })
     }
   }

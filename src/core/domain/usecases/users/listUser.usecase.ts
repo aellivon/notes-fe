@@ -18,6 +18,8 @@ export default class ListUsersUseCase {
   ) {
   }
   async execute ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<any> {
+
+    console.log(queryString, "query")
     const response = await this.dataGateway.listUsers({pageNumber, url, queryString, department, type, status})
     try {
       let userList = this.dataGateway.getUserListFromResponse(response)

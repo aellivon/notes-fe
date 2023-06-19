@@ -19,7 +19,7 @@ export const uiStateSlice = createSlice({
       state.hiddenNavbar = action.payload
     },
     setNotificationMessage(state, action: PayloadAction<string>) {
-      if (action.payload.includes('Error')){
+      if (action.payload.includes('Error') || action.payload.includes('Fail')){
         toast.error(action.payload)
       } else if (action.payload.includes('Success')) {
         toast.success(action.payload)

@@ -15,9 +15,11 @@ export default class memberCardController {
 
   constructor () {
     this.updateUserUseCase = new UpdateUserUseCase(new UserApiGateway(), new UsersRepository())
-    this.createUserUseCase = new CreateUserUseCase(new UserApiGateway(), new UsersRepository())
     this.deleteUserUseCase = new DeleteUserUseCase(new UserApiGateway(), new UsersRepository())
     this.listUsersUseCase = new ListUsersUseCase(new UserApiGateway(), new UsersRepository())
+    this.createUserUseCase = new CreateUserUseCase(
+      new UserApiGateway(), new UsersRepository(), new ListUsersUseCase(new UserApiGateway(), new UsersRepository())
+    )
     this.userRepository = new UsersRepository()
   }
 
@@ -26,15 +28,7 @@ export default class memberCardController {
   }
 
   async createProfile (form: IFormUserProfileFields): Promise<any> {
-    this.createUserUseCase.execute(form)
-      // Call list API to get the ID of the newly created item
-      const pageNumber = 1
-      const url = null
-      const queryString = '*'
-      const department = '*'
-      const type = '*'
-      const status = 'active'
-      this.listUsersUseCase.execute({pageNumber, url, queryString, department, type, status})
+      await this.createUserUseCase.execute(form)
   }
 
   async deleteProfile (userId: number): Promise<any> {

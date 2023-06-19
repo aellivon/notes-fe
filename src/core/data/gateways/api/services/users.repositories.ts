@@ -18,8 +18,8 @@ export default class UsersRepository {
         store.dispatch(updateUserList(user))
     }
 
-    deleteUser(user: IUserProfile) {
-        store.dispatch(deleteUserList(user))
+    deleteUser(userID: number) {
+        store.dispatch(deleteUserList(userID))
     }
 
     resetUserFormErrors() {
