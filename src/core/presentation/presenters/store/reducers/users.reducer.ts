@@ -1,7 +1,6 @@
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { PagedUserListEntity, IPagedUserListInterface, IUserProfile } from "../../../../domain/entities/users/user.entity";
-import { stat } from "fs";
 
 
 interface IUsersState {
@@ -26,11 +25,6 @@ export const usersSlice = createSlice({
       toUpdateUsers[elementPos] = action.payload
       state.users.results = [...toUpdateUsers]
     },
-    createUserList(state, action: PayloadAction<IUserProfile>){
-      let prevResults = [...state.users.results]
-      prevResults.unshift(action.payload)
-      state.users.results = prevResults
-    },
     deleteUserList(state, action: PayloadAction<IUserProfile>){
       const { id } = action.payload; 
       let prevResults = [...state.users.results]
@@ -44,7 +38,6 @@ export const usersSlice = createSlice({
 export const {
   setUserList,
   updateUserList,
-  createUserList,
   deleteUserList
 } = usersSlice.actions
 export default usersSlice.reducer

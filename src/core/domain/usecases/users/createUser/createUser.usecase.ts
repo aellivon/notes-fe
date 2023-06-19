@@ -14,13 +14,10 @@ export default class CreateUserUseCase {
   async execute (form: IFormUserProfileFields): Promise<any> {
     try {
       const res = await this.dataGateway.createUser(form)
-      const createdUser = this.dataGateway.mapSingleUserFromResponse(res)
-      this.usersRepository.updateUser(createdUser)
+      this.dataGateway.mapSingleUserFromResponse(res)
       store.dispatch(setNotificationMessage('Successfully Created Member'))
     } catch (error: any) {
       this.usersRepository.setUserFormErrors(this.dataGateway.mapUserProfileFormError(error))
-      // history.apRe
-      // toast.error('Error in updating member')
       console.log({ error })
     }
   }
