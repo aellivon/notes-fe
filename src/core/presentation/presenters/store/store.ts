@@ -3,7 +3,9 @@ import authReducer from './reducers/auth.reducer'
 import appUIReducer from './reducers/appState.reducer'
 import usersReducer from './reducers/users.reducer';
 import groupsReducer from './reducers/groups.reducer';
+import knowledgebaseReducer from './reducers/knowledgebase.reducer';
 import formUserProfileReducer from './reducers/formUserProfile.reducer';
+import formKBReducer from './reducers/formKB.reducer';
 import {
   persistReducer,
   FLUSH,
@@ -14,10 +16,8 @@ import {
   REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-
 import { encryptTransform } from 'redux-persist-transform-encrypt';
-import { useStore } from 'react-redux';
-import knowledgebaseReducer from './reducers/knowledgebase.reducer';
+
 
 const encryptor = encryptTransform({
   secretKey: 'my-super-secret-key',
@@ -29,6 +29,7 @@ const encryptor = encryptTransform({
 
 const reducer = combineReducers({
   formUserProfileState: formUserProfileReducer,
+  fromKBState: formKBReducer,
   authState: authReducer,
   appUIState: appUIReducer,
   usersState: usersReducer,

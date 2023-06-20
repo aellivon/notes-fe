@@ -96,3 +96,14 @@ export interface IUserProfileError {
 export interface WrappedIUserProfileError {
   error: IUserProfileError
 }
+
+
+export interface IKnowledgebaseError {
+  non_field_errors?: string,
+  title?: string
+  description?: string
+}
+
+export interface WrappedIKnowledgebaseError {
+  error: IKnowledgebaseError
+}

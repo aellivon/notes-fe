@@ -8,6 +8,7 @@ import LoginFormContainer from './screens/login/login.container'
 import DashboardContainer from './screens/dashboard/dashboard.container'
 import MemberContainer from './screens/members/members.container'
 import { useAppSelector } from '../presenters/store/hooks'
+import KnowledgebaseContainer from './screens/knowledgebase/knowledgebase.container'
   
 export const Navigator = () => {
   const currentUser = useAppSelector(state => state.authState.user);
@@ -38,6 +39,7 @@ export const Navigator = () => {
       <Routes>
         <Route path='/' element={<AlreadyLoggedInRoute element={<LoginFormContainer />} />} />
         <Route path='/dashboard' element={<PrivateRoute element={<DashboardContainer />} />} />
+        <Route path='/knowledge-base' element={<PrivateRoute element={<KnowledgebaseContainer />} />} />
         <Route path='/members' element={<PrivateRoute element={<MemberContainer />} />} />
         <Route path="*" element={<Navigate to="/"/>} />
       </Routes>

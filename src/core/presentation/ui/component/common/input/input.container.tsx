@@ -8,6 +8,7 @@ export interface IInputContainerModel {
   onChangeEvent: (event: any) => void
   value: string | undefined
   label: string
+  type?: string
 }
 
 
@@ -20,6 +21,7 @@ const InputContainer: React.FC<IInputContainerModel> = (props) => {
       }}
       value={props.value}
       label={props.label}
+      type={props.type}
     />
   )
 }

@@ -38,7 +38,7 @@ export const DashboardView: React.FC<DashboardProps> = (props) => {
                 highLight={highLight}
             />
             <div className={`transition-width ease-in-out duration-500 ${contentClasses}`}>
-                <div className='h-80vh block flex p-8 gap-8 overflow-y-scroll justify-center flex-col lg:flex-row'>
+                <div className='h-80vh block flex p-8 gap-8 overflow-y-scroll justify-center flex-col lg:flex-row lg:grid lg:grid-cols-4'>
                     {
                         props.pagedNotes.results.map((element, index) => {
                             return <DashboardCardContainer
