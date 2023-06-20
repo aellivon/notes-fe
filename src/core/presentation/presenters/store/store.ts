@@ -17,6 +17,7 @@ import storage from 'redux-persist/lib/storage'
 
 import { encryptTransform } from 'redux-persist-transform-encrypt';
 import { useStore } from 'react-redux';
+import knowledgebaseReducer from './reducers/knowledgebase.reducer';
 
 const encryptor = encryptTransform({
   secretKey: 'my-super-secret-key',
@@ -31,6 +32,7 @@ const reducer = combineReducers({
   authState: authReducer,
   appUIState: appUIReducer,
   usersState: usersReducer,
+  kbState: knowledgebaseReducer,
   groupState: groupsReducer
 });
 

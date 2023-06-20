@@ -2,8 +2,6 @@
  * Contains all the interfaces for the API responses
  */
 
-// import { IUserProfile } from "../../users/entities/userprofile.type"
-// import { UserRole } from "../entities/user-role.entity"
 
 export interface IBaseAPIModel {
   id: number
@@ -44,9 +42,18 @@ export interface IUserModel extends IBaseAPIModel {
   is_active?: boolean
 }
 
+export interface IKnowledgebaseModel extends IBaseAPIModel {
+  title: string
+  is_active?: boolean
+  description: string
+  owner: IUserModel
+}
+
 export interface IListUserModel extends IPagedAPIViewModel<IUserModel> {}
 
 export interface IListGroupModel extends IPagedAPIViewModel<IGroupBaseModel> {}
+
+export interface IListKnowledgebaseModel extends IPagedAPIViewModel<IKnowledgebaseModel> {}
 
 export interface ILoginResponseDataModel{
   user: IUserModel
