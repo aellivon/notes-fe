@@ -4,12 +4,8 @@ import truncate from '../../../utils/truncate'
 import { useOnClickOutside } from '../../../utils/useOnClickOutside'
 import { IconContext } from 'react-icons'
 import {
-  HiOutlineSquares2X2, HiOutlineBars3, HiXMark, HiOutlineCalendar,
-  HiOutlineChartBarSquare, HiOutlineClipboardDocumentList, HiOutlineBuildingOffice,
-  HiOutlineBuildingStorefront, HiOutlineUserGroup, HiOutlineUser, HiArrowLeftOnRectangle, HiOutlineCog8Tooth, HiOutlineUsers, HiOutlineBookOpen
+  HiOutlineSquares2X2, HiOutlineBars3, HiXMark, HiArrowLeftOnRectangle, HiOutlineCog8Tooth, HiOutlineUsers, HiOutlineBookOpen
 } from "react-icons/hi2";
-import { MdOutlineRecordVoiceOver } from "react-icons/md";
-import { SlScreenDesktop } from "react-icons/sl";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -28,7 +24,7 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
   // Display only javascripts
   let hideNavMenu = props.navBarState
 
-  let [saleMenuGroupOpen, setsaleMenuGroupOpen] = useState(false)
+  // let [saleMenuGroupOpen, setsaleMenuGroupOpen] = useState(false)
   let [adminMenuGroupOpen, setadminMenuGroupOpen] = useState(props.adminGroupOpen ? props.adminGroupOpen : false)
   let [showSettingMenu, setShowSettingMenu] = useState(false)
 
@@ -36,14 +32,13 @@ export const SidebarView: React.FC<ISidebarViewModel> = (props) => {
     setShowSettingMenu(false)
   })
 
+  // let saleMenuAdditionalClasses = ""
 
-  let saleMenuAdditionalClasses = ""
-
-  if (!saleMenuGroupOpen) {
-    saleMenuAdditionalClasses = "hidden"
-  } else {
-    saleMenuAdditionalClasses = ""
-  }
+  // if (!saleMenuGroupOpen) {
+  //   saleMenuAdditionalClasses = "hidden"
+  // } else {
+  //   saleMenuAdditionalClasses = ""
+  // }
 
 
   let adminMenuAdditionalClasses = ""

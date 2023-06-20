@@ -1,6 +1,5 @@
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { PagedUserListEntity, IPagedUserListInterface } from "../../../../domain/entities/users/user.entity";
 import { IFormUserProfileErrors } from "../../../../domain/entities/formModels/user-profile-form.entity";
 
 interface IUsersState {

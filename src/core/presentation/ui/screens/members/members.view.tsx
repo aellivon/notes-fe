@@ -6,7 +6,7 @@ import { useAppSelector } from '../../../presenters/store/hooks'
 
 import { ITabItems } from '../../../../domain/entities/active-tab-component.entity'
 import { IBreadCrumbItems } from '../../../../domain/entities/breadcrumb-component.entity';
-import { HiMagnifyingGlass, HiPlusCircle } from 'react-icons/hi2';
+import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 import { IconContext } from 'react-icons'
 

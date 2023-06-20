@@ -4,7 +4,7 @@ import Datepicker from "react-tailwindcss-datepicker";
 import { useEffect, useState } from 'react'
 
 import { ModalContainer } from "../../common/modal/modal.container";
-import { HiPencilSquare, HiPlusCircle, HiTrash, HiXCircle, HiXMark } from 'react-icons/hi2';
+import { HiPencilSquare, HiPlusCircle, HiTrash } from 'react-icons/hi2';
 import { IconContext } from 'react-icons'
 import { IUserProfile } from '../../../../../domain/entities/users/user.entity';
 import { IFormUserProfileErrors, IFormUserProfileFields } from '../../../../../domain/entities/formModels/user-profile-form.entity';
@@ -37,6 +37,7 @@ export const MemberModalView: React.FC<Props> = (props) => {
 
     useEffect(() => {
         setUserProfileValue(initialValues)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.member])
 
     const handleModalToggle = (toChangeInto: boolean) => {
@@ -134,7 +135,7 @@ export const MemberModalView: React.FC<Props> = (props) => {
                         return (
                             <Form>
 
-                                {props.actionType == 'Delete' ?
+                                {props.actionType === 'Delete' ?
                                     <div className='h-10vh'>
                                         <span className='text-gray-800 ml-3'>
                                             Are you sure you want to delete this user?

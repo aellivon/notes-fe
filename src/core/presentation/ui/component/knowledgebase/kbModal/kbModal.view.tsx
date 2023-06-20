@@ -31,6 +31,7 @@ export const KnowledgebaseModalView: React.FC<Props> = (props) => {
 
     useEffect(() => {
         setNoteValue(initialValues)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.notes])
 
     const handleModalToggle = (toChangeInto: boolean) => {
@@ -119,8 +120,7 @@ export const KnowledgebaseModalView: React.FC<Props> = (props) => {
                         // errors = props.formErrors TODO
                         return (
                             <Form>
-
-                                {props.actionType == 'Delete' ?
+                                {props.actionType === 'Delete' ?
                                     <div className='h-10vh'>
                                         <span className='text-gray-800 ml-3'>
                                             Are you sure you want to delete this note?

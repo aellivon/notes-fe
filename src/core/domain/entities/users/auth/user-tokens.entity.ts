@@ -1,6 +1,3 @@
-import UserBaseEntity, { IBaseUserProfile } from '../user-base.entity'
-
-
 export interface IAuthenticationTokens {
   accessToken?: string
   refreshToken?: string

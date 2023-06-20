@@ -1,5 +1,4 @@
 import { IBaseEntity } from '../base/base.entity'
-import { IGroupBaseModel } from '../../../data/gateways/api/api.types'
 import PagedListEntity from '../base/base.paged.entity'
 
 

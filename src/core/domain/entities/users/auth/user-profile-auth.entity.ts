@@ -1,7 +1,5 @@
 import UserBaseEntity, { IBaseUserProfile } from '../user-base.entity'
 
-import { ILoginResponseDataModel, IRefreshResponseDataModel } from '../../../../data/gateways/api/api.types'
-
 export interface IAuthenticatedUserProfile extends IBaseUserProfile {
   id: number
   email: string

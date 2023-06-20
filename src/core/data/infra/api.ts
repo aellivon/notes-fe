@@ -1,15 +1,13 @@
 import { callRefresh } from '../../domain/usecases/users/refreshToken.usecase'
 import { callLogout } from '../../domain/usecases/logout/logout.case'
 import { ApiResponse, ApisauceInstance, create } from 'apisauce'
-import { ApiConfig, API_CONFIG, REFRESH_URL } from './api.config'
+import { ApiConfig, API_CONFIG } from './api.config'
 import { getGeneralApiProblem } from './api-problem'
 import { IErrorResponseModel } from '../gateways/api/api.types'
-import { toast } from 'react-toastify'
 import { store } from '../../presentation/presenters/store/store'
 
 import {
   IRefreshParamModel,
-  IRefreshResponseDataModel
 } from '../gateways/api/api.types'
 
 export interface IApi {
@@ -72,7 +70,7 @@ export class Api implements IApi {
     if (response.status && [200, 201, 202, 203, 204].includes(response.status)) {
       return data as TApiResponseModel
     } else if (response.status === 401) {
-        if (response.status && response.status == 401 && this.singleRequest == false) {
+        if (response.status && response.status === 401 && this.singleRequest === false) {
           if (this.onHoldRequest === null) {
               let form: IRefreshParamModel = {
                 refresh: store.getState().authState.tokens.refreshToken
