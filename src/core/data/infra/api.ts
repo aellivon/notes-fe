@@ -21,8 +21,9 @@ export class Api extends baseApi {
               }
               // Maybe setting it on axios is better?
               this.onHoldRequest = response
-              const refRes = await callRefresh(form)
-              if (refRes.success === true && this.onHoldRequest.config !== undefined) {
+              await callRefresh(form)
+              const updatedStore = store.getState()
+              if (updatedStore.authState.tokens.accessToken !== "" && this.onHoldRequest.config !== undefined) {
                 response = await this.apiSauce.any(this.onHoldRequest.config)
               } else {
                 callLogout()

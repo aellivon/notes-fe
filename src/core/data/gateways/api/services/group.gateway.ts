@@ -5,6 +5,7 @@ import { PagedGroupBaseEntity, IBaseGroupProfile } from '../../../../domain/enti
 import { Api } from '../../../infra/api'
 import { setGroupAttributes } from './mappers/group.mappers'
 import { setPagedDataBaseAttributes } from './mappers/page.mapper'
+import { GROUP_URL } from '../constants'
 
 
 interface Params {
@@ -22,7 +23,7 @@ export default class GroupApiGateway extends Api implements IGroupGateway {
         let params = {
             page: pageNumber
         }
-        return this.get<IListGroupModel>('/user/group', {...params})
+        return this.get<IListGroupModel>(GROUP_URL, {...params})
     }
 
     mapGroupEntity (model: IListGroupModel) {

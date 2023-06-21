@@ -10,7 +10,7 @@ import { mapUserAttributes } from './mappers/user.mappers'
 import { IFormUserProfileFields } from '../../../../domain/entities/formModels/user-profile-form.entity'
 import { mapUserFormError } from './mappers/userForms/userFormError'
 import { IFormUserProfileErrors } from '../../../../domain/entities/formModels/user-profile-form.entity'
-import { USER_LIST_URL, USER_DETAIL_URL } from '../constants'
+import { USER_URL, USER_DETAIL_URL } from '../constants'
 
 interface Params {
     pageNumber?: number
@@ -87,7 +87,7 @@ export default class UserApiGateway extends Api {
             let base64AvatarURL = toBase64(form.avatarURL)
             params["avatar_url"] = await base64AvatarURL
         }
-        return await this.post<IUserModel>(USER_LIST_URL, params)
+        return await this.post<IUserModel>(USER_URL, params)
     }
 
     async deleteUser(id: number): Promise<IUserModel> {
@@ -110,7 +110,7 @@ export default class UserApiGateway extends Api {
             type: type,
             status: status
         }
-        return this.get<IListUserModel>(USER_LIST_URL, { ...params })
+        return this.get<IListUserModel>(USER_URL, { ...params })
     }
 
     getUserListFromResponse(listUserModel: IListUserModel): PagedUserListEntity {

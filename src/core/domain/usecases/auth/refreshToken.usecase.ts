@@ -1,5 +1,6 @@
 import AuthRepository from '../../../data/gateways/api/services/auth.repositories'
 import RefreshAPIGateway from "../../../data/gateways/api/services/refresh.gateway"
+import { callLogout } from '../logout/logout.case'
 
 interface Params {
   refresh: string
@@ -17,6 +18,7 @@ export default class RefreshTokenUseCase {
         const formattedTokenResponse = this.gateway.getTokensFromResponse(refreshToken)
         this.authRepository.setUserTokens(formattedTokenResponse)
       } catch (error) {
+        callLogout()
         console.log({ error })
     }
   }
