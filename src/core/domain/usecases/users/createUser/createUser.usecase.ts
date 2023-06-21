@@ -19,7 +19,7 @@ export default class CreateUserUseCase {
       const res = await this.dataGateway.createUser(form)
       this.dataGateway.mapSingleUserFromResponse(res)
       store.dispatch(setNotificationMessage('Successfully Created Member'))
-      this.listUserUseCase.execute({})
+      await this.listUserUseCase.execute({})
     } catch (error: any) {
       this.usersRepository.setUserFormErrors(this.dataGateway.mapUserProfileFormError(error))
       console.log({ error })

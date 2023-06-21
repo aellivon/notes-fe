@@ -8,6 +8,7 @@ import { Api } from '../../../infra/api'
 import UserProfileEntity from '../../../../domain/entities/users/auth/user-profile-auth.entity';
 import UserAuthEntity, { IAuthenticationTokens } from '../../../../domain/entities/users/auth/user-tokens.entity';
 import { setUserAuthAttributes, transformTokenResponse, transformInitialLoginTokenResponse } from './mappers/user.auth.mapper';
+import { LOGIN_URL } from '../constants';
 
 export interface IAuthBaseGateway {
   login: (form: ILoginFormDataModel) => Promise<ILoginResponseDataModel>
@@ -28,7 +29,7 @@ interface IMappedLoginResponse {
 export default class AuthApiGateway extends Api implements IAuthBaseGateway {
 
   async login (form: ILoginFormDataModel): Promise<ILoginResponseDataModel> {
-    return await this.post<ILoginResponseDataModel>('/user/auth/login/', form)
+    return await this.post<ILoginResponseDataModel>(LOGIN_URL, form)
   }
 
   // Mapper

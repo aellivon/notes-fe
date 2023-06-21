@@ -32,7 +32,12 @@ export default class UserProfileAuthEntity extends UserBaseEntity {
 
   static mock(): UserProfileAuthEntity {
     const user = new UserProfileAuthEntity()
-    user.email = 'admin'
+    user.id = 1
+    user.email = "john@sunny.com"
+    user.firstName = "John"
+    user.lastName = "Doe"
+    user.displayName = "John Doe"
+    user.avatarURL = "http://localhost:8000/media/profile_pictures/908d4a04-fb5.png"
     return user
   }
 }

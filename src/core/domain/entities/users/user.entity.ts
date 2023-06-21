@@ -47,7 +47,19 @@ export default class UserEntity extends UserBaseEntity {
 
   static mock(): UserEntity {
     const user = new UserEntity()
-    user.email = 'admin'
+    user.setEntity({
+      id: 1,
+      email: "john@sunny.com",
+      firstName: "John",
+      lastName: "Doe",
+      displayName: "John Doe",
+      furiganaLastName: "ドウ",
+      furiganaFirstName: "ジョン",
+      avatarURL: "http://localhost:8000/media/profile_pictures/908d4a04-fb5.png",
+      position: "Software Developer",
+      department: "IT Department",
+      dateJoined: "2021-03-18T11:47:25+09:00",
+    })
     return user
   }
 }
