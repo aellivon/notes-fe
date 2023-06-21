@@ -1,2 +1,3 @@
 export const LOGIN_URL = `/user/auth/login/`
-export const LIST_USER_URL = `/user/user/`
+export const USER_LIST_URL = `/user/user/`
+export const USER_DETAIL_URL = (id: number) => `user/user/${id}/`

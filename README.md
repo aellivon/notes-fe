@@ -1,8 +1,8 @@
 # Note Frontend
 
-React, Tailwind, Clean Architecture Tinkering
+React, Typescript, Tailwind, and Clean Architecture Tinkering
 
-Some Notes: probably better to seperate it by feature
+Notes: probably better to seperate it by feature in the future
 
 # Setup
 
@@ -18,20 +18,14 @@ $ npm install
 
 There should be a sample called .env.sample
 
-#### Install migrations
-
-```bash
-$ pipenv run python manage.py migrate
-```
-
 #### Run the development server
 
 ```bash
-$ pipenv run python manage.py runserver
+$ npm run start
 ```
 
-#### Running Tests
+#### Running tests
 
 ```bash
-$ pipenv run python manage.py test
+$ npm run test
 ```

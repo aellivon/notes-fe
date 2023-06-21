@@ -1,6 +1,6 @@
+import { IUserGateway } from "../../../../data/gateways/api/services/user.gateway"
+import UsersRepository from "../../../../data/gateways/api/services/users.repositories"
 
-import { IUserGateway } from '../../../data/gateways/api/services/user.gateway'
-import UsersRepository from '../../../data/gateways/api/services/users.repositories'
 
 interface Params {
   pageNumber?: number
@@ -19,7 +19,6 @@ export default class ListUsersUseCase {
   }
   async execute ({pageNumber = 1, url = null, queryString = "", department = "*", type = "*", status = "active"}: Params): Promise<any> {
 
-    console.log(queryString, "query")
     const response = await this.dataGateway.listUsers({pageNumber, url, queryString, department, type, status})
     try {
       let userList = this.dataGateway.getUserListFromResponse(response)

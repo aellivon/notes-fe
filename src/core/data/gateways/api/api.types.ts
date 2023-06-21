@@ -15,8 +15,8 @@ export interface ApiDataResponseModel<T> {
 }
 
 export interface IPagedAPIViewModel<T> {
-  previous: boolean
-  next: boolean
+  previous: string | null
+  next: string | null
   count: number
   current_page_number: number
   total_pages: number

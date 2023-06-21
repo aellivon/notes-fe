@@ -1,4 +1,4 @@
-import ListUsersUseCase from "../../../../domain/usecases/users/listUser.usecase"
+import ListUsersUseCase from "../../../../domain/usecases/users/listUser/listUser.usecase"
 import ListGroupUseCase from "../../../../domain/usecases/groups/listGroup.usecase"
 
 import UserApiGateway from "../../../../data/gateways/api/services/user.gateway"

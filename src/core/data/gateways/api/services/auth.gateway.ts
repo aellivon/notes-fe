@@ -6,19 +6,13 @@ import { ILoginFormDataModel } from '../../../../domain/entities/formModels/logi
 import { Api } from '../../../infra/api'
 
 import UserProfileEntity from '../../../../domain/entities/users/auth/user-profile-auth.entity';
-import UserAuthEntity, { IAuthenticationTokens } from '../../../../domain/entities/users/auth/user-tokens.entity';
-import { setUserAuthAttributes, transformTokenResponse, transformInitialLoginTokenResponse } from './mappers/user.auth.mapper';
+import UserAuthEntity from '../../../../domain/entities/users/auth/user-tokens.entity';
+import { setUserAuthAttributes, transformInitialLoginTokenResponse } from './mappers/user.auth.mapper';
 import { LOGIN_URL } from '../constants';
 
 export interface IAuthBaseGateway {
   login: (form: ILoginFormDataModel) => Promise<ILoginResponseDataModel>
   extractEntitiesFromLoginResponse: (response: ILoginResponseDataModel) => IMappedLoginResponse
-  refresh: (form: IRefreshFormDataModel) => Promise<IRefreshResponseModel>
-  getTokensFromResponse: (response: IRefreshResponseModel) => IAuthenticationTokens
-}
-
-export interface IRefreshFormDataModel {
-  refresh: string;
 }
 
 interface IMappedLoginResponse {
@@ -51,13 +45,5 @@ export default class AuthApiGateway extends Api implements IAuthBaseGateway {
       user: entity,
       tokens: tokens
     }
-  }
-
-  async refresh (form: IRefreshFormDataModel): Promise<IRefreshResponseModel> {
-    return this.post<IRefreshResponseModel>('/user/auth/token/refresh/', form)
-  }
-
-  getTokensFromResponse(response: IRefreshResponseModel): IAuthenticationTokens {
-    return transformTokenResponse(response)
   }
 }

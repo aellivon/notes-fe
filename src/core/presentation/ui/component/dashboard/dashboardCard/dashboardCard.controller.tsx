@@ -3,7 +3,7 @@ import UsersRepository from "../../../../../data/gateways/api/services/users.rep
 import { IFormUserProfileFields } from "../../../../../domain/entities/formModels/user-profile-form.entity";
 import CreateUserUseCase from "../../../../../domain/usecases/users/createUser/createUser.usecase";
 import DeleteUserUseCase from "../../../../../domain/usecases/users/deleteUser/deleteUser.usecase";
-import ListUsersUseCase from "../../../../../domain/usecases/users/listUser.usecase";
+import ListUsersUseCase from "../../../../../domain/usecases/users/listUser/listUser.usecase";
 import UpdateUserUseCase from "../../../../../domain/usecases/users/updateUser/updateUser.usecase";
 
 export default class dashboardCardController {
