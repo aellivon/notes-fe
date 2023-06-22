@@ -10,9 +10,7 @@ const DashboardContainer: React.FC = () => {
 
   return (
     <div className='bg-gray-100 h-screen'>
-      <DashboardView
-        onLogout={logout}
-      />
+      <DashboardView/>
     </div>
   )
 }
