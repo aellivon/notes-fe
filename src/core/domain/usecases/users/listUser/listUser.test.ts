@@ -10,9 +10,9 @@ describe('List User', () => {
 
 
   beforeEach(() => {
-    const userAPIGateway = new UserApiGateway()
-    mockAPIResponses(userAPIGateway.apiSauce.axiosInstance)
-    useCase = new ListUsersUseCase(userAPIGateway, new UsersRepository())
+    const gateway = new UserApiGateway()
+    mockAPIResponses(gateway.apiSauce.axiosInstance)
+    useCase = new ListUsersUseCase(gateway, new UsersRepository())
   })
 
   test('execute', async () => {

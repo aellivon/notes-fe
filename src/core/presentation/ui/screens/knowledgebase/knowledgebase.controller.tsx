@@ -2,8 +2,8 @@ import KnowledgebaseApiGateway from '../../../../data/gateways/api/services/know
 import KnowledgebaseRepository from '../../../../data/gateways/api/services/knowledgebase.repositories'
 import { IFormKnowledgebaseFields } from '../../../../domain/entities/formModels/knowledgebase-form.entity'
 import CreateKnowledgebaseUseCase from '../../../../domain/usecases/knowledgebase/createKnowledgebase/createKnowledgebase.usecase'
-import ListKnowledgeBaseUseCase from '../../../../domain/usecases/knowledgebase/listKnowledgebase.usecase'
-import ListMyKnowledgeBaseUseCase from '../../../../domain/usecases/knowledgebase/listMyKnowledgebase.usecase'
+import ListKnowledgeBaseUseCase from '../../../../domain/usecases/knowledgebase/listKnowledgebase/listKnowledgebase.usecase'
+import ListMyKnowledgeBaseUseCase from '../../../../domain/usecases/knowledgebase/listMyKnowlegebaseUseCase/listMyKnowledgebase.usecase'
 
 
 interface Params {

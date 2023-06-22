@@ -1,7 +1,7 @@
 import AuthRepository from '../../../../data/gateways/api/services/auth.repositories'
 import KnowledgebaseApiGateway from '../../../../data/gateways/api/services/knowledgebase.gateway'
 import KnowledgebaseRepository from '../../../../data/gateways/api/services/knowledgebase.repositories'
-import ListKnowledgeBaseUseCase from '../../../../domain/usecases/knowledgebase/listKnowledgebase.usecase'
+import ListKnowledgeBaseUseCase from '../../../../domain/usecases/knowledgebase/listKnowledgebase/listKnowledgebase.usecase'
 import LogOutCase from '../../../../domain/usecases/logout/logout.case'
 
 

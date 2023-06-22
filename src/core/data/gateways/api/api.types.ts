@@ -46,7 +46,7 @@ export interface IKnowledgebaseModel extends IBaseAPIModel {
   title: string
   is_active?: boolean
   description: string
-  owner: IUserModel
+  owner: number
 }
 
 export interface IListUserModel extends IPagedAPIViewModel<IUserModel> {}

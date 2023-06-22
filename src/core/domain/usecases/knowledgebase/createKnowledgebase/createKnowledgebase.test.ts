@@ -4,7 +4,7 @@ import gateway from "../../../../data/gateways/api/services/user.gateway"
 import { mockAPIResponses } from "../../../../data/infra/api-mock"
 import { store } from "../../../../presentation/presenters/store/store"
 import { IFormUserProfileFields } from "../../../entities/formModels/user-profile-form.entity"
-import ListMyKnowledgeBaseUseCase from "../listMyKnowledgebase.usecase"
+import ListMyKnowledgeBaseUseCase from "../listMyKnowlegebaseUseCase/listMyKnowledgebase.usecase"
 import CreateKnowledgebaseUseCase from "./createKnowledgebase.usecase"
 
 
@@ -53,33 +53,33 @@ describe('Create Knowledgbase', () => {
 
     let state = store.getState()
 
-    expect(state.kbState.kb.results.length).toBe(0)
+    expect(state.kbState.kb.results.length).toBe(1)
 
     await useCase.execute(knowledgebase)
     state = store.getState()
-    expect(state.kbState.kb.results.length).toBe(0)
+    expect(state.kbState.kb.results.length).toBe(1)
     expect(state.fromKBState.kbErrors.title).toStrictEqual([simulatedError.title])
   })
 
-  // test('execute', async () => {
-  //   const gateway = new KnowledgebaseApiGateway()
-  //   mockAPIResponses(gateway.apiSauce.axiosInstance)
-  //   useCase = new CreateKnowledgebaseUseCase(
-  //       gateway, new KnowledgebaseRepository(),
-  //       new ListMyKnowledgeBaseUseCase(gateway, new KnowledgebaseRepository())
-  //   )
 
-  //   let state = store.getState()
+  test('execute', async () => {
+    mockAPIResponses(gateway.apiSauce.axiosInstance, false, knowledgebase)
 
-  //   expect(state.usersState.users.results.length).toBe(0)
+    useCase = new CreateKnowledgebaseUseCase(
+        gateway, new KnowledgebaseRepository(),
+        new ListMyKnowledgeBaseUseCase(gateway, new KnowledgebaseRepository())
+    )
 
-  //   await useCase.execute(knowledgebase)
-  //   state = store.getState()
-  //   expect(state.usersState.users.results.length).toBe(1)
-  //   expect(state.usersState.users.results[0].id).toBe(2)
-  //   expect(state.usersState.users.results[0].email).toBe(user2.email)
-  //   expect(state.usersState.users.results[0].firstName).toBe(user2.firstName)
-  //   expect(state.usersState.users.results[0].lastName).toBe(user2.lastName)
-  // })
+    let state = store.getState()
 
+    expect(state.kbState.kb.results.length).toBe(1)
+
+    await useCase.execute(knowledgebase)
+    state = store.getState()
+
+    expect(state.kbState.kb.results.length).toBe(1)
+    expect(state.kbState.kb.results[0].title).toBe(knowledgebase.title)
+    expect(state.kbState.kb.results[0].description).toBe(knowledgebase.description)
+    expect(state.kbState.kb.results[0].isPublic).toBe(knowledgebase.isPublic)
+  })
 })

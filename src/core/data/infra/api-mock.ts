@@ -1,5 +1,5 @@
 import MockAdapter from 'axios-mock-adapter'
-import { USER_URL, LOGIN_URL, USER_DETAIL_URL, GROUP_URL, REFRESH_URL, KNOWLEDGEBASE_URL } from '../gateways/api/constants'
+import { USER_URL, LOGIN_URL, USER_DETAIL_URL, GROUP_URL, REFRESH_URL, KNOWLEDGEBASE_URL, KNOWLEDGEBASE_ALL_URL, KNOWLEDGEBASE_DETAIL_URL } from '../gateways/api/constants'
 import UserProfileAuthEntity from '../../domain/entities/users/auth/user-profile-auth.entity'
 import UserAuthEntity from '../../domain/entities/users/auth/user-tokens.entity'
 import { IFormUserProfileFields, IFormUserProfileErrors } from '../../domain/entities/formModels/user-profile-form.entity'
@@ -16,7 +16,10 @@ export const mockAPIResponses = (
       mock.onPost(USER_URL).reply(400, getOnCreateWithErrorResponse(baseDataRes))
       mock.onPatch(USER_DETAIL_URL(2)).reply(400, getUserPatchErrorResponse(baseDataRes))
       mock.onPost(REFRESH_URL).reply(401, getRefreshTokenErrorResponse())
+
+      // KB
       mock.onPost(KNOWLEDGEBASE_URL).reply(400, getKnowledgeBaseErrorResponse(baseDataRes))
+      mock.onPatch(KNOWLEDGEBASE_DETAIL_URL(1)).reply(400, getKnowledgbasePatchErrorResponse(baseDataRes))
     } else {
       mock.onPost(LOGIN_URL).reply(200, getLoginResponse())
 
@@ -33,7 +36,11 @@ export const mockAPIResponses = (
       mock.onPost(REFRESH_URL).reply(200, getRefreshTokenSuccessResponse(baseDataRes))
 
       // KB
-      mock.onPost(KNOWLEDGEBASE_URL).reply(400, getKnowledgebaseSuccessResponse(baseDataRes))
+      mock.onGet(KNOWLEDGEBASE_URL).reply(200, getMyKnowledgeBaseListSuccessResponse())
+      mock.onGet(KNOWLEDGEBASE_ALL_URL).reply(200, getKnowledgeBaseListSuccessResponse())
+      mock.onPost(KNOWLEDGEBASE_URL).reply(201, getKnowledgebaseCreateSuccessResponse(baseDataRes))
+      mock.onDelete(KNOWLEDGEBASE_DETAIL_URL(1)).reply(204, {})
+      mock.onPatch(KNOWLEDGEBASE_DETAIL_URL(1)).reply(200, getKnowledgebasePatchSuccessResponse(baseDataRes))
     }
 }
 
@@ -164,12 +171,70 @@ const getKnowledgeBaseErrorResponse = (data: IFormKnowledgebaseErrors) => {
   }
 }
 
-const getKnowledgebaseSuccessResponse = (data: IFormKnowledgebaseFields) => {
+const getKnowledgebaseCreateSuccessResponse = (data: IFormKnowledgebaseFields) => {
   return {
     "id": 2,
     "title": data.title,
     "description": data.description,
     "is_public": data.isPublic,
     "owner": 1
+  }
+}
+
+const getMyKnowledgeBaseListSuccessResponse = () => {
+  return {
+    "next": null,
+    "previous": null,
+    "count": 1,
+    "total_pages": 1,
+    "results": [
+        {
+            "id": 1,
+            "title": "Title",
+            "description": "Desc",
+            "is_public": false,
+            "owner": 1
+        }
+    ],
+    "current_page_number": 1
+  }
+}
+
+const getKnowledgeBaseListSuccessResponse = () => {
+  return {
+    "next": null,
+    "previous": null,
+    "count": 1,
+    "total_pages": 1,
+    "results": [
+        {
+            "id": 6,
+            "title": "Title",
+            "description": "Desc",
+            "is_public": true,
+            "owner": 1
+        }
+    ],
+    "current_page_number": 1
+  }
+}
+
+
+const getKnowledgebasePatchSuccessResponse = (data: IFormKnowledgebaseFields) => {
+  return {
+    "id": 1,
+    "title": data.title,
+    "description": data.description,
+    "is_public": data.isPublic,
+    "owner": 1
+  }
+}
+
+const getKnowledgbasePatchErrorResponse = (data: IFormKnowledgebaseErrors) => {
+  console.log(data)
+  return {
+    "title": [
+        data.title
+      ]
   }
 }

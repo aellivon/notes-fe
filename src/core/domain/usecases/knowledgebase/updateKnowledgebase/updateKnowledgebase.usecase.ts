@@ -14,7 +14,7 @@ export default class UpdateKnowledgebaseUseCase {
     try {
       const res = await this.dataGateway.updateKnowledgebase(form, noteId)
       const updatedNote = this.dataGateway.mapSingleKBFromResponse(res)
-      this.knowledgebase.updateKnowledgebase(updatedNote)
+      await this.knowledgebase.updateKnowledgebase(updatedNote)
       store.dispatch(setNotificationMessage('Successfully Updated Note'))
     } catch (error: any) {
       this.knowledgebase.setKnowledgebaseFormErrors(this.dataGateway.mapKnowledgeBaseFormError(error))

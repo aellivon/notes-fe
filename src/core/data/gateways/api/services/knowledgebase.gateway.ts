@@ -8,7 +8,7 @@ import KnowledgebaseEntity, { IKnowledgeBase, PagedKnowledgebaseEntity } from '.
 import { mapKBAttributes } from './mappers/kb.mappers'
 import { IFormKnowledgebaseErrors, IFormKnowledgebaseFields } from '../../../../domain/entities/formModels/knowledgebase-form.entity'
 import { mapKnowledgebaseFormError } from './mappers/knowledgebaseFormError'
-import { KNOWLEDGEBASE_URL } from '../constants'
+import { KNOWLEDGEBASE_ALL_URL, KNOWLEDGEBASE_DETAIL_URL, KNOWLEDGEBASE_URL } from '../constants'
 
 interface Params {
     pageNumber?: number
@@ -29,7 +29,7 @@ export default class KnowledgebaseApiGateway extends Api {
             description: form.description,
             is_public: form.isPublic,
         }
-        return await this.patch<IKnowledgebaseModel>(`knowledgebase/knowledgebase/${id}/`, params)
+        return await this.patch<IKnowledgebaseModel>(KNOWLEDGEBASE_DETAIL_URL(id), params)
     }
 
     async createKnowledgebase(form: IFormKnowledgebaseFields): Promise<IKnowledgebaseModel> {
@@ -42,7 +42,7 @@ export default class KnowledgebaseApiGateway extends Api {
     }
 
     async deleteKnowledgebase(id: number): Promise<IKnowledgebaseModel> {
-        return await this.delete<IKnowledgebaseModel>(`knowledgebase/knowledgebase/${id}/`)
+        return await this.delete<IKnowledgebaseModel>(KNOWLEDGEBASE_DETAIL_URL(id))
     }
 
     mapKnowledgeBaseFormError(error: IFormKnowledgebaseErrors): IFormKnowledgebaseErrors {
@@ -56,7 +56,7 @@ export default class KnowledgebaseApiGateway extends Api {
         let params = {
             page: pageNumber,
         }
-        return this.get<IListKnowledgebaseModel>('/knowledgebase/knowledgebase/all', { ...params })
+        return this.get<IListKnowledgebaseModel>(KNOWLEDGEBASE_ALL_URL, { ...params })
     }
 
     async listMyKnowledgebase({ pageNumber = 1, url = null}: Params): Promise<IListKnowledgebaseModel> {
